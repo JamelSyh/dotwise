@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { setInText, setOutText, setInOpt, selectTranscriptorState } from "app/transcriptor/transcriptor";
 import Dropdown from './dropdown';
-// import { DownloadOne, Copy } from "@icon-park/react";
+import { DownloadOne, Copy } from "@icon-park/react";
 import '../App.css';
 
 function OutputTextArea() {

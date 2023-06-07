@@ -100,7 +100,7 @@ export const transcriptorSlice = createSlice({
   },
 });
 
-export const { setInText, setOutText } =
+export const { setInText, setOutText, setInLang, setOutLang, setInOpt, setOutOpt, setInDrop, setOutDrop, setPending, setKeyboard, setBrailleBoard } =
   transcriptorSlice.actions;
 
 export const selectTranscriptorState = (state: RootState) =>
