@@ -1,0 +1,232 @@
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setInText, setOutText, selectTranscriptorState } from "app/transcriptor/transcriptor";
+// import { useSelector } from "react-redux/es/exports";
+// import { useDispatch } from "react-redux/es/exports";
+// import { useSpeechSynthesis } from 'react-speech-kit';
+// import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Keyboard, UploadOne, Close, ViewGridCard, Voice, VolumeNotice, PauseOne } from "@icon-park/react";
+import Dropdown from './dropdown';
+// import brailleToNum from "../constants/brailleToNum";
+// import brailleKeys from "../constants/brailleKeys";
+// import '../App.css';
+
+function InputTextArea() {
+
+  const dispatch = useAppDispatch();
+  const transcriptor = useAppSelector(selectTranscriptorState);
+
+  const inText = transcriptor.inText;
+  const inLang = transcriptor.inLang;
+  const outLang = transcriptor.outLang;
+  const inOpt = transcriptor.inOpt;
+  const outOpt = transcriptor.outOpt;
+  const kb = transcriptor.keyboard;
+  const brailleBoard = transcriptor.brailleBoard;
+  // const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
+  // const ocr_api_key = useSelector(state => state.backend.ocrApiKey);
+
+  // const [selectedFile, setSelectedFile] = useState(null);
+  // const [brailleMode, setBrailleMode] = useState(false);
+  // const [brailleInput, setBrailleInput] = useState("")
+  // const [key, setKey] = useState('');
+  // const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis();
+  // const voiceList = {
+  //   'auto': voices[1],
+  //   'en': voices[1],
+  //   'fr': voices[6],
+  // }
+  const speechList = {
+    'auto': '',
+    'en': 'en-US',
+    'fr': 'fr-FR',
+    'ar': 'ar-SA'
+  }
+  const OCRLangList = {
+    'en': 'eng',
+    'fr': 'fre',
+    'ar': 'ara',
+  }
+  // const { transcript, resetTranscript, listening } = useSpeechRecognition();
+
+
+  const handleStartRecognition = () => {
+    //   if (listening) {
+    //     SpeechRecognition.stopListening();
+    //   } else {
+    //     resetTranscript();
+    //     SpeechRecognition.startListening({ continuous: true, language: speechList[inLang.code] });
+    //   }
+  };
+
+
+  const handleClear = () => {
+    // dispatch(inputText(""));
+    // setSelectedFile(null);
+  }
+
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
+
+  // const uploadFile = async (file, lang, key) => {
+  // try {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   formData.append('apikey', ocr_api_key);
+  //   formData.append('language', OCRLangList[lang]);
+
+  //   const response = await axios.post(`https://api.ocr.space/parse/image/`, formData, {
+  //   });
+  //   return response.data;
+  // } catch (error) {
+  //   console.error('Error uploading file:', error);
+  //   throw error;
+  // }
+  // };
+
+  // const handleUpload = async () => {
+  //   if (inLang.code === "auto") {
+  //     dispatch(inputLang(inOpt[2]));
+  //     return;
+  //   }
+  //   const response = await uploadFile(selectedFile, inLang.code, dotwise_api_key);
+  //   if (response) {
+  //     dispatch(inputText(response.ParsedResults[0].ParsedText))
+  //   }
+  // };
+
+  // const handleKeyPress = (event) => {
+  //   if (brailleMode) {
+  //     if (outLang.code == "auto")
+  //       dispatch(outputLang(outOpt[2]));
+  //     const newKey = brailleKeys[event.key.toLowerCase()];
+  //     if (newKey) {
+  //       setKey(newKey);
+  //       setBrailleInput(brailleInput + newKey)
+  //     }
+  //     if (event.ctrlKey || event.metaKey) {
+  //       event.stopPropagation();
+  //       // Allow Ctrl+.. (or Cmd+C on Mac)
+  //       return;
+  //     }
+  //     event.preventDefault();
+  //   }
+  // };
+
+  // const handleSpeech = () => {
+  //   if (listening)
+  //     SpeechRecognition.stopListening();
+  //   if (inLang.code === "auto") {
+  //     dispatch(inputLang(inOpt[2]));
+  //   }
+  //   if (inText && !speaking && voiceList[inLang.code]) {
+  //     speak({ text: inText, voice: voiceList[inLang.code] });
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   dispatch(setInText(transcript));
+  // }, [transcript, dispatch]);
+
+  // useEffect(() => {
+  //   const len = brailleInput.length
+  //   if (key) {
+  //     if (key === "backspace") {
+  //       dispatch(inputText(inText.slice(0, inText.length - 1)));
+  //       setBrailleInput(key);
+  //     } else if (key == " ") {
+  //       dispatch(inputText(inText + "  "));
+  //       setBrailleInput("");
+  //     }
+  //     else if (key <= brailleInput.charAt(len - 2)) {
+  //       if (brailleToNum[key])
+  //         dispatch(inputText(inText + brailleToNum[key]));
+  //       setBrailleInput(key);
+  //     } else {
+  //       if (brailleToNum[brailleInput])
+  //         dispatch(inputText(inText.slice(0, inText.length - 1) + brailleToNum[brailleInput]));
+  //     }
+  //     setKey('');
+  //   }
+  // }, [brailleInput, key]);
+
+
+  // useEffect(() => {
+  //   if (selectedFile) {
+  //     dispatch(pending(true));
+  //     handleUpload();
+  //   }
+  // }, [selectedFile, inLang, dispatch]);
+
+  // useEffect(() => {
+  //   if (inLang.code === "1" || inLang.code === "2") {
+  //     setBrailleMode(true);
+  //   }
+  //   else {
+  //     setBrailleMode(false);
+  //     dispatch(board(false));
+  //     inOpt.forEach((lang) => {
+  //       if (lang === inLang)
+  //         dispatch(outputOptions(lang.grade));
+  //     })
+  //   }
+  // }, [inLang]);
+
+  return (
+    <div className="card input-wrapper">
+
+      <div className="from">
+        <span className="heading">From :</span>
+        <Dropdown id="in" opt={inOpt} lang={inLang} />
+      </div>
+      <div className="text-area">
+        {/* {inText !== "" && inLang.code !== "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>} */}
+        <textarea id="input-text" cols={30} rows={6} dir={inLang.code === 'ar' ? 'rtl' : ''} value={inText} onChange={event => { dispatch(setInText(event.target.value)); dispatch(setOutText(inText)); /*  setSelectedFile(null); */ }} /* onKeyDown={handleKeyPress} */>
+        </textarea>
+        <div className="chars"><span id="input-chars">{inText.length}</span> / 5000</div>
+      </div>
+      <div className="card-bottom">
+        <label htmlFor="upload-document">
+          <div className="icoon" >
+            <UploadOne size="30" strokeWidth={3} />
+          </div>
+          <input type="file" /* onChange={handleFileChange} */ id="upload-document" hidden />
+        </label>
+
+        {/* <div className="icoon" onClick={() => { */}
+        {/*   dispatch(keyboard(!kb)); */}
+        {/*   dispatch(board(false)); */}
+        {/* }} > */}
+        {/*   <Keyboard size="30" strokeWidth={3} /> */}
+        {/* </div> */}
+        {/* {brailleMode && */}
+        {/*   <div className="icoon" onClick={() => { */}
+        {/*     dispatch(board(!brailleBoard)); */}
+        {/*     dispatch(keyboard(false)); */}
+        {/*   }} > */}
+        {/*     <ViewGridCard size="30" strokeWidth={3} /> */}
+        {/*   </div> */}
+        {/* } */}
+
+        {/* {!brailleMode && */}
+        {/*   <> */}
+        {/*     {inText && */}
+        {/*       < div className="icoon" onClick={handleSpeech}> */}
+        {/*         <VolumeNotice theme="outline" size="30" strokeWidth={3} /> */}
+        {/*       </div> */}
+        {/*     } */}
+
+        {/*     < div className="icoon" onClick={handleStartRecognition} hidden={listening}> */}
+        {/*       <Voice theme="outline" size="30" strokeWidth={3} /> */}
+        {/*     </div> */}
+        {/*     < div className="icoon" onClick={handleStartRecognition} hidden={!listening}> */}
+        {/*       <PauseOne theme="outline" size="30" strokeWidth={3} /> */}
+        {/*     </div> */}
+        {/*   </> */}
+        {/* } */}
+      </div>
+    </div >
+  );
+}
+
+export default InputTextArea;

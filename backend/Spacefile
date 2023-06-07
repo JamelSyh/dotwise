@@ -1,0 +1,15 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: backend
+    src: ./
+    engine: python3.9
+    primary: true
+    run: python manage.py runserver 0.0.0.0:$PORT
+    public_routes:
+      - "/*"
+    presets:
+      env:
+        - name: ENV_API_KEY
+          description: Secret message only available to this Micro
+          default: ""
