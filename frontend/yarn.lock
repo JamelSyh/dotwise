@@ -286,6 +286,24 @@
   resolved "https://registry.npmjs.org/@icon-park/react/-/react-1.4.2.tgz"
   integrity sha512-+MtQLjNiRuia3fC/NfpSCTIy5KH5b+NkMB9zYd7p3R4aAIK61AjK0OSraaICJdkKooU9jpzk8m0fY4g9A3JqhQ==
 
+"@ionic/core@7.0.11":
+  version "7.0.11"
+  resolved "https://registry.npmjs.org/@ionic/core/-/core-7.0.11.tgz"
+  integrity sha512-X/fC9wSfUD1Fom+0XiFrR5/CPFUHDH+fIxvL4rz2vIjPUxgx2zsp4ZjMn/HeNjtgzTuy+Yz0NdOGj9lZmmlMpA==
+  dependencies:
+    "@stencil/core" "^3.3.1"
+    ionicons "^7.1.0"
+    tslib "^2.1.0"
+
+"@ionic/react@^7.0.11":
+  version "7.0.11"
+  resolved "https://registry.npmjs.org/@ionic/react/-/react-7.0.11.tgz"
+  integrity sha512-Bz06Jr1yDGVn9YzylKHjqJRbHdwfPBG8zI+61d5psaYIhNcwBDWBvv4vPDTVXPN5i+qs4UfsWgCgxJiQakzrrg==
+  dependencies:
+    "@ionic/core" "7.0.11"
+    ionicons "^7.0.0"
+    tslib "*"
+
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.0.5.tgz"
@@ -374,6 +392,16 @@
   dependencies:
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
+
+"@stencil/core@^2.18.0":
+  version "2.22.3"
+  resolved "https://registry.npmjs.org/@stencil/core/-/core-2.22.3.tgz"
+  integrity sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==
+
+"@stencil/core@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/@stencil/core/-/core-3.3.1.tgz"
+  integrity sha512-I+660Oe9OMLiU+thjV1GgcI27dcvrSpF3xisHWBOU/4mzRtho3YW0cI8lSjcqyB1KirGTA6QeQ0Xif5UHqn8hw==
 
 "@tailwindcss/aspect-ratio@^0.4.0":
   version "0.4.0"
@@ -1436,6 +1464,13 @@ inherits@^2.0.3, inherits@~2.0.3, inherits@2:
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
+ionicons@^7.0.0, ionicons@^7.1.0:
+  version "7.1.2"
+  resolved "https://registry.npmjs.org/ionicons/-/ionicons-7.1.2.tgz"
+  integrity sha512-zZ4njAqSP39H8RRvZhJvkHsv7cBjYE/VfInH218Osf2UVxJITSOutTTd25MW+tAXKN5fheYzclUXUsF55JHUDg==
+  dependencies:
+    "@stencil/core" "^2.18.0"
+
 ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.npmjs.org/ip/-/ip-1.1.5.tgz"
@@ -2165,7 +2200,7 @@ react-audio-player@^0.17.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-dom@*, "react-dom@^16 || ^17 || ^18", react-dom@^17.0.2, react-dom@>=16, react-dom@>=16.9:
+react-dom@*, "react-dom@^16 || ^17 || ^18", react-dom@^17.0.2, react-dom@>=16, react-dom@>=16.8.6, react-dom@>=16.9:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -2271,7 +2306,7 @@ react-side-effect@^2.1.0:
   resolved "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.1.tgz"
   integrity sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==
 
-react@*, "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16 || ^17 || ^18", "react@^16.3.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.9.0 || ^17.0.0 || 18.0.0-beta", react@^17.0.2, "react@>= 16", react@>=15, react@>=16, react@>=16.3.0, react@>=16.6.0, react@>=16.9, react@17.0.2:
+react@*, "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16 || ^17 || ^18", "react@^16.3.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.9.0 || ^17.0.0 || 18.0.0-beta", react@^17.0.2, "react@>= 16", react@>=15, react@>=16, react@>=16.3.0, react@>=16.6.0, react@>=16.8.6, react@>=16.9, react@17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -2770,10 +2805,15 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@^1.9.3:
+tslib@*, tslib@^1.9.3:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2.1.0:
+  version "2.5.3"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.3.tgz"
+  integrity sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==
 
 type-fest@^0.18.0:
   version "0.18.1"
