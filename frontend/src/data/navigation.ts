@@ -375,13 +375,11 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     id: ncNanoId(),
     href: "/transcriptor",
     name: "Transcriptor",
-    type: "none",
   },
   {
     id: ncNanoId(),
     href: "/t",
     name: "translator",
-    type: "none",
   },
   // {
   //   id: ncNanoId(),
