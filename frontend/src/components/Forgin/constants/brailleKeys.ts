@@ -1,4 +1,5 @@
-const brailleKeys = {
+
+const brailleKeys: { [key: string]: string } = {
   'f': '1',
   'd': '2',
   's': '3',

@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
@@ -19,6 +20,7 @@ document
 
 ReactDOM.render(
   <Provider store={store}>
+    {/* @ts-ignore */}
     <PersistGate loading={null} persistor={persistor}>
       <App />
 

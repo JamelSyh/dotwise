@@ -10,10 +10,19 @@
     "commentCount": 11,
     "viewdCount": 2504,
     "readingTime": 2,
-    "bookmark": { "count": 3007, "isBookmarked": false },
-    "like": { "count": 3366, "isLiked": true },
+    "bookmark": {
+      "count": 3007,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 3366,
+      "isLiked": true
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "standard"
   },
   {
@@ -27,10 +36,19 @@
     "commentCount": 13,
     "viewdCount": 1646,
     "readingTime": 5,
-    "bookmark": { "count": 3751, "isBookmarked": false },
-    "like": { "count": 3024, "isLiked": false },
+    "bookmark": {
+      "count": 3751,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 3024,
+      "isLiked": false
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=U5afsxvz75c"
   },
@@ -45,10 +63,19 @@
     "commentCount": 33,
     "viewdCount": 4031,
     "readingTime": 2,
-    "bookmark": { "count": 76, "isBookmarked": false },
-    "like": { "count": 222, "isLiked": false },
+    "bookmark": {
+      "count": 76,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 222,
+      "isLiked": false
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "standard"
   },
   {
@@ -62,10 +89,19 @@
     "commentCount": 49,
     "viewdCount": 1632,
     "readingTime": 6,
-    "bookmark": { "count": 264, "isBookmarked": true },
-    "like": { "count": 3735, "isLiked": true },
+    "bookmark": {
+      "count": 264,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 3735,
+      "isLiked": true
+    },
     "authorId": 5,
-    "categoriesId": [5, 14],
+    "categoriesId": [
+      5,
+      14
+    ],
     "postType": "standard"
   },
   {
@@ -79,10 +115,19 @@
     "commentCount": 9,
     "viewdCount": 3338,
     "readingTime": 5,
-    "bookmark": { "count": 733, "isBookmarked": false },
-    "like": { "count": 3569, "isLiked": true },
+    "bookmark": {
+      "count": 733,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 3569,
+      "isLiked": true
+    },
     "authorId": 10,
-    "categoriesId": [10, 19],
+    "categoriesId": [
+      10,
+      19
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=dBsicD0ItD0&t=32s"
   },
@@ -97,10 +142,19 @@
     "commentCount": 13,
     "viewdCount": 4475,
     "readingTime": 2,
-    "bookmark": { "count": 199, "isBookmarked": false },
-    "like": { "count": 3052, "isLiked": true },
+    "bookmark": {
+      "count": 199,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 3052,
+      "isLiked": true
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "standard"
   },
   {
@@ -114,10 +168,19 @@
     "commentCount": 20,
     "viewdCount": 2714,
     "readingTime": 4,
-    "bookmark": { "count": 1321, "isBookmarked": true },
-    "like": { "count": 3309, "isLiked": true },
+    "bookmark": {
+      "count": 1321,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 3309,
+      "isLiked": true
+    },
     "authorId": 2,
-    "categoriesId": [2, 11],
+    "categoriesId": [
+      2,
+      11
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=U5afsxvz75c"
   },
@@ -132,10 +195,19 @@
     "commentCount": 18,
     "viewdCount": 3800,
     "readingTime": 5,
-    "bookmark": { "count": 1168, "isBookmarked": false },
-    "like": { "count": 1255, "isLiked": true },
+    "bookmark": {
+      "count": 1168,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1255,
+      "isLiked": true
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "audio",
     "audioUrl": "https://soundcloud.com/shenlong_production/thanh-xuan-la-anh-ndien-x-2t-ft-shenlongz"
   },
@@ -150,10 +222,19 @@
     "commentCount": 19,
     "viewdCount": 4515,
     "readingTime": 3,
-    "bookmark": { "count": 3463, "isBookmarked": true },
-    "like": { "count": 2586, "isLiked": false },
+    "bookmark": {
+      "count": 3463,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 2586,
+      "isLiked": false
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "standard"
   },
   {
@@ -167,10 +248,19 @@
     "commentCount": 14,
     "viewdCount": 2378,
     "readingTime": 6,
-    "bookmark": { "count": 3502, "isBookmarked": false },
-    "like": { "count": 773, "isLiked": true },
+    "bookmark": {
+      "count": 3502,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 773,
+      "isLiked": true
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "standard"
   },
   {
@@ -184,10 +274,19 @@
     "commentCount": 39,
     "viewdCount": 1460,
     "readingTime": 3,
-    "bookmark": { "count": 732, "isBookmarked": false },
-    "like": { "count": 1917, "isLiked": false },
+    "bookmark": {
+      "count": 732,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1917,
+      "isLiked": false
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=yvZox35ures"
   },
@@ -202,10 +301,19 @@
     "commentCount": 2,
     "viewdCount": 3418,
     "readingTime": 7,
-    "bookmark": { "count": 1502, "isBookmarked": false },
-    "like": { "count": 913, "isLiked": false },
+    "bookmark": {
+      "count": 1502,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 913,
+      "isLiked": false
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=yvZox35ures"
   },
@@ -220,10 +328,19 @@
     "commentCount": 5,
     "viewdCount": 3894,
     "readingTime": 4,
-    "bookmark": { "count": 3384, "isBookmarked": true },
-    "like": { "count": 1731, "isLiked": false },
+    "bookmark": {
+      "count": 3384,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 1731,
+      "isLiked": false
+    },
     "authorId": 10,
-    "categoriesId": [10, 19],
+    "categoriesId": [
+      10,
+      19
+    ],
     "postType": "audio",
     "audioUrl": "https://soundcloud.com/charlesnkeys/charles-xe-dap-acoustic-cover"
   },
@@ -238,10 +355,19 @@
     "commentCount": 27,
     "viewdCount": 1038,
     "readingTime": 4,
-    "bookmark": { "count": 3818, "isBookmarked": false },
-    "like": { "count": 1160, "isLiked": false },
+    "bookmark": {
+      "count": 3818,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1160,
+      "isLiked": false
+    },
     "authorId": 2,
-    "categoriesId": [2, 11],
+    "categoriesId": [
+      2,
+      11
+    ],
     "postType": "gallery",
     "galleryImgs": [
       "https://images.pexels.com/photos/347141/pexels-photo-347141.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
@@ -261,10 +387,19 @@
     "commentCount": 3,
     "viewdCount": 584,
     "readingTime": 5,
-    "bookmark": { "count": 1308, "isBookmarked": false },
-    "like": { "count": 2182, "isLiked": false },
+    "bookmark": {
+      "count": 1308,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 2182,
+      "isLiked": false
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "audio",
     "audioUrl": "https://soundcloud.com/pkvpro123/tim-toi-ft-tho"
   },
@@ -279,10 +414,19 @@
     "commentCount": 19,
     "viewdCount": 52,
     "readingTime": 5,
-    "bookmark": { "count": 482, "isBookmarked": true },
-    "like": { "count": 627, "isLiked": false },
+    "bookmark": {
+      "count": 482,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 627,
+      "isLiked": false
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=dBsicD0ItD0&t=32s"
   },
@@ -297,10 +441,19 @@
     "commentCount": 1,
     "viewdCount": 2996,
     "readingTime": 2,
-    "bookmark": { "count": 2515, "isBookmarked": false },
-    "like": { "count": 1277, "isLiked": false },
+    "bookmark": {
+      "count": 2515,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1277,
+      "isLiked": false
+    },
     "authorId": 10,
-    "categoriesId": [10, 19],
+    "categoriesId": [
+      10,
+      19
+    ],
     "postType": "standard"
   },
   {
@@ -314,10 +467,19 @@
     "commentCount": 1,
     "viewdCount": 129,
     "readingTime": 7,
-    "bookmark": { "count": 3976, "isBookmarked": false },
-    "like": { "count": 3126, "isLiked": false },
+    "bookmark": {
+      "count": 3976,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 3126,
+      "isLiked": false
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "standard"
   },
   {
@@ -331,10 +493,19 @@
     "commentCount": 45,
     "viewdCount": 575,
     "readingTime": 7,
-    "bookmark": { "count": 2264, "isBookmarked": true },
-    "like": { "count": 1642, "isLiked": false },
+    "bookmark": {
+      "count": 2264,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 1642,
+      "isLiked": false
+    },
     "authorId": 7,
-    "categoriesId": [7, 16],
+    "categoriesId": [
+      7,
+      16
+    ],
     "postType": "standard"
   },
   {
@@ -348,10 +519,19 @@
     "commentCount": 36,
     "viewdCount": 2783,
     "readingTime": 4,
-    "bookmark": { "count": 1653, "isBookmarked": true },
-    "like": { "count": 505, "isLiked": false },
+    "bookmark": {
+      "count": 1653,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 505,
+      "isLiked": false
+    },
     "authorId": 10,
-    "categoriesId": [10, 19],
+    "categoriesId": [
+      10,
+      19
+    ],
     "postType": "standard"
   },
   {
@@ -365,10 +545,19 @@
     "commentCount": 6,
     "viewdCount": 979,
     "readingTime": 6,
-    "bookmark": { "count": 3728, "isBookmarked": true },
-    "like": { "count": 1234, "isLiked": false },
+    "bookmark": {
+      "count": 3728,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 1234,
+      "isLiked": false
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "standard"
   },
   {
@@ -382,10 +571,19 @@
     "commentCount": 7,
     "viewdCount": 1501,
     "readingTime": 6,
-    "bookmark": { "count": 3278, "isBookmarked": false },
-    "like": { "count": 1803, "isLiked": false },
+    "bookmark": {
+      "count": 3278,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1803,
+      "isLiked": false
+    },
     "authorId": 7,
-    "categoriesId": [7, 16],
+    "categoriesId": [
+      7,
+      16
+    ],
     "postType": "standard"
   },
   {
@@ -399,10 +597,19 @@
     "commentCount": 14,
     "viewdCount": 3004,
     "readingTime": 7,
-    "bookmark": { "count": 2090, "isBookmarked": false },
-    "like": { "count": 2811, "isLiked": true },
+    "bookmark": {
+      "count": 2090,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 2811,
+      "isLiked": true
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "standard"
   },
   {
@@ -416,10 +623,19 @@
     "commentCount": 5,
     "viewdCount": 2580,
     "readingTime": 6,
-    "bookmark": { "count": 449, "isBookmarked": false },
-    "like": { "count": 507, "isLiked": true },
+    "bookmark": {
+      "count": 449,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 507,
+      "isLiked": true
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "standard"
   },
   {
@@ -433,10 +649,19 @@
     "commentCount": 43,
     "viewdCount": 204,
     "readingTime": 5,
-    "bookmark": { "count": 1381, "isBookmarked": true },
-    "like": { "count": 3503, "isLiked": false },
+    "bookmark": {
+      "count": 1381,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 3503,
+      "isLiked": false
+    },
     "authorId": 5,
-    "categoriesId": [5, 14],
+    "categoriesId": [
+      5,
+      14
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=yvZox35ures"
   },
@@ -451,10 +676,19 @@
     "commentCount": 24,
     "viewdCount": 2592,
     "readingTime": 5,
-    "bookmark": { "count": 224, "isBookmarked": true },
-    "like": { "count": 2125, "isLiked": false },
+    "bookmark": {
+      "count": 224,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 2125,
+      "isLiked": false
+    },
     "authorId": 4,
-    "categoriesId": [4, 13],
+    "categoriesId": [
+      4,
+      13
+    ],
     "postType": "standard"
   },
   {
@@ -468,10 +702,19 @@
     "commentCount": 28,
     "viewdCount": 1031,
     "readingTime": 3,
-    "bookmark": { "count": 840, "isBookmarked": false },
-    "like": { "count": 2454, "isLiked": false },
+    "bookmark": {
+      "count": 840,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 2454,
+      "isLiked": false
+    },
     "authorId": 3,
-    "categoriesId": [3, 12],
+    "categoriesId": [
+      3,
+      12
+    ],
     "postType": "standard"
   },
   {
@@ -485,10 +728,19 @@
     "commentCount": 7,
     "viewdCount": 2399,
     "readingTime": 3,
-    "bookmark": { "count": 567, "isBookmarked": false },
-    "like": { "count": 1340, "isLiked": false },
+    "bookmark": {
+      "count": 567,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 1340,
+      "isLiked": false
+    },
     "authorId": 5,
-    "categoriesId": [5, 14],
+    "categoriesId": [
+      5,
+      14
+    ],
     "postType": "video",
     "videoUrl": "https://www.youtube.com/watch?v=U5afsxvz75c"
   },
@@ -503,10 +755,19 @@
     "commentCount": 7,
     "viewdCount": 4216,
     "readingTime": 6,
-    "bookmark": { "count": 357, "isBookmarked": false },
-    "like": { "count": 2709, "isLiked": false },
+    "bookmark": {
+      "count": 357,
+      "isBookmarked": false
+    },
+    "like": {
+      "count": 2709,
+      "isLiked": false
+    },
     "authorId": 1,
-    "categoriesId": [1, 10],
+    "categoriesId": [
+      1,
+      10
+    ],
     "postType": "standard"
   },
   {
@@ -520,10 +781,19 @@
     "commentCount": 10,
     "viewdCount": 2809,
     "readingTime": 5,
-    "bookmark": { "count": 1598, "isBookmarked": true },
-    "like": { "count": 327, "isLiked": false },
+    "bookmark": {
+      "count": 1598,
+      "isBookmarked": true
+    },
+    "like": {
+      "count": 327,
+      "isLiked": false
+    },
     "authorId": 9,
-    "categoriesId": [9, 18],
+    "categoriesId": [
+      9,
+      18
+    ],
     "postType": "audio"
   }
 ]

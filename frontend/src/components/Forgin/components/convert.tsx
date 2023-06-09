@@ -1,27 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { inputOptions, outputOptions, inputLang, outputText, pending } from "../redux/actions";
-
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setInLang, setOutText, setPending, setInOpt, setOutOpt, selectTranscriptorState } from "app/transcriptor/transcriptor";
+import { selectAuthState } from "app/auth/auth";
 
 function Convert() {
 
+  const dispatch = useAppDispatch();
+  const transcriptor = useAppSelector(selectTranscriptorState);
+  const auth = useAppSelector(selectAuthState);
 
-  const dispatch = useDispatch();
-  const inText = useSelector(state => state.text.inputText);
-  const inLang = useSelector(state => state.language.inLang);
-  const outLang = useSelector(state => state.language.outLang);
-  const options = useSelector(state => state.options.inOpt);
-  const url = useSelector(state => state.backend.url);
-  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
-  const detectlang_api_key = useSelector(state => state.backend.detectlangApiKey);
+  const inText = transcriptor.inText;
+  const inLang = transcriptor.inLang;
+  const outLang = transcriptor.outLang;
+  const inOpt = transcriptor.inOpt;
+  const outOpt = transcriptor.outOpt;
+  const url = auth.BASE_API_URL;
+  const dotwise_api_key = auth.DOTWISE_API_KEY;
+  const detectlang_api_key = auth.LANG_DETECT_API_KEY;
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
   useEffect(() => {
 
-    dispatch(pending(true));
+    dispatch(setPending(true));
     const timer = setTimeout(() => {
       setDebouncedText(inText);
     }, 500);
@@ -31,14 +33,14 @@ function Convert() {
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const { data } = await axios.get(`${url}transcript_options/`, {
+        const { data } = await axios.get(`${url}/api/transcript_options/`, {
           params: {
             key: dotwise_api_key,
           },
-        },);
+        });
         if (data) {
-          dispatch(inputOptions(data));
-          dispatch(outputOptions(data[0]['grade']));
+          dispatch(setInOpt(data));
+          dispatch(setOutOpt(data[0]['grade']));
         }
       } catch (error) {
         console.error('Error fetching options:', error);
@@ -65,18 +67,18 @@ function Convert() {
           );
 
           if (response)
-            options.forEach((option) => {
+            inOpt.forEach((option) => {
               if (option.code === response.data.data.detections[0].language) {
-                dispatch(inputLang(option));
+                dispatch(setInLang(option));
               }
             });
         }
       } catch (error) {
-        dispatch(inputLang(options[2]));
+        dispatch(setInLang(inOpt[2]));
       }
     };
     doDetection();
-  }, [debouncedText, inLang, options, dispatch]);
+  }, [debouncedText, inLang, inOpt, dispatch]);
 
   useEffect(() => {
 
@@ -88,20 +90,21 @@ function Convert() {
         formData.append('target', outLang.code);
         formData.append('key', dotwise_api_key);
 
-        const { data } = await axios.post(`${url}transcriptor/`, formData);
+        const { data } = await axios.post(`${url}/api/transcriptor/`, formData);
         if (data) {
           if (debouncedText !== "" && data.result)
-            dispatch(outputText(data.result));
+            dispatch(setOutText(data.result));
           else
-            dispatch(outputText(""));
+            dispatch(setOutText(""));
         }
       } catch (error) {
         console.error('Error transcribing:', error);
       }
-      dispatch(pending(false));
+      dispatch(setPending(false));
     };
     Transcoding();
   }, [debouncedText, inLang, outLang, dispatch]);
+  return (<></>);
 }
 
 export default Convert;

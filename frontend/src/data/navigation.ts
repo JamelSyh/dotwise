@@ -115,16 +115,16 @@ const dashboardChildMenus: NavItemType[] = [
     href: "/dashboard/edit-profile",
     name: "Edit profile",
   },
-  {
-    id: ncNanoId(),
-    href: "/dashboard/billing-address",
-    name: "Billing address",
-  },
-  {
-    id: ncNanoId(),
-    href: "/dashboard/subscription",
-    name: "Subscription",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard/billing-address",
+  //   name: "Billing address",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard/subscription",
+  //   name: "Subscription",
+  // },
   {
     id: ncNanoId(),
     href: "/dashboard/submit-post",
@@ -165,11 +165,11 @@ const otherPageChildMenus: NavItemType[] = [
     type: "dropdown",
     children: dashboardChildMenus,
   },
-  {
-    id: ncNanoId(),
-    href: "/subscription",
-    name: "Subscription",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/subscription",
+  //   name: "Subscription",
+  // },
 ];
 
 const archviePageChildrenMenus: NavItemType[] = [
@@ -199,11 +199,11 @@ const archviePageChildrenMenus: NavItemType[] = [
         href: "/author/the-demo-author-slug",
         name: "Author Page 1",
       },
-      {
-        id: ncNanoId(),
-        href: "/author-v2/the-demo-author-slug",
-        name: "Author Page 2",
-      },
+      // {
+      //   id: ncNanoId(),
+      //   href: "/author-v2/the-demo-author-slug",
+      //   name: "Author Page 2",
+      // },
     ],
   },
   {
@@ -217,11 +217,11 @@ const archviePageChildrenMenus: NavItemType[] = [
         href: "/search",
         name: "Seach Page 1",
       },
-      {
-        id: ncNanoId(),
-        href: "/search-v2",
-        name: "Search Page 2",
-      },
+      // {
+      //   id: ncNanoId(),
+      //   href: "/search-v2",
+      //   name: "Search Page 2",
+      // },
     ],
   },
 ];
@@ -335,9 +335,18 @@ const demoChildMenus: NavItemType[] = [
   //     },
   {
     id: ncNanoId(),
-    href: "/home-header-style2-logedin",
-    name: "Header - Logedin",
-    isNew: true,
+    href: "/transcriptor",
+    name: "Transcriptor",
+  },
+  {
+    id: ncNanoId(),
+    href: "/translator",
+    name: "translator",
+  },
+  {
+    id: ncNanoId(),
+    href: "/lookup",
+    name: "Lookup",
   },
   // ],
   // },
@@ -378,8 +387,13 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/t",
+    href: "/translator",
     name: "translator",
+  },
+  {
+    id: ncNanoId(),
+    href: "/lookup",
+    name: "Lookup",
   },
   // {
   //   id: ncNanoId(),

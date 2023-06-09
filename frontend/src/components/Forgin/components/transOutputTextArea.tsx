@@ -1,23 +1,26 @@
-
-import { useSelector } from "react-redux/es/exports";
-import { useDispatch } from "react-redux/es/exports";
-import { outputText } from "../redux/actions";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setOutText, selectTranslatorState } from "app/translator/translator";
+import { selectTranscriptorState } from "app/transcriptor/transcriptor";
+import { selectAuthState } from "app/auth/auth";
 import TransDropdown from "./transDropdown";
 import TransDropdownGrade from "./transDropdownGrade";
 import { DownloadOne, Copy } from "@icon-park/react";
 import '../App.css';
 
-function TranslOutputTextArea() {
+function TransOutputTextArea() {
 
+  const dispatch = useAppDispatch();
+  const translator = useAppSelector(selectTranslatorState);
+  const transcriptor = useAppSelector(selectTranscriptorState);
+  const auth = useAppSelector(selectAuthState);
 
-  const dispatch = useDispatch();
-  const outText = useSelector(state => state.text.outputText);
-  const outTrans = useSelector(state => state.language.outTrans);
-  const outTransOpt = useSelector(state => state.options.outTransOpt);
-  const inLang = useSelector(state => state.language.inLang);
-  const pending = useSelector(state => state.text.pending);
-  const url = useSelector(state => state.backend.url);
-  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
+  const outText = translator.outText;
+  const outTrans = translator.outLang;
+  const outTransOpt = translator.outOpt;
+  const inLang = transcriptor.inLang;
+  const pending = translator.pending;
+  const url = auth.BASE_API_URL;
+  const dotwise_api_key = auth.DOTWISE_API_KEY;
 
 
   const copyToClipboard = () => {
@@ -25,7 +28,7 @@ function TranslOutputTextArea() {
   }
 
   const handleDownload = async () => {
-    const response = await fetch(`${url}downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
+    const response = await fetch(`${url}/api/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
     const blob = await response.blob();
     const tempUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -49,7 +52,7 @@ function TranslOutputTextArea() {
         <TransDropdown id="out" opt={outTransOpt} lang={outTrans} />
         <TransDropdownGrade id="out" opt={outTrans} lang={outTrans} />
       </ div>
-      <textarea id="output-text" cols="30" rows="6" placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(outputText(event.target.value))}></textarea>
+      <textarea id="output-text" cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value))}></textarea>
       {outText &&
         <div className="card-bottom">
           {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >
@@ -64,5 +67,5 @@ function TranslOutputTextArea() {
   );
 }
 
-export default TranslOutputTextArea;
+export default TransOutputTextArea;
 

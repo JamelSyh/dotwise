@@ -1,5 +1,10 @@
 import LayoutPage from "components/LayoutPage/LayoutPage";
-import React, { FC } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import React, { useState, useEffect, FC } from "react";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectAuthState, setUser, setToken, setErrMsg, setPending } from "app/auth/auth";
+import jwt_decode from "jwt-decode";
+
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -11,6 +16,10 @@ import { Helmet } from "react-helmet";
 export interface PageLoginProps {
   className?: string;
 }
+
+
+
+
 
 const loginSocials = [
   {
@@ -31,6 +40,100 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
+
+  const history = useHistory();
+  const location = useLocation();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuthState);
+
+  const user = auth.user;
+  const token = auth.token;
+  const pending = auth.pending;
+  const BASE_API_URL = auth.BASE_API_URL;
+
+
+  let userLogin = async (username: any, password: any) => {
+
+    // @ts-ignore
+    let { from } = location.state || { from: { pathname: "/" } };
+
+    let response = await fetch(`${BASE_API_URL}/api/token/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+    let data = await response.json();
+
+    if (response.status === 200) {
+      dispatch(setToken(data));
+      dispatch(setUser(jwt_decode(data.access)));
+      localStorage.setItem("authToken", JSON.stringify(data));
+      localStorage.setItem("user", JSON.stringify(jwt_decode(data.access)));
+      history.replace(from);
+    } else {
+      dispatch(setErrMsg(data.detail));
+    }
+  };
+
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    userLogin(username, password);
+  };
+
+  const updateToken = async () => {
+    let response = await fetch(`${BASE_API_URL}/api/token/refresh/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refresh: token?.refresh }),
+    });
+    let data = await response.json();
+
+    if (response.status === 200) {
+      dispatch(setToken(data));
+      dispatch(setUser(jwt_decode(data.access)));
+      localStorage.setItem("authToken", JSON.stringify(data));
+      localStorage.setItem("user", JSON.stringify(jwt_decode(data.access)));
+    } else {
+      userLogout();
+    }
+    if (pending) {
+      setPending(false);
+    }
+  };
+
+  let userLogout = () => {
+    dispatch(setUser(null));
+    dispatch(setToken(null));
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+  };
+
+  useEffect(() => {
+    if (pending) {
+      updateToken();
+    }
+    let interval = setInterval(() => {
+      if (token) {
+        updateToken();
+      }
+    }, 1000 * 60 * 4);
+
+    return () => clearInterval(interval);
+  }, [token, pending]);
+
+
   return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
@@ -68,13 +171,16 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6" action="#" method="post">
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
               </span>
               <Input
-                type="email"
+                type="text"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 placeholder="example@example.com"
                 className="mt-1"
               />
@@ -86,7 +192,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                   Forgot password?
                 </NcLink>
               </span>
-              <Input type="password" className="mt-1" />
+              <Input type="password" name="password" onChange={(e) => setPassword(e.target.value)} value={password} className="mt-1" />
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
           </form>

@@ -2,9 +2,34 @@ import { Popover, Transition } from "@headlessui/react";
 import Avatar from "components/Avatar/Avatar";
 import { avatarImgs } from "contains/fakeData";
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectAuthState, setUser, setToken, setErrMsg, setPending } from "app/auth/auth";
 
 export default function AvatarDropdown() {
+
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuthState);
+
+  const user = auth.user;
+  const token = auth.token;
+  const pending = auth.pending;
+  const BASE_API_URL = auth.BASE_API_URL;
+
+  let userLogout = () => {
+    dispatch(setUser(null));
+    dispatch(setToken(null));
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+  };
+
+  const handleLogout = () => {
+    userLogout();
+    history.push("/");
+  }
+
+
   return (
     <div className="AvatarDropdown">
       <Popover className="relative">
@@ -272,7 +297,7 @@ export default function AvatarDropdown() {
                           />
                         </svg>
                       </div>
-                      <div className="ml-4">
+                      <div className="ml-4" onClick={handleLogout}>
                         <p className="text-sm font-medium ">{"Log Out"}</p>
                       </div>
                     </Link>

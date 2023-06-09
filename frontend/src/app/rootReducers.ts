@@ -5,6 +5,9 @@ import darkmodeReducer from "./darkmode/darkmode";
 import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import transcriptorReducer from "./transcriptor/transcriptor";
+import authReducer from "./auth/auth";
+import translatorReducer from "./translator/translator";
+import searchReducer from "./search/search";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -14,6 +17,9 @@ const rootReducers = {
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
   transcriptor: transcriptorReducer,
+  auth: authReducer,
+  translator: translatorReducer,
+  search: searchReducer,
 };
 
 export default rootReducers;

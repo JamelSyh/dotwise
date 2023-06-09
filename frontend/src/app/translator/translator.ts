@@ -1,48 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 
-interface Language {
+// Interfaces
+
+interface Grade {
   code: string;
-  name: string;
-  native?: string;
-  grade?: { code: string; name: string }[];
+  name: string
 }
 
-interface TranscriptorState {
+interface Language {
+  code?: string;
+  name?: string;
+  native?: string;
+  grade?: Grade;
+}
+
+interface TranslatorState {
   inText: string;
   outText: string;
-  inLang: Language;
-  outLang: Language;
-  inOpt: Language[];
-  outOpt: Language[];
-  inDrop: boolean;
-  outDrop: boolean;
-  pending: boolean;
-  braille: boolean;
-  keyboard: boolean;
-  brailleBoard: boolean;
+  inLang: any;
+  outLang: any;
+  inOpt: any;
+  outOpt: any;
+  inDrop: any;
+  outDrop: any;
+  pending: any;
+  keyboard: any;
+  brailleBoard: any;
 }
 
-const initialState: TranscriptorState = {
+// Initial state
+const initialState: TranslatorState = {
   inText: "",
   outText: "",
-  braille: false,
-  inLang: {
-    code: "auto",
-    name: "Auto",
-    native: "Detect",
-    grade: [{ code: "1", name: "Grade 1" }],
-  },
-  outLang: { code: "1", name: "Grade 1" },
-  inOpt: [
-    {
-      code: "auto",
-      name: "Auto",
-      native: "Detect",
-      grade: [{ code: "1", name: "Grade 1" }],
-    },
+  inLang: [
+    { code: "fr", name: "French", native: "francais", grade: { code: "1", name: "Grade 1" } }, [{ code: "1", name: "Grade 1" }]
   ],
-  outOpt: [{ code: "1", name: "Grade 1" }],
+  outLang: [
+    { code: "en", name: "English", native: "english", grade: { code: "1", name: "Grade 1" } }, [{ code: "1", name: "Grade 1" }]
+  ],
+  inOpt: [
+    [[{ code: "en", name: "English", native: "english", grade: { code: "1", name: "Grade 1" } }], [{ code: "1", name: "Grade 1" }]],
+  ],
+  outOpt: [
+    [[{ code: "en", name: "English", native: "english", grade: { code: "1", name: "Grade 1" } }], [{ code: "1", name: "Grade 1" }]],
+  ],
   inDrop: false,
   outDrop: false,
   pending: false,
@@ -50,8 +52,9 @@ const initialState: TranscriptorState = {
   brailleBoard: false,
 };
 
-export const transcriptorSlice = createSlice({
-  name: "transcriptor",
+// Slice
+export const TranslatorSlice = createSlice({
+  name: "Translator",
   initialState,
   reducers: {
     setInText: (state, action: PayloadAction<string>) => {
@@ -60,16 +63,16 @@ export const transcriptorSlice = createSlice({
     setOutText: (state, action: PayloadAction<string>) => {
       state.outText = action.payload;
     },
-    setInLang: (state, action: PayloadAction<Language>) => {
+    setInLang: (state, action: PayloadAction<Language[]>) => {
       state.inLang = action.payload;
     },
-    setOutLang: (state, action: PayloadAction<Language>) => {
+    setOutLang: (state, action: PayloadAction<Language[]>) => {
       state.outLang = action.payload;
     },
-    setInOpt: (state, action: PayloadAction<Language[]>) => {
+    setInOpt: (state, action: PayloadAction<Language[][]>) => {
       state.inOpt = action.payload;
     },
-    setOutOpt: (state, action: PayloadAction<Language[]>) => {
+    setOutOpt: (state, action: PayloadAction<Language[][]>) => {
       state.outOpt = action.payload;
     },
     setInDrop: (state, action: PayloadAction<boolean>) => {
@@ -86,9 +89,6 @@ export const transcriptorSlice = createSlice({
     },
     setBrailleBoard: (state, action: PayloadAction<boolean>) => {
       state.brailleBoard = action.payload;
-    },
-    setBraille: (state, action: PayloadAction<boolean>) => {
-      state.braille = action.payload;
     },
     switchLang: (state) => {
       const { inLang, outLang } = state;
@@ -123,10 +123,9 @@ export const {
   switchLang,
   switchOpt,
   switchText,
-  setBraille,
-} = transcriptorSlice.actions;
+} = TranslatorSlice.actions;
 
-export const selectTranscriptorState = (state: RootState) =>
-  state.transcriptor;
+// Selector
+export const selectTranslatorState = (state: RootState) => state.translator;
 
-export default transcriptorSlice.reducer;
+export default TranslatorSlice.reducer;

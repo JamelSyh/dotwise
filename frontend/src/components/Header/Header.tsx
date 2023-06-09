@@ -6,7 +6,7 @@ import BookmarkContainer from "containers/BookmarkContainer/BookmarkContainer";
 import PostCardLikeContainer from "containers/PostCardLikeContainer/PostCardLikeContainer";
 import { PageItemType } from "app/pages/pages";
 import MainNav2Logged from "./MainNav2Logged";
-import MainNav2 from "./MainNav2";
+// import MainNav2 from "./MainNav2";
 import MainNav1 from "./MainNav1";
 
 export interface HeaderProps {

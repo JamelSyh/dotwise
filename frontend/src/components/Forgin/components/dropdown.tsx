@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { setInLang, setOutLang, selectTranscriptorState } from "app/transcriptor/transcriptor";
-import { IonIcon } from "@ionic/react";
 import enFlag from "../flags/en-US.svg"
 import arFlag from "../flags/ar-DZ.svg"
 import frFlag from "../flags/fr-FR.svg"
@@ -69,7 +68,7 @@ function Dropdown({ id, opt, lang }: any) {
       <div className="dropdown-toggle" onClick={toggleActive}>
         {handleFlag(lang.code)}
         <span className="selected" data-value={lang.code}>{lang.name} {lang.native ? `(${lang.native})` : ""}</span>
-        <IonIcon name="chevron-down-outline"></IonIcon>
+        <i className="fa-solid fa-angle-down"></i>
       </div>
       <ul className="dropdown-menu" style={{ height: `${opt.length * 50 + 40}px` }}>
         {populateOptions()}

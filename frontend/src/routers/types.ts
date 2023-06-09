@@ -25,6 +25,8 @@ export interface LocationStates {
   "/single-video/:slug"?: {};
   //
   "/transcriptor"?: {};
+  "/translator"?: {};
+  "/lookup"?: {};
   //
   "/search"?: {};
   "/search-v2"?: {};

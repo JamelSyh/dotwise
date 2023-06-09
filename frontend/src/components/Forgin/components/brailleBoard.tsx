@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { inputText } from "../redux/actions";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setInText, selectTranscriptorState } from "app/transcriptor/transcriptor";
 
 function BrailleBoard() {
 
@@ -27,8 +26,9 @@ function BrailleBoard() {
     return combo;
   }
 
-  const dispatch = useDispatch();
-  const inText = useSelector(state => state.text.inputText);
+  const dispatch = useAppDispatch();
+  const transcriptor = useAppSelector(selectTranscriptorState);
+  const inText = transcriptor.inText;
 
   const [input, setInput] = useState([false, false, false, false, false, false]);
 
@@ -53,11 +53,11 @@ function BrailleBoard() {
 
   const handleAdd = () => {
     let num = encoder(input);
-    dispatch(inputText(inText + brailleToNum[num]));
+    dispatch(setInText(inText + brailleToNum[num]));
     handleClear();
   }
   const handleDelete = () => {
-    dispatch(inputText(inText.slice(0, -1)));
+    dispatch(setInText(inText.slice(0, -1)));
   }
 
   const handleClear = () => {

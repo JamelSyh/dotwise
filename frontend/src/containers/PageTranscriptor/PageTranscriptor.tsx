@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setInText, setOutText, switchLang, switchOpt, switchText, selectTranscriptorState } from "app/transcriptor/transcriptor";
 import InputTextArea from 'components/Forgin/components/inputTextArea';
 import OutputTextArea from 'components/Forgin/components/outputTextArea';
-import { TransferData } from "@icon-park/react";
-// import { useDispatch, useSelector } from "react-redux/es/exports";
-// import { switchOption, switchLang, switchText, mobile } from "../redux/actions";
-// import Convert from '../components/convert';
-// import InputTextArea from '../components/inputTextArea';
-// import OutputTextArea from '../components/outputTextArea';
-// import VKeyboard from '../components/keyboard';
-// import BrailleBoard from '../components/brailleBoard';
+// import { TransferData } from "@icon-park/react";
+import Convert from "components/Forgin/components/convert";
+
+
+// @ts-ignore
+import VKeyboard from 'components/Forgin/components/keyboard';
+// @ts-ignore
+import BrailleBoard from 'components/Forgin/components/brailleBoard';
 import './App.css';
 
 
@@ -17,51 +19,38 @@ import './App.css';
 function Transcriptor() {
 
 
-  // const dispatch = useDispatch();
-  // const kb = useSelector(state => state.functions.keyboard);
-  // const brailleBoard = useSelector(state => state.functions.board);
-  // const inLang = useSelector(state => state.language.inLang);
+  const dispatch = useAppDispatch();
+  const transcriptor = useAppSelector(selectTranscriptorState);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const kb = transcriptor.keyboard;
+  const brailleBoard = transcriptor.brailleBoard;
+  const inLang = transcriptor.inLang;
 
-  // const swap = () => {
-  //   dispatch(switchOption());
-  //   dispatch(switchLang());
-  //   dispatch(switchText());
-  // }
 
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setScreenWidth(window.innerWidth);
-  //     if (screenWidth < 720) {
-  //       dispatch(mobile(true));
-  //     } else {
-  //       dispatch(mobile(false));
-  //     }
-  //   }
+  const swap = () => {
+    dispatch(switchOpt());
+    dispatch(switchLang());
+    dispatch(switchText());
+  }
 
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-
-  // }, [screenWidth, dispatch]);
 
   return (
     <>
-      {/* <Convert /> */}
+      <Convert />
       <main>
         <div className="container">
           <div className="input-container">
             <InputTextArea />
             <div className="center">
-              <div className="swap-position" /* onClick={swap} */>
-                <TransferData theme="outline" size="20" />
+              <div className="swap-position" onClick={swap}>
+                <i className="fa-solid fa-arrow-right-arrow-left"></i>
               </div>
             </div>
             <OutputTextArea />
           </div>
         </div>
-        {/* {brailleBoard && <BrailleBoard />} */}
-        {/* {kb && <VKeyboard inLang={inLang} />} */}
+        {brailleBoard && <BrailleBoard />}
+        {kb && <VKeyboard inLang={inLang} />}
       </main>
     </>
   );

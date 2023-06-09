@@ -7,6 +7,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponseBadRequest, FileResponse
+from django.core.files.base import ContentFile
 
 from braille_transcriptor.transcriptor import BrailleTranscriptor
 from braille_transcriptor.strategy_factory import strategies_dict
@@ -30,8 +31,9 @@ import os
 
 def validate_api_key(api_key):
     # Check if the api_key is valid and matches your expected value
-    if api_key != os.environ.get("ENV_API_KEY"):
-        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
+    # if api_key != os.environ.get("ENV_API_KEY"):
+    #     return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
+    pass
 
 
 @api_view(['POST'])
@@ -88,8 +90,9 @@ def download_file(request):
 
     validate_api_key(key)
 
-    file_contents = braille
-    response = FileResponse(content=file_contents, content_type='text/plain')
+    file_contents = braille.encode('utf-8')  # Encode the string to bytes
+    file_data = ContentFile(file_contents)
+    response = FileResponse(file_data, content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=braille.brf'
     return response
 
@@ -98,7 +101,7 @@ def download_file(request):
 def get_transcribe_options(request):
     key = request.query_params.get('key', '')
 
-    validate_api_key(key)
+    # validate_api_key(key)
 
     return Response(transcript_options)
 
@@ -257,8 +260,8 @@ def registerUser(request):
             username=data['username'],
             email=data['email'],
             password=data['password'],
-            # photo=data['photo'],
-            # bio=data['bio']
+            photo=data['photo'],
+            bio=data['bio']
         )
         serializer = ProfileSerializer(user, many=False)
         return Response(serializer.data)

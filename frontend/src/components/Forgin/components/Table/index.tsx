@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import useTable from "../../hooks/useTable";
+import useTable from "./hooks/useTable";
 import styles from "./Table.module.css";
 import TableFooter from "./TableFooter";
 
-const Table = ({ data, rowsPerPage }) => {
+const Table = ({ data, rowsPerPage }: any) => {
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
   return (
@@ -20,9 +20,15 @@ const Table = ({ data, rowsPerPage }) => {
         <tbody>
           {slice.map((el, key) => (
             <tr className={styles.tableRowItems} key={key}>
-              <td className={styles.tableCell}>{el.word}</td>
-              <td className={styles.tableCell}>{el.contraction}</td>
-              <td className={styles.tableCell}>{el.braille}</td>
+
+              <td className={styles.tableCell}>{// @ts-ignore
+                el.word}</td>
+              <td className={styles.tableCell}>{
+                // @ts-ignore
+                el.contraction}</td>
+              <td className={styles.tableCell}>{
+                // @ts-ignore
+                el.braille}</td>
             </tr>
           ))}
         </tbody>

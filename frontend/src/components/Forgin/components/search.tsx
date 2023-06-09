@@ -1,29 +1,35 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { searchData, searchLangOptions } from "../redux/actions";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setInOpt, setData, selectSearchState } from "app/search/search";
+import { selectAuthState } from "app/auth/auth";
 
 
 function Search() {
 
-  const dispatch = useDispatch();
-  const lang = useSelector(state => state.search.lang);
-  const url = useSelector(state => state.backend.url);
-  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
+  const dispatch = useAppDispatch();
+  const search = useAppSelector(selectSearchState);
+  const auth = useAppSelector(selectAuthState);
+
+
+
+  const lang = search.inLang;
+  const url = auth.BASE_API_URL;
+  const dotwise_api_key = auth.DOTWISE_API_KEY;
+
 
 
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const { data } = await axios.get(`${url}search_options/`, {
+        const { data } = await axios.get(`${url}/api/search_options/`, {
           params: {
             key: dotwise_api_key,
           },
         });
 
         if (data) {
-          dispatch(searchLangOptions(data));
+          dispatch(setInOpt(data));
         }
       } catch (error) {
         console.error('Error fetching options:', error);
@@ -36,14 +42,14 @@ function Search() {
 
     const getSearchData = async () => {
       try {
-        const { data } = await axios.get(`${url}contraction_list/`, {
+        const { data } = await axios.get(`${url}/api/contraction_list/`, {
           params: {
             lang: lang.code,
             key: dotwise_api_key,
           }
         });
         if (data) {
-          dispatch(searchData(data))
+          dispatch(setData(data))
           // dispatch(inputOptions(data));
           // dispatch(outputOptions(data[0]['grade']));
         }
@@ -54,6 +60,7 @@ function Search() {
     getSearchData();
   }, [dispatch, lang]);
 
+  return (<></>);
 }
 
 export default Search;

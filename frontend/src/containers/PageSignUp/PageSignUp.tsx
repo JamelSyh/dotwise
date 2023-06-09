@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
@@ -7,6 +8,8 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
+import { selectAuthState } from "app/auth/auth";
+import { useAppSelector } from "app/hooks";
 
 export interface PageSignUpProps {
   className?: string;
@@ -31,6 +34,61 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+
+  const history = useHistory();
+
+  const auth = useAppSelector(selectAuthState);
+
+  const user = auth.user;
+  const token = auth.token;
+  const pending = auth.pending;
+  const BASE_API_URL = auth.BASE_API_URL;
+
+  const [message, setMessage] = useState();
+  const [userState, setUserState] = useState({
+    username: "",
+    email: "admin@gmil.com",
+    password: "",
+    // confirm_password: "",
+    bio: "f",
+    photo: "f",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setUserState((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+    console.log(userState);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("username", userState.username);
+    formData.append("email", userState.email);
+    formData.append("password", userState.password);
+    formData.append("photo", userState.photo);
+    formData.append("bio", userState.bio);
+
+    const response = await fetch(`${BASE_API_URL}/api/register/`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+
+    if (response.status === 200) {
+      history.push("/login");
+    } else {
+      setMessage(data.detail);
+    }
+  };
+
+
   return (
     <div className={`nc-PageSignUp ${className}`} data-nc-id="PageSignUp">
       <Helmet>
@@ -68,13 +126,29 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit} >
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                Username
+              </span>
+              <Input
+                type="text"
+                name="username"
+                value={userState.username}
+                onChange={handleChange}
+                placeholder="username"
+                className="mt-1"
+              />
+            </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
               </span>
               <Input
                 type="email"
+                name="email"
+                value={userState.email}
+                onChange={handleChange}
                 placeholder="example@example.com"
                 className="mt-1"
               />
@@ -83,7 +157,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
-              <Input type="password" className="mt-1" />
+              <Input name="password" value={userState.password} onChange={handleChange} type="password" className="mt-1" />
+
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
           </form>

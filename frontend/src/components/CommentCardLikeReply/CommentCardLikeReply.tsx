@@ -16,18 +16,17 @@ const CommentCardLikeReply: FC<CommentCardLikeReplyProps> = ({
   likeCount,
   isLiked,
   commentId,
-  onClickLike = () => {},
-  onClickReply = () => {},
+  onClickLike = () => { },
+  onClickReply = () => { },
 }) => {
   const renderActionBtns = () => {
     return (
       <>
         <button
-          className={`min-w-[68px] flex items-center rounded-full leading-none px-3 h-8 text-xs ${twFocusClass()} ${
-            isLiked
-              ? "text-rose-600 bg-rose-50"
-              : "text-neutral-700 bg-neutral-100 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 hover:text-rose-600 dark:hover:text-rose-500"
-          }`}
+          className={`min-w-[68px] flex items-center rounded-full leading-none px-3 h-8 text-xs ${twFocusClass()} ${isLiked
+            ? "text-rose-600 bg-rose-50"
+            : "text-neutral-700 bg-neutral-100 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 hover:text-rose-600 dark:hover:text-rose-500"
+            }`}
           onClick={() => onClickLike(commentId)}
           title="Liked"
         >
@@ -48,11 +47,10 @@ const CommentCardLikeReply: FC<CommentCardLikeReplyProps> = ({
           </svg>
 
           <span
-            className={`${
-              isLiked
-                ? "text-rose-600"
-                : "text-neutral-900 dark:text-neutral-200"
-            }`}
+            className={`${isLiked
+              ? "text-rose-600"
+              : "text-neutral-900 dark:text-neutral-200"
+              }`}
           >
             {convertNumbThousand(likeCount)}
           </span>

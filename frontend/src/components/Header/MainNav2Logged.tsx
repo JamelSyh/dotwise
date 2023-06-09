@@ -9,7 +9,7 @@ import React, { FC } from "react";
 import AvatarDropdown from "./AvatarDropdown";
 import NotifyDropdown from "./NotifyDropdown";
 
-export interface MainNav2LoggedProps {}
+export interface MainNav2LoggedProps { }
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   return (
