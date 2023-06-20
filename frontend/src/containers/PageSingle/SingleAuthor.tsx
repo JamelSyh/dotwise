@@ -2,12 +2,18 @@ import Avatar from "components/Avatar/Avatar";
 import { PostAuthorType } from "data/types";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
 
 export interface SingleAuthorProps {
   author: PostAuthorType;
 }
 
-const SingleAuthor: FC<SingleAuthorProps> = ({ author }) => {
+const SingleAuthor: FC<SingleAuthorProps> = () => {
+
+  const auth = useAppSelector(selectAuthState);
+  const author = auth.profile;
+
   return (
     <div className="nc-SingleAuthor flex">
       <Link to={author.href}>

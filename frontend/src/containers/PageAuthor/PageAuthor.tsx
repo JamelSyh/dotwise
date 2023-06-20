@@ -1,5 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { DEMO_POSTS } from "data/posts";
+import GetContent from "../../components/Forgin/components/getContent";
 import { PostAuthorType, PostDataType } from "data/types";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
@@ -18,6 +19,10 @@ import { DEMO_CATEGORIES } from "data/taxonomies";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import NcImage from "components/NcImage/NcImage";
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
+import { selectAuthState } from "app/auth/auth";
 
 export interface PageAuthorProps {
   className?: string;
@@ -34,6 +39,26 @@ const FILTERS = [
 const TABS = ["Articles", "Favorites", "Saved"];
 
 const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
+
+  const { slug } = useParams();
+  const id = parseInt(slug.split('/').pop());
+
+  const auth = useAppSelector(selectAuthState);
+  const content = useAppSelector(selectContentState);
+  const authors = auth.profiles;
+  const author = authors.find((profile: any) => profile?.id === id) ? authors.find((profile: any) => profile?.id === id) : {};
+
+  // useEffect(() => {
+  //   console.log(author);
+  // }, [])
+
+
+  // const filteredP = content.posts.map((post: any) => {
+  //   console.log(post);
+  // });
+
+  const filteredPosts = content.posts.filter((post: any) => post.author.id == id);
+
   const [tabActive, setTabActive] = useState<string>(TABS[0]);
 
   const handleClickTab = (item: string) => {
@@ -62,16 +87,16 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
           <div className=" bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-16 rounded-[40px] shadow-2xl flex flex-col sm:flex-row sm:items-center">
             <Avatar
               containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
-              imgUrl={AUTHOR.avatar}
+              imgUrl={author.avatar}
               sizeClass="w-20 h-20 text-xl lg:text-2xl lg:w-36 lg:h-36"
               radius="rounded-full"
             />
             <div className="mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
               <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
-                {AUTHOR.displayName}
+                {author.displayName}
               </h2>
               <span className="block text-sm text-neutral-6000 dark:text-neutral-300 md:text-base">
-                {AUTHOR.desc}
+                {author.desc}
               </span>
               <SocialsList />
             </div>
@@ -103,7 +128,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {posts.map((post) => (
+            {filteredPosts.map((post: any) => (
               <Card11 key={post.id} post={post} />
             ))}
           </div>
@@ -137,6 +162,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
       </div>
+      <GetContent />
     </div>
   );
 };

@@ -228,47 +228,47 @@ const archviePageChildrenMenus: NavItemType[] = [
 
 const singleChildrenMenus: NavItemType = {
   id: ncNanoId(),
-  href: "/single/this-is-single-slug",
+  href: "/blog/:slug",
   name: "Single Templates",
   isNew: true,
   type: "dropdown",
   children: [
+    // {
+    //   id: ncNanoId(),
+    //   href: "/single-sidebar/this-is-single-slug",
+    //   name: "Single style 1",
+    // },
+    // {
+    //   id: ncNanoId(),
+    //   name: "Single 1 sidebar",
+    //   href: "/single/this-is-single-slug-2",
+    // },
+    // {
+    //   id: ncNanoId(),
+    //   href: "/single-template-2/this-is-single-slug-2",
+    //   name: "Single style 2",
+    // },
+    // {
+    //   id: ncNanoId(),
+    //   href: "/single-2-sidebar/this-is-single-slug",
+    //   name: "Single 2 sidebar",
+    // },
     {
       id: ncNanoId(),
-      href: "/single-sidebar/this-is-single-slug",
-      name: "Single style 1",
+      href: "/blog",
+      name: "blog",
     },
-    {
-      id: ncNanoId(),
-      name: "Single 1 sidebar",
-      href: "/single/this-is-single-slug-2",
-    },
-    {
-      id: ncNanoId(),
-      href: "/single-template-2/this-is-single-slug-2",
-      name: "Single style 2",
-    },
-    {
-      id: ncNanoId(),
-      href: "/single-2-sidebar/this-is-single-slug",
-      name: "Single 2 sidebar",
-    },
-    {
-      id: ncNanoId(),
-      href: "/single-template-3/this-is-single-slug-3",
-      name: "Single style 3",
-    },
-    {
-      id: ncNanoId(),
-      href: "/single-3-sidebar/this-is-single-slug",
-      name: "Single 3 sidebar",
-    },
-    {
-      id: ncNanoId(),
-      href: "/single-4-sidebar/this-is-single-slug",
-      name: "Single style 4 ",
-      isNew: true,
-    },
+    // {
+    //   id: ncNanoId(),
+    //   href: "/single-3-sidebar/this-is-single-slug",
+    //   name: "Single 3 sidebar",
+    // },
+    // {
+    //   id: ncNanoId(),
+    //   href: "/single-4-sidebar/this-is-single-slug",
+    //   name: "Single style 4 ",
+    //   isNew: true,
+    // },
   ],
 };
 

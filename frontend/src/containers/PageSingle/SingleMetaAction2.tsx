@@ -54,7 +54,7 @@ const SingleMetaAction2: FC<SingleMetaAction2Props> = ({
               />
             </svg>
           )}
-          onClick={() => {}}
+          onClick={() => { }}
           data={SOCIALS_DATA}
         />
         <PostActionDropdown

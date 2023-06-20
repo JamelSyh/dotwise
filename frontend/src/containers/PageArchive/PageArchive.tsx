@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import ModalCategories from "./ModalCategories";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
@@ -16,16 +16,22 @@ import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGri
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
+import { useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
 
 export interface PageArchiveProps {
   className?: string;
 }
 
+
 // Tag and category have same data type - we will use one demo data
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
+  const content = useAppSelector(selectContentState);
+
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
+  const posts: PostDataType[] = content.posts;
+  console.log(DEMO_POSTS[0], content.posts[0]);
 
   const FILTERS = [
     { name: "Most Recent" },
@@ -34,6 +40,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     { name: "Most Discussed" },
     { name: "Most Viewed" },
   ];
+
+
 
   return (
     <div

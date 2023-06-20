@@ -30,7 +30,7 @@ const Card11: FC<Card11Props> = ({
       data-nc-id="Card11"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      //
+    //
     >
       <div
         className={`block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden ${ratio}`}

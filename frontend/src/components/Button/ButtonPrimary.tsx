@@ -1,7 +1,7 @@
 import Button, { ButtonProps } from "components/Button/Button";
 import React from "react";
 
-export interface ButtonPrimaryProps extends ButtonProps {}
+export interface ButtonPrimaryProps extends ButtonProps { }
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   className = "",

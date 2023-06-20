@@ -45,6 +45,7 @@ import PageTranscriptor from "containers/PageTranscriptor/PageTranscriptor";
 import PageTranslator from "containers/PageTranslator/PageTranslator";
 import PageLookup from "containers/PageLookup/PageLookup"
 import { selectAuthState } from "app/auth/auth";
+import GetContent from "../components/Forgin/components/getContent";
 
 
 export const privatePages: Page[] = [
@@ -85,7 +86,7 @@ export const publicPages: Page[] = [
   //   component: PageSingleTemp2Sidebar,
   // },
   {
-    path: "/single-template-3/:slug",
+    path: "/blog/:slug",
     component: PageSingle,
   },
   // {
@@ -146,6 +147,7 @@ const Routes = () => {
           return (
             <Route
               key={path}
+              // @ts-ignore
               component={component}
               exact={!!exact}
               path={path}
@@ -156,6 +158,7 @@ const Routes = () => {
           <PrivateRoute key={path} exact={!!exact} path={path}>
             <Route
               key={path}
+              // @ts-ignore
               component={component}
               exact={!!exact}
               path={path}
@@ -165,6 +168,7 @@ const Routes = () => {
         <Route component={Page404} />
       </Switch>
       <Footer />
+      <GetContent />
       {/* MEDIA */}
 
       {/* //is Safari on an apple touch-screen device */}

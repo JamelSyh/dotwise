@@ -41,7 +41,9 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
       >
         {/* THIS IS THE DEMP CONTENT */}
         {/* IF YOUR DATA IS JSON, YOU CAN USE render with html-react-parser (https://www.npmjs.com/package/html-react-parser) */}
-        <SingleContentDemo />
+        {/* <SingleContentDemo /> */}
+        {/* {data.desc} */}
+        <div dangerouslySetInnerHTML={{ __html: data.desc }} />
       </div>
 
       {/* TAGS */}
@@ -54,7 +56,7 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
       {/* AUTHOR */}
       <div className="max-w-screen-md mx-auto border-b border-t border-neutral-100 dark:border-neutral-700"></div>
       <div className="max-w-screen-md mx-auto ">
-        <SingleAuthor author={author} />
+        <SingleAuthor />
       </div>
 
       {/* COMMENT FORM */}

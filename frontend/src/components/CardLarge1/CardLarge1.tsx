@@ -21,8 +21,8 @@ const CardLarge1: FC<CardLarge1Props> = ({
   className = "",
   isShowing = true,
   post,
-  onClickNext = () => {},
-  onClickPrev = () => {},
+  onClickNext = () => { },
+  onClickPrev = () => { },
 }) => {
   const { featuredImage, title, date, categories, author, readingTime, href } =
     post;

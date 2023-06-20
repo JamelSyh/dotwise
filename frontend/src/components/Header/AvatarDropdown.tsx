@@ -1,33 +1,40 @@
 import { Popover, Transition } from "@headlessui/react";
 import Avatar from "components/Avatar/Avatar";
 import { avatarImgs } from "contains/fakeData";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { selectAuthState, setUser, setToken, setErrMsg, setPending } from "app/auth/auth";
+import { selectAuthState, setUser, setToken, setProfile, setErrMsg, setPending } from "app/auth/auth";
+import { selectContentState } from "app/content/content";
 
 export default function AvatarDropdown() {
 
   const history = useHistory();
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
+  const content = useAppSelector(selectContentState);
 
   const user = auth.user;
   const token = auth.token;
+  const profile = auth.profile;
   const pending = auth.pending;
   const BASE_API_URL = auth.BASE_API_URL;
 
   let userLogout = () => {
     dispatch(setUser(null));
     dispatch(setToken(null));
+    dispatch(setProfile({}));
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
+    // history.push("/");
   };
 
   const handleLogout = () => {
     userLogout();
-    history.push("/");
   }
+
+  useEffect(() => {
+  }, [content]);
 
 
   return (
@@ -40,7 +47,7 @@ export default function AvatarDropdown() {
             >
               <Avatar
                 radius="rounded-full"
-                imgUrl={avatarImgs[1]}
+                imgUrl={profile.avatar}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -58,15 +65,15 @@ export default function AvatarDropdown() {
                   <div className="relative grid grid-cols-1 gap-6 bg-white dark:bg-neutral-800 py-7 px-6">
                     <div className="flex items-center space-x-3">
                       <Avatar
-                        imgUrl={avatarImgs[1]}
+                        imgUrl={profile.avatar}
                         sizeClass="w-12 h-12"
                         radius="rounded-full"
                       />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">Eden Tuan</h4>
+                        <h4 className="font-semibold">{profile.displayName}</h4>
                         <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                          UI Designer
+                          {profile.jobName}
                         </p>
                       </div>
                     </div>
@@ -75,7 +82,7 @@ export default function AvatarDropdown() {
 
                     {/* ------------------ 1 --------------------- */}
                     <Link
-                      to={"/author/demo-slug"}
+                      to={`/author/${profile.id}`}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
@@ -109,7 +116,7 @@ export default function AvatarDropdown() {
 
                     {/* ------------------ 2 --------------------- */}
                     <Link
-                      to={"/author/demo-slug"}
+                      to={"/dashboard/posts"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
@@ -150,7 +157,7 @@ export default function AvatarDropdown() {
 
                     {/* ------------------ 2 --------------------- */}
                     <Link
-                      to={"/dashboard"}
+                      to={"/dashboard/edit-profile"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
@@ -201,7 +208,7 @@ export default function AvatarDropdown() {
                     <div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
                     {/* ------------------ 2 --------------------- */}
                     <Link
-                      to={"/##"}
+                      to={"/about"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">

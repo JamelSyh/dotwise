@@ -23,6 +23,7 @@ class BlogSerializer(ModelSerializer):
             'author_name',
             'author_photo',
             'author_bio',
+            'author_id',
             'reading_time',
             'comment_count'
         ]
@@ -50,8 +51,9 @@ class CommentCreateSerializer(ModelSerializer):
         ]
 
 
-class ProfileSerializer(ModelSerializer):
-    password = serializers.CharField(write_only=True)
+class ProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=False)
+    blog_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -61,18 +63,26 @@ class ProfileSerializer(ModelSerializer):
             'photo',
             'email',
             'password',
-            'bio'
+            'bio',
+            'blog_count'
         ]
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            validated_data['username'],
-            validated_data['email'],
-            validated_data['password'],
-        )
-        profile = Profile.objects.create(
-            user=user,
-            photo=validated_data['photo'],
-            bio=validated_data['bio'],
-        )
-        return profile
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance
+
+    def get_blog_count(self, obj):
+        return obj.blog_posts.count()

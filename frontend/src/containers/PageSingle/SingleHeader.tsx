@@ -34,7 +34,7 @@ const SingleHeader: FC<SingleHeaderProps> = ({
           <SingleTitle mainClass={titleMainClass} title={title} />
           {!!desc && !hiddenDesc && (
             <span className="block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pb-1">
-              {desc}
+              <div dangerouslySetInnerHTML={{ __html: desc }} />
             </span>
           )}
           <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>

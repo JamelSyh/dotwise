@@ -29,6 +29,9 @@ urlpatterns = [
     # User
     path('register/', views.registerUser, name="register"),
     path('profile/<int:pk>/', views.getProfile, name="getProfile"),
+    path('profile/<int:pk>/update/', views.updateProfile, name="update-profile"),
+    path('users/', views.getUsers, name='get_users'),
+    path('user/<int:pk>/', views.getUser, name='get_user'),
 
     # Authentication
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

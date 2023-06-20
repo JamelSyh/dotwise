@@ -311,6 +311,9 @@ input:checked + .slider {
   background-color: var(--primary-color);
 }
 
+form {
+  margin-top: 0 !important;
+}
 
 input:checked + .slider:before {
   -webkit-transform: translateX(37px);

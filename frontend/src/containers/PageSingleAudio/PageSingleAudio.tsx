@@ -30,7 +30,7 @@ const PageSingleAudio: FC<PageSingleAudioProps> = ({ className = "" }) => {
 
   useEffect(() => {
     // UPDATE CURRENTPAGE DATA IN PAGE-REDUCERS
-    dispatch(changeCurrentPage({ type: "/single/:slug", data: SINGLE_AUDIO }));
+    dispatch(changeCurrentPage({ type: "/blog/:slug", data: SINGLE_AUDIO }));
     return () => {
       dispatch(changeCurrentPage({ type: "/", data: {} }));
     };
@@ -71,9 +71,8 @@ const PageSingleAudio: FC<PageSingleAudioProps> = ({ className = "" }) => {
         className={`aspect-w-1 aspect-h-1 rounded-full overflow-hidden shadow-2xl group cursor-pointer `}
       >
         <img
-          className={`w-full h-full object-cover group-hover:scale-105 transform transition-transform nc-will-change-transform nc-animation-spin rounded-full ${
-            newState === "playing" ? "playing" : ""
-          }`}
+          className={`w-full h-full object-cover group-hover:scale-105 transform transition-transform nc-will-change-transform nc-animation-spin rounded-full ${newState === "playing" ? "playing" : ""
+            }`}
           src={SINGLE_AUDIO.featuredImage}
           alt="audio"
         />

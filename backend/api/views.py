@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponseBadRequest, FileResponse
 from django.core.files.base import ContentFile
+from django.core.exceptions import ObjectDoesNotExist
 
 from braille_transcriptor.transcriptor import BrailleTranscriptor
 from braille_transcriptor.strategy_factory import strategies_dict
@@ -195,6 +196,7 @@ def getMyBlogs(request):
 @permission_classes([IsAuthenticated])
 def createBlog(request):
     data = request.data
+    print(data)
     user = Profile.objects.get(id=data['author'])
     serializer = BlogSerializer(data=data)
     if serializer.is_valid():
@@ -302,3 +304,40 @@ def getProfile(request, pk):
     user = Profile.objects.get(pk=pk)
     serializer = ProfileSerializer(user, many=False)
     return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateProfile(request, pk):
+    print(request.data)
+    try:
+        profile = Profile.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        return Response({'detail': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Check if the authenticated user is the owner of the profile
+    if request.user != profile:
+        return Response({'detail': 'You do not have permission to update this profile'}, status=status.HTTP_403_FORBIDDEN)
+
+    serializer = ProfileSerializer(profile, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getUsers(request):
+    users = Profile.objects.all()
+    serializer = ProfileSerializer(users, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getUser(request, pk):
+    try:
+        user = Profile.objects.get(pk=pk)
+        serializer = ProfileSerializer(user, many=False)
+        return Response(serializer.data)
+    except ObjectDoesNotExist:
+        return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

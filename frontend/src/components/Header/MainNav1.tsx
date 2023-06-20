@@ -12,8 +12,6 @@ export interface MainNav1Props {
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
 
-  console.log(location.pathname);
-
 
 
   return (

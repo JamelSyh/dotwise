@@ -18,8 +18,8 @@ interface DashboardLocationState {
   "/root"?: {};
   "/posts"?: {};
   "/edit-profile"?: {};
-  "/subscription"?: {};
-  "/billing-address"?: {};
+  // "/subscription"?: {};
+  // "/billing-address"?: {};
   "/submit-post"?: {};
   "/account"?: {};
 }
@@ -52,18 +52,18 @@ const subPages: DashboardPage[] = [
     emoij: "🛠",
     pageName: "Edit profile",
   },
-  {
-    sPath: "/subscription",
-    component: DashboardSubcription,
-    emoij: "📃",
-    pageName: "Subscription",
-  },
-  {
-    sPath: "/billing-address",
-    component: DashboardBillingAddress,
-    emoij: "✈",
-    pageName: "Billing address",
-  },
+  // {
+  //   sPath: "/subscription",
+  //   component: DashboardSubcription,
+  //   emoij: "📃",
+  //   pageName: "Subscription",
+  // },
+  // {
+  //   sPath: "/billing-address",
+  //   component: DashboardBillingAddress,
+  //   emoij: "✈",
+  //   pageName: "Billing address",
+  // },
   {
     sPath: "/submit-post",
     component: DashboardSubmitPost,

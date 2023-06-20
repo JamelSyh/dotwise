@@ -128,7 +128,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
+        'NAME': 'dotwise',
         'USER': 'jamalsyh2002',
         'PASSWORD': 'ZfOAbv52HtXo',
         'HOST': 'ep-aged-pine-178264.eu-central-1.aws.neon.tech',

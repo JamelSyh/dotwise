@@ -1,61 +1,86 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NcImage from "components/NcImage/NcImage";
 import Pagination from "components/Pagination/Pagination";
+import { getMyBlogs } from "../../components/Forgin/components/blogUtils";
+import { useAppSelector, useAppDispatch } from 'app/hooks';
+import { selectAuthState } from 'app/auth/auth';
+import { selectContentState, setMyPosts } from "app/content/content";
+import { deleteBlog } from "../../components/Forgin/components/blogUtils";
 
-const people = [
-  {
-    id: 1,
-    title: "Tokyo Fashion Week Is Making Itself Great Again",
-    image:
-      "https://images.unsplash.com/photo-1617059063772-34532796cdb5?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: true,
-    payment: "Not Applicable",
-  },
-  {
-    id: 2,
-    title: "Traveling Tends to Magnify All Human Emotions",
-    image:
-      "https://images.unsplash.com/photo-1622987437805-5c6f7c2609d7?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: true,
-    payment: "Not Applicable",
-  },
-  {
-    id: 3,
-    title: "Interior Design: Hexagon is the New Circle in 2018",
-    image:
-      "https://images.unsplash.com/photo-1617201277988-f0efcc14e626?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: true,
-    payment: "Not Applicable",
-  },
-  {
-    id: 4,
-    title: "Heritage Museums & Gardens to Open with New Landscape",
-    image:
-      "https://images.unsplash.com/photo-1622960748096-1983e5f17824?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: true,
-    payment: "Not Applicable",
-  },
-  {
-    id: 5,
-    title:
-      "Man agrees to complete $5,000 Hereford Inlet Lighthouse painting job",
-    image:
-      "https://images.unsplash.com/photo-1617202227468-7597afc7046d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: false,
-    payment: "Not Applicable",
-  },
-  {
-    id: 6,
-    title:
-      "Denton Corker Marshall the mysterious black box is biennale pavilion",
-    image:
-      "https://images.unsplash.com/photo-1622978147823-33d5e241e976?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
-    liveStatus: true,
-    payment: "Not Applicable",
-  },
-];
+// const people = [
+//   {
+//     id: 1,
+//     title: "Tokyo Fashion Week Is Making Itself Great Again",
+//     image:
+//       "https://images.unsplash.com/photo-1617059063772-34532796cdb5?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: true,
+//     payment: "Not Applicable",
+//   },
+//   {
+//     id: 2,
+//     title: "Traveling Tends to Magnify All Human Emotions",
+//     image:
+//       "https://images.unsplash.com/photo-1622987437805-5c6f7c2609d7?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: true,
+//     payment: "Not Applicable",
+//   },
+//   {
+//     id: 3,
+//     title: "Interior Design: Hexagon is the New Circle in 2018",
+//     image:
+//       "https://images.unsplash.com/photo-1617201277988-f0efcc14e626?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: true,
+//     payment: "Not Applicable",
+//   },
+//   {
+//     id: 4,
+//     title: "Heritage Museums & Gardens to Open with New Landscape",
+//     image:
+//       "https://images.unsplash.com/photo-1622960748096-1983e5f17824?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: true,
+//     payment: "Not Applicable",
+//   },
+//   {
+//     id: 5,
+//     title:
+//       "Man agrees to complete $5,000 Hereford Inlet Lighthouse painting job",
+//     image:
+//       "https://images.unsplash.com/photo-1617202227468-7597afc7046d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: false,
+//     payment: "Not Applicable",
+//   },
+//   {
+//     id: 6,
+//     title:
+//       "Denton Corker Marshall the mysterious black box is biennale pavilion",
+//     image:
+//       "https://images.unsplash.com/photo-1622978147823-33d5e241e976?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60",
+//     liveStatus: true,
+//     payment: "Not Applicable",
+//   },
+// ];
+
+
 
 const DashboardPosts = () => {
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuthState);
+  const content = useAppSelector(selectContentState);
+  const user = auth.user;
+  const authToken = auth.token;
+  const url = auth.BASE_API_URL;
+
+
+  const setMyBlogs = async () => {
+    const res = await getMyBlogs(url, authToken);
+    dispatch(setMyPosts(res));
+    console.log(res);
+  }
+
+  useEffect(() => {
+    setMyBlogs();
+  }, [content.posts])
+
   return (
     <div className="flex flex-col space-y-8">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -70,9 +95,6 @@ const DashboardPosts = () => {
                   <th scope="col" className="px-6 py-3">
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                    Payment
-                  </th>
 
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Edit</span>
@@ -80,7 +102,7 @@ const DashboardPosts = () => {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
-                {people.map((item) => (
+                {content.myPosts.map((item: any) => (
                   <tr key={item.id}>
                     <td className="px-6 py-4">
                       <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
@@ -106,9 +128,6 @@ const DashboardPosts = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-                      <span> {item.payment}</span>
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                       <a
                         href="/#"
@@ -118,8 +137,10 @@ const DashboardPosts = () => {
                       </a>
                       {` | `}
                       <a
-                        href="/#"
                         className="text-rose-600 hover:text-rose-900"
+                        onClick={() => {
+                          deleteBlog(url, item.id, authToken);
+                        }}
                       >
                         Delete
                       </a>

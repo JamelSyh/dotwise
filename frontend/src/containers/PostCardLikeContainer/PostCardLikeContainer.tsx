@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
 import {
   selectRecentLikeds,
   selectRecentRemoveds,
@@ -25,6 +26,7 @@ const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
 }) => {
   const recentLikeds = useAppSelector(selectRecentLikeds);
   const recentRemoveds = useAppSelector(selectRecentRemoveds);
+  const auth = useAppSelector(selectAuthState);
   const dispatch = useAppDispatch();
 
   const isLiked = () => {
@@ -49,10 +51,12 @@ const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
   };
 
   const handleClickLike = () => {
-    if (isLiked()) {
-      dispatch(removeLikedByPostId(postId));
-    } else {
-      dispatch(addNewLikedByPostId(postId));
+    if (auth.token) {
+      if (isLiked()) {
+        dispatch(removeLikedByPostId(postId));
+      } else {
+        dispatch(addNewLikedByPostId(postId));
+      }
     }
     onClickLike && onClickLike(postId);
   };

@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Profile(AbstractUser):
     photo = models.ImageField(
-        upload_to='profile/', blank=True, null=True, default='profile/default.png')
+        upload_to='profile/', blank=True, null=True, default='profile/default.jpg')
     bio = models.TextField(blank=True, null=True)
 
     def __str__(self):

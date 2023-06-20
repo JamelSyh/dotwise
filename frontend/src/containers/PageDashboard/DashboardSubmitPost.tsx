@@ -1,18 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
 import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
+import Editor from "components/editor/editor";
+import { useAppSelector, useAppDispatch } from 'app/hooks';
+import { selectAuthState } from 'app/auth/auth';
+import { createBlog, fileValidation } from "../../components/Forgin/components/blogUtils";
 
 const DashboardSubmitPost = () => {
+
+  const auth = useAppSelector(selectAuthState);
+  const user = auth.user;
+  const authToken = auth.token;
+  const url = auth.BASE_API_URL;
+
+  const [message, setMessage] = useState("");
+  const [blog, setBlog] = useState({
+    title: "",
+    content: "",
+    category: "",
+    image: "",
+    id: user.user_id,
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setBlog((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleDataFromEditor = (data: any) => {
+    setBlog((prev) => {
+      return {
+        ...prev,
+        content: data
+      }
+    });
+  }
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const res = await createBlog(url, blog, authToken);
+    console.log(res);
+  }
+
+  const handleFile = (e: any) => {
+    const { name, files } = e.target;
+    fileValidation(files, setMessage, e);
+    setBlog((prev) => {
+      return {
+        ...prev,
+        [name]: files[0],
+      };
+    });
+  };
+
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
-      <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
+      <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
         <label className="block md:col-span-2">
           <Label>Post Title *</Label>
 
-          <Input type="text" className="mt-1" />
+          <Input type="text" name="title" className="mt-1" value={blog.title} onChange={handleChange} />
         </label>
         <label className="block md:col-span-2">
           <Label>Post Excerpt</Label>
@@ -65,9 +120,10 @@ const DashboardSubmitPost = () => {
                   <span>Upload a file</span>
                   <input
                     id="file-upload"
-                    name="file-upload"
+                    name="image"
                     type="file"
                     className="sr-only"
+                    onChange={handleFile}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
@@ -81,7 +137,7 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label> Post Content</Label>
 
-          <Textarea className="mt-1" rows={16} />
+          <Editor onData={handleDataFromEditor} />
         </label>
 
         <ButtonPrimary className="md:col-span-2" type="submit">

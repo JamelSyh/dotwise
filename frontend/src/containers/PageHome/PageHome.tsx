@@ -27,16 +27,22 @@ import SectionMagazine7 from "./SectionMagazine7";
 import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+import { useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
+import { selectAuthState } from "app/auth/auth";
 
 //
-const POSTS: PostDataType[] = DEMO_POSTS;
 //
-const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
-const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
-const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
 const PageHome: React.FC = () => {
+  const content = useAppSelector(selectContentState);
+  const auth = useAppSelector(selectAuthState);
+  const profiles = auth.profiles;
+  const POSTS: PostDataType[] = content.posts;
+  const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
+  const MAGAZINE1_POSTS = content.posts;
+  const MAGAZINE2_POSTS = content.posts;
   return (
     <div className="nc-PageHome relative">
       <Helmet>
@@ -62,7 +68,7 @@ const PageHome: React.FC = () => {
             <SectionSliderNewAuthors
               heading="Newest authors"
               subHeading="Say hello to future creator potentials"
-              authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+              authors={profiles.filter((_, i) => i < 10)}
               uniqueSliderClass="PageHome"
             />
           </div>
@@ -78,17 +84,17 @@ const PageHome: React.FC = () => {
           />
 
           {/* === SECTION 6 === */}
-          <div className="relative py-16">
-            <BackgroundSection />
-            <SectionSliderPosts
-              postCardName="card9"
-              heading="Explore latest audio articles"
-              subHeading="Click on the icon to enjoy the music or podcast 🎧"
-              sliderStype="style2"
-              posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)}
-              uniqueSliderClass="pageHome-section6"
-            />
-          </div>
+          {/* <div className="relative py-16"> */}
+          {/*   <BackgroundSection /> */}
+          {/*   <SectionSliderPosts */}
+          {/*     postCardName="card9" */}
+          {/*     heading="Explore latest audio articles" */}
+          {/*     subHeading="Click on the icon to enjoy the music or podcast 🎧" */}
+          {/*     sliderStype="style2" */}
+          {/*     posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)} */}
+          {/*     uniqueSliderClass="pageHome-section6" */}
+          {/*   /> */}
+          {/* </div> */}
 
           {/* === SECTION 4 === */}
           <SectionMagazine1
@@ -98,7 +104,7 @@ const PageHome: React.FC = () => {
           />
 
           {/* === SECTION 3 === */}
-          <SectionAds />
+          {/* <SectionAds /> */}
 
           {/* === SECTION 7 === */}
           <SectionMagazine7
@@ -108,39 +114,39 @@ const PageHome: React.FC = () => {
         </div>
 
         {/* === SECTION 11 === */}
-        <div className="dark bg-neutral-900 dark:bg-black dark:bg-opacity-20 text-neutral-100">
-          <div className="relative container">
-            <SectionGridPosts
-              className="py-16 lg:py-28"
-              headingIsCenter
-              postCardName="card10V2"
-              heading="Explore latest video articles"
-              subHeading="Hover on the post card and preview video 🥡"
-              posts={DEMO_POSTS_VIDEO.filter((_, i) => i > 5 && i < 12)}
-              gridClass="md:grid-cols-2 lg:grid-cols-3"
-            />
-          </div>
-        </div>
+        {/* <div className="dark bg-neutral-900 dark:bg-black dark:bg-opacity-20 text-neutral-100"> */}
+        {/*   <div className="relative container"> */}
+        {/*     <SectionGridPosts */}
+        {/*       className="py-16 lg:py-28" */}
+        {/*       headingIsCenter */}
+        {/*       postCardName="card10V2" */}
+        {/*       heading="Explore latest video articles" */}
+        {/*       subHeading="Hover on the post card and preview video 🥡" */}
+        {/*       posts={DEMO_POSTS_VIDEO.filter((_, i) => i > 5 && i < 12)} */}
+        {/*       gridClass="md:grid-cols-2 lg:grid-cols-3" */}
+        {/*     /> */}
+        {/*   </div> */}
+        {/* </div> */}
 
         <div className="container ">
           {/* === SECTION 9 === */}
-          <SectionMagazine8
-            className="py-16 lg:py-28"
-            posts={DEMO_POSTS_AUDIO.filter((_, i) => i < 6)}
-          />
+          {/* <SectionMagazine8 */}
+          {/*   className="py-16 lg:py-28" */}
+          {/*   posts={DEMO_POSTS_AUDIO.filter((_, i) => i < 6)} */}
+          {/* /> */}
 
-          {/* === SECTION 9 === */}
-          <div className="relative py-16">
-            <BackgroundSection />
-            <SectionMagazine9
-              posts={DEMO_POSTS_AUDIO.filter((_, i) => i >= 6 && i < 16)}
-            />
-          </div>
+          {/* {/* === SECTION 9 === */}
+          {/* <div className="relative py-16"> */}
+          {/*   <BackgroundSection /> */}
+          {/*   <SectionMagazine9 */}
+          {/*     posts={DEMO_POSTS_AUDIO.filter((_, i) => i >= 6 && i < 16)} */}
+          {/*   /> */}
+          {/* </div> */}
 
           {/* === SECTION 5 === */}
           <SectionGridAuthorBox
             className="py-16 lg:py-28"
-            authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+            authors={profiles.filter((_, i) => i < 10)}
           />
 
           {/* === SECTION 8 === */}
@@ -158,31 +164,31 @@ const PageHome: React.FC = () => {
           />
 
           {/* === SECTION 12 === */}
-          <div className="relative py-16">
-            <BackgroundSection />
-            <SectionSliderPosts
-              postCardName="card11"
-              heading=" More design articles"
-              subHeading="Over 1118 articles "
-              posts={DEMO_POSTS.filter(
-                (p, i) => i > 3 && i < 25 && p.postType === "standard"
-              )}
-              sliderStype="style2"
-              uniqueSliderClass="pageHome-section12"
-            />
-          </div>
+          {/* <div className="relative py-16"> */}
+          {/*   <BackgroundSection /> */}
+          {/*   <SectionSliderPosts */}
+          {/*     postCardName="card11" */}
+          {/*     heading=" More design articles" */}
+          {/*     subHeading="Over 1118 articles " */}
+          {/*     posts={DEMO_POSTS.filter( */}
+          {/*       (p, i) => i > 3 && i < 25 && p.postType === "standard" */}
+          {/*     )} */}
+          {/*     sliderStype="style2" */}
+          {/*     uniqueSliderClass="pageHome-section12" */}
+          {/*   /> */}
+          {/* </div> */}
 
           {/* === SECTION 14 === */}
           <SectionSubscribe2 className="pt-16 lg:pt-28" />
 
           {/* === SECTION 15 === */}
-          <SectionVideos className="py-16 lg:py-28" />
+          {/* <SectionVideos className="py-16 lg:py-28" /> */}
 
           {/* === SECTION 17 === */}
           <SectionLatestPosts
             className="pb-16 lg:pb-28"
-            posts={DEMO_POSTS.filter((_, i) => i > 8 && i < 16)}
-            widgetPosts={DEMO_POSTS.filter((_, i) => i > 2 && i < 7)}
+            posts={POSTS}
+            widgetPosts={POSTS.filter((_, i) => i > 2 && i < 7)}
             categories={DEMO_CATEGORIES.filter((_, i) => i > 2 && i < 8)}
             tags={DEMO_CATEGORIES}
           />

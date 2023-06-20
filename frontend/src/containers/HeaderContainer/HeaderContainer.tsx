@@ -32,7 +32,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({ className = "" }) => {
     return "style1";
   };
 
-  console.log(getMainNavStyle());
+  // console.log(getMainNavStyle());
 
   return <Header mainNavStyle={getMainNavStyle()} currentPage={currentPage} />;
 };
