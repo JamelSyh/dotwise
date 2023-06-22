@@ -49,7 +49,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [message, setMessage] = useState();
   const [userState, setUserState] = useState({
     username: "",
-    email: "user@dotwise.com",
+    email: "",
     password: "",
     // confirm_password: "",
     bio: "",
