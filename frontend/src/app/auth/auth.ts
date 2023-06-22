@@ -4,10 +4,10 @@ import { RootState } from "app/store";
 import { isEqual } from "lodash";
 
 const initialState = {
-  BASE_API_URL: import.meta.env.VITE_BASE_API_URL,
-  DOTWISE_API_KEY: import.meta.env.VITE_DOTWISE_API_KEY,
-  LANG_DETECT_API_KEY: import.meta.env.VITE_DETECT_LANG_API_KEY,
-  OCR_API_KEY: import.meta.env.VITE_OCR_API_KEY,
+  BASE_API_URL: process.env.VITE_BASE_API_URL,
+  DOTWISE_API_KEY: process.env.VITE_DOTWISE_API_KEY,
+  LANG_DETECT_API_KEY: process.env.VITE_DETECT_LANG_API_KEY,
+  OCR_API_KEY: process.env.VITE_OCR_API_KEY,
   user: JSON.parse(localStorage.getItem("user") as string),
   token: JSON.parse(localStorage.getItem("authToken") as string),
   profile:
