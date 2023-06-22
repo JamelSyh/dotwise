@@ -104,7 +104,7 @@ const DashboardEditProfile = () => {
           </div>
         </div>
 
-        <label className="block md:col-span-2">
+        <label className="block">
           <Label>Username</Label>
           <Input
             placeholder="Example Doe"
@@ -116,6 +116,21 @@ const DashboardEditProfile = () => {
             }
           />
         </label>
+        <label className="block">
+          <Label>Category</Label>
+
+          <Select className="mt-1" onChange={(e) => {
+            setProfile({ ...profile, role: e.target.value })
+          }}>
+            <option value="-1">– select –</option>
+            <option value="D">Deveoper</option>
+            <option value="B">Blind</option>
+            <option value="BA">Blind Assistant</option>
+            <option value="U">User</option>
+          </Select>
+          {/* </label> */}
+        </label>
+
         {/* <label className="block"> */}
         {/*   <Label>Last name</Label> */}
         {/*   <Input */}
@@ -167,20 +182,6 @@ const DashboardEditProfile = () => {
           <p className="mt-1 text-sm text-neutral-500">
             Brief description for your article. URLs are hyperlinked.
           </p>
-        </label>
-        <label className="block">
-          <Label>Category</Label>
-
-          <Select className="mt-1" onChange={(e) => {
-            setProfile({ ...profile, role: e.target.value })
-          }}>
-            <option value="-1">– select –</option>
-            <option value="D">Deveoper</option>
-            <option value="B">Blind</option>
-            <option value="BA">Blind Assistant</option>
-            <option value="U">User</option>
-          </Select>
-          {/* </label> */}
         </label>
         <ButtonPrimary loading={pending} className="md:col-span-2" type="submit">
           Update profile
