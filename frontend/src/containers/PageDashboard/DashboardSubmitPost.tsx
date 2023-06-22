@@ -143,7 +143,7 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label> Post Content</Label>
 
-          <Editorr onData={handleDataFromEditor} />
+          <Editorr required onData={handleDataFromEditor} />
         </label>
 
         <ButtonPrimary loading={pending} className="md:col-span-2" type="submit">

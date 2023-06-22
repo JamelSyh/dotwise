@@ -19,7 +19,6 @@ const Editorr = ({ onData }: any) => {
       apiKey='nhp9ra3035s3g91itr2eugwb58nl665i90po10o3ahzfewka'
       onInit={(evt, editor) => editorRef.current = editor}
       initialValue="<p>enter the content here.</p>"
-      required
       init={{
         height: 400,
         menubar: false,

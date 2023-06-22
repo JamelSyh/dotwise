@@ -7,7 +7,7 @@ import { handleSubmitComment } from "../../components/Forgin/components/blogUtil
 import { fetchBlog } from "../../components/Forgin/components/blogUtils";
 import { useHistory, useParams, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { selectAuthState } from "app/auth/auth";
+import { selectAuthState, setPending } from "app/auth/auth";
 import { setPost } from "app/content/content";
 
 export interface SingleCommentFormProps {
@@ -35,6 +35,7 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
   const [comment, setComment] = useState("");
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
+  const pending = auth.pending;
   const url = auth.BASE_API_URL;
 
   // @ts-ignore
@@ -50,12 +51,14 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
       });
       return;
     }
+    dispatch(setPending(true));
     handleSubmitComment(comment, id, auth).then(() => {
       setComment("");
       fetchBlog(url, auth?.user?.user_id, id).then((data) => {
         dispatch(setPost(data));
       });
     });
+    dispatch(setPending(false));
   };
 
 
@@ -70,10 +73,10 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
         onChange={(e) => { setComment(e.target.value); }}
       />
       <div className="mt-2 space-x-3">
-        <ButtonPrimary onClick={(e) => { handleCommentSubmit(e); }} type="submit">
+        <ButtonPrimary loading={pending} onClick={(e) => { handleCommentSubmit(e); }} type="submit">
           Submit
         </ButtonPrimary>
-        <ButtonSecondary type="button" onClick={() => { }}>
+        <ButtonSecondary type="button" onClick={() => { setComment(""); }}>
           Cancel
         </ButtonSecondary>
       </div>
