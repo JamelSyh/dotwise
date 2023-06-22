@@ -56,9 +56,9 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
       setComment("");
       fetchBlog(url, auth?.user?.user_id, id).then((data) => {
         dispatch(setPost(data));
+        dispatch(setPending(false));
       });
     });
-    dispatch(setPending(false));
   };
 
 
