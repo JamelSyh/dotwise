@@ -5,7 +5,7 @@ import { isEqual } from "lodash";
 
 const initialState = {
   BASE_API_URL: import.meta.env.VITE_BASE_API_URL,
-  DOTWISE_API_KEY: "qlA5W85n0Wl8Kwl6xPQcLmBsCCVLCJs2xy4Bgn8K",
+  DOTWISE_API_KEY: import.meta.env.VITE_DOTWISE_API_KEY,
   LANG_DETECT_API_KEY: import.meta.env.VITE_DETECT_LANG_API_KEY,
   OCR_API_KEY: import.meta.env.VITE_OCR_API_KEY,
   user: JSON.parse(localStorage.getItem("user") as string),
