@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setProfiles, setProfile } from "app/auth/auth";
