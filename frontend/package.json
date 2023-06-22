@@ -54,6 +54,7 @@
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
     "cssjanus": "^2.1.0",
+    "dotenv": "^16.3.1",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.8",
     "postcss-cssjanus": "^1.0.5",
