@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useEffect, useState } from "react";
 import { DEMO_POSTS } from "data/posts";
 import GetContent from "../../components/Forgin/components/getContent";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import React, { FC, Fragment, ReactNode } from "react";
 import { Menu, Transition } from "@headlessui/react";

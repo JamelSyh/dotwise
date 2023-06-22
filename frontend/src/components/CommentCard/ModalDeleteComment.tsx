@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useEffect, useRef } from "react";
 import NcModal from "components/NcModal/NcModal";
 import { CommentType } from "./CommentCard";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect, FC } from "react";

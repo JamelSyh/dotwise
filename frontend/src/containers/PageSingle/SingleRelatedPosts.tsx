@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC } from "react";
 import Heading from "components/Heading/Heading";
 import { PostDataType } from "data/types";

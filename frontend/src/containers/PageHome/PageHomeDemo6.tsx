@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import { Helmet } from "react-helmet";

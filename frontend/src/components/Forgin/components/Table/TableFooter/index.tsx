@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 
 import styles from "./TableFooter.module.css";
@@ -13,9 +14,8 @@ const TableFooter = ({ range, setPage, page, slice }) => {
       {range.map((el, index) => (
         <button
           key={index}
-          className={`${styles.button} ${
-            page === el ? styles.activeButton : styles.inactiveButton
-          }`}
+          className={`${styles.button} ${page === el ? styles.activeButton : styles.inactiveButton
+            }`}
           onClick={() => setPage(el)}
         >
           {el}

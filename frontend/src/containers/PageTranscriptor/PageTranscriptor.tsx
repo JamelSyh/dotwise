@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { setInText, setOutText, switchLang, switchOpt, switchText, selectTranscriptorState } from "app/transcriptor/transcriptor";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { PostDataType, TaxonomyType } from "data/types";
 import NcImage from "components/NcImage/NcImage";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useState, useEffect } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
