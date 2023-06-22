@@ -18,7 +18,8 @@ const Editorr = ({ onData }: any) => {
     <Editor
       apiKey='nhp9ra3035s3g91itr2eugwb58nl665i90po10o3ahzfewka'
       onInit={(evt, editor) => editorRef.current = editor}
-      initialValue="<p>This is the initial content of the editor.</p>"
+      initialValue="<p>enter the content here.</p>"
+      required
       init={{
         height: 400,
         menubar: false,

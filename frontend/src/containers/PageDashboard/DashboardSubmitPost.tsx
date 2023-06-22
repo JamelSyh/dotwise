@@ -73,7 +73,7 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label>Post Title *</Label>
 
-          <Input type="text" name="title" className="mt-1" value={blog.title} onChange={handleChange} />
+          <Input type="text" name="title" required className="mt-1" value={blog.title} onChange={handleChange} />
         </label>
         <label className="block md:col-span-2">
           <Label>Post Excerpt</Label>
