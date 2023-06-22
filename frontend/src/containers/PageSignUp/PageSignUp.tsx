@@ -49,11 +49,11 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [message, setMessage] = useState();
   const [userState, setUserState] = useState({
     username: "",
-    email: "admin@gmil.com",
+    email: "user@dotwise.com",
     password: "",
     // confirm_password: "",
     bio: "",
-    photo: "profile/default.jpg",
+    photo: "v1687457552/media/profile/default.jpg",
   });
 
   const handleChange = (e: any) => {
