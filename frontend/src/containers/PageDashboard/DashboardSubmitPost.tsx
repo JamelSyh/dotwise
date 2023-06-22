@@ -50,7 +50,7 @@ const DashboardSubmitPost = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (blog.content != "")
+    if (blog.content == "")
       return;
     dispatch(setPending(true));
     const res = await createBlog(url, blog, authToken);
