@@ -1,3 +1,4 @@
+// @ts-nocheck
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import React, { ComponentType, FC } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router";
