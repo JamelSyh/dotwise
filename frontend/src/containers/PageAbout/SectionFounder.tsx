@@ -14,38 +14,24 @@ const FOUNDER_DEMO: People[] = [
     name: `Jamal Sayah`,
     job: "Co-founder and Chief Executive",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687463422/zkabikuepkdtj4e2ught.jpg",
   },
 ];
 
 const FOUNDER_PARTNER: People[] = [
   {
     id: "1",
-    name: `Jamal Sayah`,
-    job: "Co-founder and Chief Executive",
+    name: `Megateli Abdelaziz`,
+    job: "colleague",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
   },
   {
     id: "4",
-    name: `Danien Jame`,
-    job: "Co-founder and Chief Executive",
+    name: `Khelil Ouaras`,
+    job: "colleague",
     avatar:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "3",
-    name: `Orla Dwyer`,
-    job: "Co-founder, Chairman",
-    avatar:
-      "https://images.unsplash.com/photo-1560365163-3e8d64e762ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "2",
-    name: `Dara Frazier`,
-    job: "Co-Founder, Chief Strategy Officer",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
   },
 ];
 
