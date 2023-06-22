@@ -7,7 +7,7 @@ from . models import Blog, Comment, Profile
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'author', 'created_at', 'updated_at',
-                    'publish_status', 'category', 'total_likes')
+                    'publish_status', 'category', 'total_likes', 'image')
 
     list_filter = ('publish_status', 'category', 'created_at', 'updated_at')
 

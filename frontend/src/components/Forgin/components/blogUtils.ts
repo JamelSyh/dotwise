@@ -1,3 +1,4 @@
+const imageUrl = "https://res.cloudinary.com/dz3frffba/";
 
 export const login = async (url: any, username: any, password: any) => {
 
@@ -76,7 +77,7 @@ export const fetchComments = async (url: any, blogId: any) => {
       lastName: "",
       displayName: data.username,
       email: "",
-      avatar: `${url}${comment.photo}`,
+      avatar: `${comment.photo}`,
       count: 0,
       href: `/author/${comment.user}`,
       desc: "",
@@ -142,7 +143,7 @@ export const fetchProfile = async (id: any, url: string) => {
     displayName: data.username,
     email: data.email,
     gender: "",
-    avatar: `${url}${data.photo}`,
+    avatar: `${imageUrl}${data.photo}`,
     bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     count: data.blog_count,
     href: `/author/${data.id}`,
@@ -166,7 +167,7 @@ export const fetchAllProfiles = async (url: string) => {
     displayName: post.username,
     email: post.email,
     gender: "",
-    avatar: `${url}${post.photo}`,
+    avatar: `${imageUrl}${post.photo}`,
     bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     count: post.blog_count,
     href: `/author/${post.id}`,
@@ -234,7 +235,7 @@ export const getMyBlogs = async (url: any, token: any) => {
       const transformedPosts = data.map((post: any, index: any) => ({
         id: post.id,
         title: post.title,
-        image: `${url}${post.image}`,
+        image: `${imageUrl}${post.image}`,
         liveStatus: true,
         payment: "Not Applicable",
       }));
@@ -299,7 +300,7 @@ export async function fetchBlog(url: any, id: any, blogId: number) {
       lastName: "",
       displayName: data.author_name,
       email: data.author_email,
-      avatar: `${url}${data.author_photo}`,
+      avatar: `${data.author_photo}`,
       count: 43,
       href: `/author/${data.author_id}`,
       desc: data.author_bio,
@@ -316,7 +317,7 @@ export async function fetchBlog(url: any, id: any, blogId: number) {
       color: "indigo"
     }],
     id: data.id,
-    featuredImage: `${url}${data.image}`,
+    featuredImage: `${imageUrl}${data.image}`,
     title: data.title,
     desc: data.summary,
     date: data.date_created,
@@ -365,7 +366,7 @@ export const fetchAllBlogs = async (url: string, id: null) => {
       displayName: post.author_name,
       email: post.author_email,
       gender: "",
-      avatar: `${url}${post.author_photo}`,
+      avatar: `${post.author_photo}`,
       count: 43,
       href: `/author/${post.author_id}`,
       desc: post.author_bio,
@@ -383,7 +384,7 @@ export const fetchAllBlogs = async (url: string, id: null) => {
     }],
     index: index + 1,
     id: post.id,
-    featuredImage: `${url}${post.image}`,
+    featuredImage: `${imageUrl}${post.image}`,
     title: post.title,
     desc: post.summary,
     date: post.date_created,

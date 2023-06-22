@@ -2,14 +2,11 @@ from django.db import models
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
 from django.utils.crypto import get_random_string
+from cloudinary.models import CloudinaryField
+from cloudinary import uploader
 
 
 class Profile(AbstractUser):
-    photo = models.ImageField(
-        upload_to='profile/', blank=True, null=True, default='profile/default.jpg')
-    bio = models.TextField(blank=True, null=True)
-    api_key = models.CharField(
-        max_length=40, unique=True, blank=True, null=True)
     ROLES = (
         ('A', 'Admin'),
         ('D', 'Developer'),
@@ -17,6 +14,11 @@ class Profile(AbstractUser):
         ('B', 'Blind User'),
         ('BA', 'Blind Assistant'),
     )
+    photo = CloudinaryField("image", blank=True,
+                            null=True, default="image/upload/v1687451576/media/profile/default.jpg")
+    bio = models.TextField(blank=True, null=True)
+    api_key = models.CharField(
+        max_length=40, unique=True, blank=True, null=True)
     role = models.CharField(max_length=2, choices=ROLES, default='U')
 
     def save(self, *args, **kwargs):
@@ -25,6 +27,7 @@ class Profile(AbstractUser):
             self.api_key = get_random_string(length=40)
 
         super().save(*args, **kwargs)
+        super().save(update_fields=['photo'])
 
     def __str__(self):
         return self.username
@@ -72,8 +75,8 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    image = models.ImageField(
-        upload_to='images/', blank=True, null=True, default='images/default_blog.png')
+    image = CloudinaryField('image', null=True, blank=True,
+                            default="image/upload/v1687454064/media/profile/default_post.jpg")
     category = models.CharField(
         max_length=100, default='uncategorized', choices=CHOICES)
     publish_status = models.BooleanField(default=True, choices=(
@@ -114,8 +117,23 @@ class Blog(models.Model):
         return Comment.objects.filter(blog=self).count()
 
     def delete(self, *args, **kwargs):
-        self.image.delete()
         super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        # Check if the image field has changed
+        if self.pk:
+            old_instance = Blog.objects.get(pk=self.pk)
+            if self.image != old_instance.image:
+                # Delete the old image from Cloudinary
+                uploader.destroy(old_instance.image.public_id)
+
+        # Save the blog instance
+        super().save(*args, **kwargs)
+
+        super().save(update_fields=['image'])
+
+    def __str__(self):
+        return self.slug
 
 
 class Comment(models.Model):

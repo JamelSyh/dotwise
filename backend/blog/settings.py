@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,7 +46,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    'rest_framework.authtoken',
+    'cloudinary',
+
 
 ]
 
@@ -123,15 +127,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blog.wsgi.application'
 
 
+# Database
 # To use Neon with Django, you have to create a Project on Neon and specify the project connection settings in your settings.py in the same way as for standalone Postgres.
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
+        'NAME': 'maindb',
         'USER': 'jamalsyh2002',
-        'PASSWORD': 'Wl0JU8nIFejM',
-        'HOST': 'ep-super-star-928546.eu-central-1.aws.neon.tech',
+        'PASSWORD': 'kQIfOh4m0HSt',
+        'HOST': 'ep-flat-fire-896067.eu-central-1.aws.neon.tech',
         'PORT': '5432',
     }
 }
@@ -167,11 +172,19 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+cloudinary.config(
+    cloud_name="dz3frffba",
+    api_key="168892518867381",
+    api_secret="Rj9nsFiltTEakEQMYx82WOHctlI",
+)
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
