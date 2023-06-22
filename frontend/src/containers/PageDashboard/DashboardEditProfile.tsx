@@ -104,8 +104,8 @@ const DashboardEditProfile = () => {
           </div>
         </div>
 
-        <label className="block">
-          <Label>First name</Label>
+        <label className="block md:col-span-2">
+          <Label>Username</Label>
           <Input
             placeholder="Example Doe"
             type="text"
@@ -116,16 +116,16 @@ const DashboardEditProfile = () => {
             }
           />
         </label>
-        <label className="block">
-          <Label>Last name</Label>
-          <Input
-            placeholder="Doe"
-            type="text"
-            className="mt-1"
-            value={profile.username}
-            onChange={(event) => setProfile({ ...profile, bio: event.target.value })}
-          />
-        </label>
+        {/* <label className="block"> */}
+        {/*   <Label>Last name</Label> */}
+        {/*   <Input */}
+        {/*     placeholder="Doe" */}
+        {/*     type="text" */}
+        {/*     className="mt-1" */}
+        {/*     value={profile.username} */}
+        {/*     onChange={(event) => setProfile({ ...profile, bio: event.target.value })} */}
+        {/*   /> */}
+        {/* </label> */}
         <label className="block">
           <Label>Email address</Label>
           <Input
