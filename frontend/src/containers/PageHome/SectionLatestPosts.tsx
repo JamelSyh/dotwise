@@ -41,13 +41,13 @@ export interface SectionLatestPostsProps {
   className?: string;
   heading?: string;
   postCardName?:
-    | "card3"
-    | "card4"
-    | "card7"
-    | "card9"
-    | "card10"
-    | "card11"
-    | "card14";
+  | "card3"
+  | "card4"
+  | "card7"
+  | "card9"
+  | "card10"
+  | "card11"
+  | "card14";
 }
 
 const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
@@ -104,10 +104,10 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
           </div>
         </div>
         <div className="w-full space-y-7 mt-24 lg:mt-0 lg:w-2/5 lg:pl-10 xl:pl-0 xl:w-1/3 ">
-          <WidgetTags tags={tags} />
+          {/* <WidgetTags tags={tags} /> */}
           <WidgetCategories categories={categories} />
           <WidgetAuthors authors={authors} />
-          <WidgetPosts posts={widgetPosts} />
+          {/* <WidgetPosts posts={widgetPosts} /> */}
         </div>
       </div>
     </div>

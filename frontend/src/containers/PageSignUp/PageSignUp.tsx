@@ -8,8 +8,9 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
-import { selectAuthState } from "app/auth/auth";
-import { useAppSelector } from "app/hooks";
+import { selectAuthState, setPending } from "app/auth/auth";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import { signup } from "../../components/Forgin/components/blogUtils";
 
 export interface PageSignUpProps {
   className?: string;
@@ -36,13 +37,14 @@ const loginSocials = [
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const auth = useAppSelector(selectAuthState);
 
   const user = auth.user;
   const token = auth.token;
   const pending = auth.pending;
-  const BASE_API_URL = auth.BASE_API_URL;
+  const url = auth.BASE_API_URL;
 
   const [message, setMessage] = useState();
   const [userState, setUserState] = useState({
@@ -50,8 +52,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     email: "admin@gmil.com",
     password: "",
     // confirm_password: "",
-    bio: "f",
-    photo: "f",
+    bio: "",
+    photo: "profile/default.jpg",
   });
 
   const handleChange = (e: any) => {
@@ -68,6 +70,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    dispatch(setPending(true));
+
     const formData = new FormData();
     formData.append("username", userState.username);
     formData.append("email", userState.email);
@@ -75,10 +79,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     formData.append("photo", userState.photo);
     formData.append("bio", userState.bio);
 
-    const response = await fetch(`${BASE_API_URL}/api/register/`, {
-      method: "POST",
-      body: formData,
-    });
+    const response = await signup(url, formData);
     const data = await response.json();
 
     if (response.status === 200) {
@@ -86,6 +87,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     } else {
       setMessage(data.detail);
     }
+    dispatch(setPending(false));
   };
 
 
@@ -160,7 +162,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <Input name="password" value={userState.password} onChange={handleChange} type="password" className="mt-1" />
 
             </label>
-            <ButtonPrimary type="submit">Continue</ButtonPrimary>
+            <ButtonPrimary loading={pending} type="submit">Continue</ButtonPrimary>
           </form>
 
           {/* ==== */}

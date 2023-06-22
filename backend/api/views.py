@@ -1,3 +1,4 @@
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
@@ -6,9 +7,11 @@ from .serializers import BlogSerializer, CommentSerializer, ProfileSerializer, C
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponseBadRequest, FileResponse
 from django.core.files.base import ContentFile
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 from braille_transcriptor.transcriptor import BrailleTranscriptor
 from braille_transcriptor.strategy_factory import strategies_dict
@@ -30,11 +33,23 @@ import os
 # Validate API Key
 
 
+# def validate_api_key(api_key):
+#     # Check if the api_key is valid and matches your expected value
+#     # if api_key != os.environ.get("ENV_API_KEY"):
+#     #     return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
+#     pass
+
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import PermissionDenied
+from .models import Profile
+
+
 def validate_api_key(api_key):
-    # Check if the api_key is valid and matches your expected value
-    # if api_key != os.environ.get("ENV_API_KEY"):
-    #     return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
-    pass
+    try:
+        # Check if the API key exists in the database
+        Profile.objects.get(api_key=api_key)
+    except ObjectDoesNotExist:
+        raise PermissionDenied("Invalid API key")
 
 
 @api_view(['POST'])
@@ -47,7 +62,10 @@ def transcript(request):
     if source == "auto" or target == "auto":
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     transcriptor = BrailleTranscriptor(text, source, target)
     result = transcriptor.get_results()
@@ -63,7 +81,10 @@ def translate(request):
     target_grade = request.data.get('target_grade')
     key = request.data.get('key', '')
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     transcriptor = BrailleTranscriptor(text, source_grade, source_lang)
     result_text = transcriptor.get_results()
@@ -89,7 +110,10 @@ def download_file(request):
     braille = request.query_params.get('braille')
     key = request.query_params.get('key', '')
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     file_contents = braille.encode('utf-8')  # Encode the string to bytes
     file_data = ContentFile(file_contents)
@@ -102,7 +126,10 @@ def download_file(request):
 def get_transcribe_options(request):
     key = request.query_params.get('key', '')
 
-    # validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     return Response(transcript_options)
 
@@ -111,7 +138,10 @@ def get_transcribe_options(request):
 def get_translate_options(request):
     key = request.query_params.get('key', '')
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     return Response(translate_options)
 
@@ -121,7 +151,10 @@ def get_contraction_list(request):
     lang = request.query_params.get('lang', '')
     key = request.query_params.get('key', '')
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     if not any(option["code"] == lang for option in transcript_options):
         return Response({'detail': 'Enter a valid language (en, ar, fr)'}, status=status.HTTP_403_FORBIDDEN)
@@ -146,7 +179,10 @@ def get_contraction_list(request):
 def get_search_options(request):
     key = request.query_params.get('key', '')
 
-    validate_api_key(key)
+    try:
+        validate_api_key(key)
+    except PermissionDenied:
+        return Response({'detail': 'Invalid API key'}, status=status.HTTP_403_FORBIDDEN)
 
     return Response(search_options)
 
@@ -257,25 +293,45 @@ def deleteComment(request, pk):
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    photo = data.get('photo')
+    bio = data.get('bio')
+    role = data.get('role', 'U')
+
+    existing_user = Profile.objects.filter(
+        Q(username=username) | Q(email=email)).first()
+    if existing_user:
+        message = {'detail': 'User with this username or email already exists'}
+        return Response(message, status=status.HTTP_409_CONFLICT)
+
     try:
         user = Profile.objects.create_user(
-            username=data['username'],
-            email=data['email'],
-            password=data['password'],
-            photo=data['photo'],
-            bio=data['bio']
+            username=username,
+            email=email,
+            password=password,
+            photo=photo,
+            bio=bio
         )
+
+        # Generate and assign API key
+        token, _ = Token.objects.get_or_create(user=user)
+        api_key = token.key
+        user.api_key = api_key
+        user.save()
+
         serializer = ProfileSerializer(user, many=False)
         return Response(serializer.data)
 
     except:
-        message = {'detail': 'Profile with this username already exists'}
-        return Response(message, status=status.HTTP_409_CONFLICT)
+        message = {'detail': 'An error occurred during user registration'}
+        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
 def getCategory(request):
-    return JsonResponse([category[1] for category in Blog.CHOICES], safe=False)
+    return Response([category[1] for category in Blog.CHOICES])
 
 
 @api_view(['POST'])
@@ -309,7 +365,6 @@ def getProfile(request, pk):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateProfile(request, pk):
-    print(request.data)
     try:
         profile = Profile.objects.get(pk=pk)
     except ObjectDoesNotExist:

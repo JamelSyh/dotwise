@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
+import Radio from "components/Radio/Radio"
+import Select from "components/Select/Select";
+import { useHistory } from "react-router-dom";
 import { updateProfileInfo } from "../../components/Forgin/components/blogUtils";
-import { useAppSelector } from 'app/hooks';
-import { selectAuthState } from 'app/auth/auth';
+import { useAppSelector, useAppDispatch } from 'app/hooks';
+import { selectAuthState, setPending } from 'app/auth/auth';
 
 const DashboardEditProfile = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const history = useHistory();
+  const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
   const user = auth.user;
+  const pending = auth.pending;
   const authToken = auth.token;
   const url = auth.BASE_API_URL;
 
@@ -24,11 +30,15 @@ const DashboardEditProfile = () => {
     bio: "",
     email: "",
     photo: "",
+    role: "",
   });
 
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
+    dispatch(setPending(true));
     const res = await updateProfileInfo(url, profile, authToken);
+    dispatch(setPending(false));
+    history.push(`/author/${res.id}`);
   }
 
 
@@ -157,12 +167,25 @@ const DashboardEditProfile = () => {
             Brief description for your article. URLs are hyperlinked.
           </p>
         </label>
+        <label className="block">
+          <Label>Category</Label>
 
-        <ButtonPrimary className="md:col-span-2" type="submit">
+          <Select className="mt-1" onChange={(e) => {
+            setProfile({ ...profile, role: e.target.value })
+          }}>
+            <option value="-1">– select –</option>
+            <option value="D">Deveoper</option>
+            <option value="B">Blind</option>
+            <option value="BA">Blind Assistant</option>
+            <option value="U">User</option>
+          </Select>
+          {/* </label> */}
+        </label>
+        <ButtonPrimary loading={pending} className="md:col-span-2" type="submit">
           Update profile
         </ButtonPrimary>
       </form>
-    </div>
+    </div >
   );
 };
 

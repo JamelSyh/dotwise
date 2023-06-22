@@ -8,7 +8,7 @@ import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
 import { NAVIGATION_SHORT_DEMO } from "data/navigation";
 import React, { FC } from "react";
 
-export interface MainNav2Props {}
+export interface MainNav2Props { }
 
 const MainNav2: FC<MainNav2Props> = () => {
   return (

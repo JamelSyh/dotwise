@@ -1,5 +1,5 @@
 // import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { Page } from "./types";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import PrivateRoute from "utils/privateRoute";
@@ -115,9 +115,6 @@ export const publicPages: Page[] = [
   { path: "/about", component: PageAbout },
   { path: "/contact", component: PageContact },
   { path: "/page404", component: Page404 },
-  { path: "/login", component: PageLogin },
-  { path: "/signup", component: PageSignUp },
-  { path: "/forgot-pass", component: PageForgotPass },
   //
   // { path: "/home-demo-2", component: PageHomeDemo2 },
   // { path: "/home-demo-3", component: PageHomeDemo3 },
@@ -127,11 +124,17 @@ export const publicPages: Page[] = [
   // { path: "/home-demo-7", component: PageHomeDemo7 },
   //
 ];
+const publicPagesOnly = [
+  { path: "/login", component: PageLogin },
+  { path: "/signup", component: PageSignUp },
+  { path: "/forgot-pass", component: PageForgotPass },
+]
 
 const Routes = () => {
 
 
   const auth = useAppSelector(selectAuthState);
+  const history = useHistory();
 
 
   return (
@@ -165,7 +168,15 @@ const Routes = () => {
             />
           </PrivateRoute>
         ))}
+
+        {publicPagesOnly.map(({ component, path }) => (
+          !auth.user ?
+            <Route key={path} component={component} path={path} />
+            :
+            <Redirect key={path} from={path} to={"/"} />
+        ))}
         <Route component={Page404} />
+
       </Switch>
       <Footer />
       <GetContent />

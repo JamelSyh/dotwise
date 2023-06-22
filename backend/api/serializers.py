@@ -24,20 +24,24 @@ class BlogSerializer(ModelSerializer):
             'author_photo',
             'author_bio',
             'author_id',
+            'author_email',
             'reading_time',
             'comment_count'
         ]
 
 
 class CommentSerializer(ModelSerializer):
+    photo = serializers.ReadOnlyField(source='user.photo.url')
+
     class Meta:
         model = Comment
         fields = [
             'id',
+            'user',
             'username',
             'body',
             'date_format',
-            'user_photo'
+            'photo'
         ]
 
 
@@ -64,7 +68,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             'email',
             'password',
             'bio',
-            'blog_count'
+            'blog_count',
+            'api_key',
+            'role',
         ]
 
     def create(self, validated_data):

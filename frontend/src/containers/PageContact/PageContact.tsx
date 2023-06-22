@@ -15,11 +15,11 @@ export interface PageContactProps {
 const info = [
   {
     title: "🗺 ADDRESS",
-    desc: "Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter",
+    desc: "the best place in world",
   },
   {
     title: "💌 EMAIL",
-    desc: "nc.example@example.com",
+    desc: "support@dotwise.online",
   },
   {
     title: "☎ PHONE",
@@ -59,7 +59,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
           </div>
           <div className="border border-neutral-100 dark:border-neutral-700 lg:hidden"></div>
           <div>
-            <form className="grid grid-cols-1 gap-6" action="#" method="post">
+            <form className="grid grid-cols-1 gap-6" >
               <label className="block">
                 <Label>Full name</Label>
 

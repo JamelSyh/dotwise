@@ -30,7 +30,7 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
           rightImg={rightImg}
           heading="👋 About Us."
           btnText=""
-          subHeading="We’re impartial and independent, and every day we create distinctive, world-class programmes and content which inform, educate and entertain millions of people in the around the world."
+          subHeading="We are dedicated to promoting braille literacy, empowering blind individuals, and creating an inclusive online platform."
         />
 
         <SectionFounder />

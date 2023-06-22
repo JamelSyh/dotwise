@@ -28,7 +28,7 @@ const Button: FC<ButtonProps> = ({
   targetBlank,
   type,
   loading,
-  onClick = () => {},
+  onClick = () => { },
 }) => {
   const CLASSES =
     `nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors ${fontSize} ${sizeClass} ${translate} ${className} ` +

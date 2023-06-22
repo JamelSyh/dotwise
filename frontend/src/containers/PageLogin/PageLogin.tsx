@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setUser, setToken, setErrMsg, setPending } from "app/auth/auth";
+import { login } from "../../components/Forgin/components/blogUtils";
 import jwt_decode from "jwt-decode";
 
 import facebookSvg from "images/Facebook.svg";
@@ -53,25 +54,18 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const user = auth.user;
   const token = auth.token;
   const pending = auth.pending;
-  const BASE_API_URL = auth.BASE_API_URL;
+  const url = auth.BASE_API_URL;
 
 
   let userLogin = async (username: any, password: any) => {
 
-    // @ts-ignore
     let { from } = location.state || { from: { pathname: "/" } };
 
-    let response = await fetch(`${BASE_API_URL}/api/token/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
-    let data = await response.json();
+    dispatch(setPending(true));
+
+    const response = await login(url, username, password);
+
+    const data = await response.json();
 
     if (response.status === 200) {
       dispatch(setToken(data));
@@ -82,6 +76,8 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     } else {
       dispatch(setErrMsg(data.detail));
     }
+
+    dispatch(setPending(false));
   };
 
 
@@ -91,7 +87,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   };
 
   const updateToken = async () => {
-    let response = await fetch(`${BASE_API_URL}/api/token/refresh/`, {
+    let response = await fetch(`${url}/api/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -194,7 +190,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
               </span>
               <Input type="password" name="password" onChange={(e) => setPassword(e.target.value)} value={password} className="mt-1" />
             </label>
-            <ButtonPrimary type="submit">Continue</ButtonPrimary>
+            <ButtonPrimary loading={pending} type="submit">Continue</ButtonPrimary>
           </form>
 
           {/* ==== */}

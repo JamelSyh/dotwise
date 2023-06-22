@@ -6,12 +6,12 @@ export interface RadioProps {
 }
 const Radio: React.FC<RadioProps> = ({ name, label, id }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mt-3">
       <input
         id={id}
         name={name}
         type="radio"
-        className="focus:ring-action-primary h-4 w-4 text-action-primary border-primary"
+        className="focus:ring-action-primary h-8 w-8 text-action-primary border-primary"
       />
       {label && (
         <label

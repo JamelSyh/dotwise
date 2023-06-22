@@ -17,6 +17,7 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
   //
   const location = useLocation();
 
+
   useEffect(() => {
     //  SCROLL TO COMMENT AREA
     if (location.hash !== "#comment") {
@@ -43,12 +44,13 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
         {/* IF YOUR DATA IS JSON, YOU CAN USE render with html-react-parser (https://www.npmjs.com/package/html-react-parser) */}
         {/* <SingleContentDemo /> */}
         {/* {data.desc} */}
-        <div dangerouslySetInnerHTML={{ __html: data.desc }} />
+        {/* @ts-ignore */}
+        <div dangerouslySetInnerHTML={{ __html: data.content }} />
       </div>
 
       {/* TAGS */}
       <div className="max-w-screen-md mx-auto flex flex-wrap">
-        {tags.map((item) => (
+        {data.categories.map((item) => (
           <Tag hideCount key={item.id} tag={item} className="mr-2 mb-2" />
         ))}
       </div>
@@ -56,7 +58,7 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
       {/* AUTHOR */}
       <div className="max-w-screen-md mx-auto border-b border-t border-neutral-100 dark:border-neutral-700"></div>
       <div className="max-w-screen-md mx-auto ">
-        <SingleAuthor />
+        {/* <SingleAuthor data={data} /> */}
       </div>
 
       {/* COMMENT FORM */}
@@ -69,8 +71,6 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
           Responses ({commentCount})
         </h3>
         <SingleCommentForm
-          onClickSubmit={(id) => console.log(id)}
-          onClickCancel={(id) => console.log(id)}
         />
       </div>
 

@@ -25,7 +25,7 @@ const GetContent = () => {
     };
 
     fetchData();
-  }, [auth, content]);
+  }, [content]);
 
   return null;
 }

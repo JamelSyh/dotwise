@@ -1,57 +1,40 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import React, { useRef } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
 
 
 
-const Editor = ({ onData }: any) => {
-
-
-  const [text, setText] = useState('');
-
-  const handleChange = (value: any) => {
-    setText(value);
-    onData(value);
+const Editorr = ({ onData }: any) => {
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
   };
 
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['link', 'image'],
-      ['clean']
-    ]
-  };
-
-  const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image'
-  ];
-
-  console.log(text);
 
   return (
-    <div style={{ height: "250px" }}>
-      <ReactQuill
-        style={{ height: "80%" }}
-        value={text}
-        modules={modules}
-        formats={formats}
-        onChange={handleChange}
-      />
-    </div>
+    // @ts-ignore
+    <Editor
+      apiKey='nhp9ra3035s3g91itr2eugwb58nl665i90po10o3ahzfewka'
+      onInit={(evt, editor) => editorRef.current = editor}
+      initialValue="<p>This is the initial content of the editor.</p>"
+      init={{
+        height: 400,
+        menubar: false,
+        plugins: [
+          'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+          'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+          'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'image'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+          'bold italic forecolor image code| alignleft aligncenter ' +
+          'alignright alignjustify | bullist numlist outdent indent | ' +
+          'removeformat | help ',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+      }}
+      onEditorChange={onData}
+    />
   );
 };
 
-export default Editor;
+export default Editorr;

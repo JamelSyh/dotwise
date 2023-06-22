@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import NcImage from "components/NcImage/NcImage";
 import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
 import { PostDataType } from "data/types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
@@ -25,6 +25,7 @@ const Card9: FC<Card9Props> = ({
     post;
 
   const renderMeta = () => {
+    const history = useHistory();
     return (
       <div className="inline-flex items-center text-xs text-neutral-300">
         <div className="block ">
@@ -33,18 +34,19 @@ const Card9: FC<Card9Props> = ({
               {title}
             </span>
           </h2>
-          <Link to={author.href} className="flex mt-2.5 relative">
+          <a onClick={() => { history.push(post.href) }} className="flex mt-2.5 relative">
             <span className="block text-neutral-200 hover:text-white font-medium truncate">
               {author.displayName}
             </span>
             <span className="mx-[6px] font-medium">·</span>
             <span className="font-normal truncate">{date}</span>
-          </Link>
+          </a>
         </div>
       </div>
     );
   };
 
+  const history = useHistory();
   return (
     <div
       className={`nc-Card9 relative flex flex-col group rounded-3xl overflow-hidden ${hoverClass} ${className}`}
@@ -60,7 +62,7 @@ const Card9: FC<Card9Props> = ({
           <PostFeaturedMedia post={post} />
         </div>
       ) : (
-        <Link to={href}>
+        <a onClick={() => { history.push(href); }}>
           <NcImage
             containerClassName="absolute inset-0 rounded-3xl"
             className="object-cover w-full h-full rounded-3xl"
@@ -73,7 +75,7 @@ const Card9: FC<Card9Props> = ({
             iconSize="w-4 h-4"
           />
           <span className="absolute inset-0 bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-        </Link>
+        </a>
       )}
       <Link
         to={href}

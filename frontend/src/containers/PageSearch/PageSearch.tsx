@@ -22,6 +22,8 @@ import ButtonCircle from "components/Button/ButtonCircle";
 import CardCategory2 from "components/CardCategory2/CardCategory2";
 import Tag from "components/Tag/Tag";
 import CardAuthorBox2 from "components/CardAuthorBox2/CardAuthorBox2";
+import { useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
 
 export interface PageSearchProps {
   className?: string;
@@ -53,6 +55,8 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     }
     setTabActive(item);
   };
+
+  const content = useAppSelector(selectContentState);
 
   return (
     <div className={`nc-PageSearch ${className}`} data-nc-id="PageSearch">
@@ -171,7 +175,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           {/* LOOP ITEMS POSTS */}
           {tabActive === "Articles" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8 mt-8 lg:mt-10">
-              {posts.map((post) => (
+              {content.posts.map((post) => (
                 <Card11 key={post.id} post={post} />
               ))}
             </div>

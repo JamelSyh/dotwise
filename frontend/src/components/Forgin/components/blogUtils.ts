@@ -1,3 +1,30 @@
+
+export const login = async (url: any, username: any, password: any) => {
+
+  // @ts-ignore
+
+  return await fetch(`${url}/api/token/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  });
+};
+
+export const signup = async (url: any, data: any) => {
+
+  return await fetch(`${url}/api/register/`, {
+    method: "POST",
+    body: data,
+  });
+
+}
+
+
 export const handleLike = async (url: any, blogId: any, id: any, token: any) => {
   if (!token) {
     // navigate("/login", {
@@ -16,6 +43,57 @@ export const handleLike = async (url: any, blogId: any, id: any, token: any) => 
     console.log(data);
   }
 };
+
+export const handleSubmitComment = async (content: any, blogId: any, auth: any) => {
+  if (!auth.token) {
+  } else {
+    const response = await fetch(`${auth.BASE_API_URL}/api/comments/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(auth.token.access),
+      },
+      body: JSON.stringify({
+        blog: blogId,
+        user: auth.user.user_id,
+        body: content,
+      }),
+    });
+    const data = await response.json();
+    console.log(data, "new comment");
+  };
+}
+
+
+export const fetchComments = async (url: any, blogId: any) => {
+  const response = await fetch(`${url}/api/blogs/${blogId}/comments`);
+  const data = await response.json();
+  return data.map((comment: any, index: any) => ({
+    id: comment.id,
+    author: {
+      id: comment.user,
+      firstName: comment.username,
+      lastName: "",
+      displayName: data.username,
+      email: "",
+      avatar: `${url}${comment.photo}`,
+      count: 0,
+      href: `/author/${comment.user}`,
+      desc: "",
+      jobName: "Author Job",
+    },
+    children: [],
+    date: comment.date_format,
+    content: comment.body,
+    parentId: null,
+    like: {
+      count: 0,
+      isLiked: false
+    },
+    childrens: null
+  }));
+}
+
 
 export const handleUnlike = async (url: any, blogId: any, id: any, token: any) => {
   if (!token) {
@@ -69,7 +147,9 @@ export const fetchProfile = async (id: any, url: string) => {
     count: data.blog_count,
     href: `/author/${data.id}`,
     desc: data.bio,
-    jobName: "Author Job"
+    jobName: "Author Job",
+    api_key: data.api_key,
+    role: data.role
   }
   return transformedPosts;
 }
@@ -80,6 +160,7 @@ export const fetchAllProfiles = async (url: string) => {
   const data = await response.json();
   const transformedPosts = data.map((post: any, index: any) => ({
     id: post.id,
+    api_key: data.api_key,
     firstName: post.username,
     lastName: "",
     displayName: post.username,
@@ -90,7 +171,8 @@ export const fetchAllProfiles = async (url: string) => {
     count: post.blog_count,
     href: `/author/${post.id}`,
     desc: post.bio,
-    jobName: "Author Job"
+    jobName: "Author Job",
+    role: post.role,
   }));
   return transformedPosts;
 }
@@ -114,6 +196,9 @@ export const updateProfileInfo = async (url: any, user: any, token: any) => {
   if (user.photo) {
     formData.append('photo', user.photo);
   }
+  if (user.role) {
+    formData.append('role', user.role);
+  }
 
   try {
     const response = await fetch(`${url}/api/profile/${user.id}/update/`, {
@@ -125,8 +210,7 @@ export const updateProfileInfo = async (url: any, user: any, token: any) => {
     });
 
     if (response.ok) {
-      const updatedProfile = await response.json();
-      console.log(updatedProfile);
+      return await response.json();
     } else {
       console.error('Failed to update profile:', response.status);
     }
@@ -168,7 +252,8 @@ export const createBlog = async (url: any, blog: any, token: any) => {
   formData.append("title", blog.title);
   formData.append("content", blog.content);
   formData.append("category", blog.category);
-  formData.append("image", blog.image);
+  if (blog.image)
+    formData.append("image", blog.image);
   formData.append("author", blog.id);
   const requestOptions = {
     method: "POST",
@@ -192,30 +277,41 @@ export const deleteBlog = async (url: any, id: any, token: any) => {
   });
 };
 
+export const deleteComment = async (commentId: any, auth: any) => {
+  await fetch(`${auth.BASE_API_URL}/api/comments/${commentId}/delete/`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + String(auth.token.access),
+    },
+  });
+}
 
 
 export async function fetchBlog(url: any, id: any, blogId: number) {
   const response = await fetch(`${url}/api/blogs/${blogId}/`);
   const data = await response.json();
+  const comments = await fetchComments(url, blogId);
   const transformedPosts = {
     author: {
       id: data.author_id,
       firstName: data.author_name,
       lastName: "",
       displayName: data.author_name,
-      email: "nfoulcher2@google.com.br",
+      email: data.author_email,
       avatar: `${url}${data.author_photo}`,
       count: 43,
       href: `/author/${data.author_id}`,
-      desc: "There’s no stopping the tech giant. Apple now opens its 100th store in China.There’s no stopping the tech giant.",
+      desc: data.author_bio,
       jobName: "Author Job",
+      role: data.author_role,
     },
     categories: [{
       id: 1,
-      name: "Garden",
+      name: data.category,
       href: "/archive/the-demo-archive-slug",
       thumbnail: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80",
-      taxonomy: "category",
+      taxonomy: data.category,
       count: 13,
       color: "indigo"
     }],
@@ -250,42 +346,12 @@ export async function fetchBlog(url: any, id: any, blogId: number) {
         color: "indigo"
       },
     ],
-    content: "",
-    comments: [
-      {
-        id: 1,
-        author: {
-          id: data.author_id,
-          firstName: data.author_name,
-          lastName: "",
-          displayName: data.author_name,
-          email: "nfoulcher2@google.com.br",
-          avatar: `${url}${data.author_photo}`,
-          count: 43,
-          href: `/author/${data.author_id}`,
-          desc: "There’s no stopping the tech giant. Apple now opens its 100th store in China.There’s no stopping the tech giant.",
-          jobName: "Author Job",
-        },
-        children: [],
-        date: "May 20, 2021",
-        content: "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-        parentId: null,
-        like: {
-          count: 96,
-          isLiked: false
-        },
-        childrens: null
-      }
-    ]
+    content: data.content,
+    comments: comments,
   };
   return transformedPosts;
 }
 
-export async function fetchComments(url: string, id: number) {
-  const response = await fetch(`${url}${id}/comments/`);
-  const data = await response.json();
-  return data;
-}
 
 export const fetchAllBlogs = async (url: string, id: null) => {
   const response = await fetch(`${url}/api/blogs/`);
@@ -297,18 +363,19 @@ export const fetchAllBlogs = async (url: string, id: null) => {
       firstName: post.author_name,
       lastName: "",
       displayName: post.author_name,
-      email: "nfoulcher2@google.com.br",
-      gender: "Bigender",
+      email: post.author_email,
+      gender: "",
       avatar: `${url}${post.author_photo}`,
       count: 43,
       href: `/author/${post.author_id}`,
-      desc: "There’s no stopping the tech giant. Apple now opens its 100th store in China.There’s no stopping the tech giant.",
+      desc: post.author_bio,
       jobName: "Author Job",
-      bgImage: "https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+      bgImage: "https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      role: data.author_role,
     },
     categories: [{
       id: 1,
-      name: "Garden",
+      name: post.category,
       href: "/archive/the-demo-archive-slug",
       thumbnail: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80",
       count: 13,

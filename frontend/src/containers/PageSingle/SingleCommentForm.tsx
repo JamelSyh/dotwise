@@ -1,14 +1,20 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import Textarea from "components/Textarea/Textarea";
+import { handleSubmitComment } from "../../components/Forgin/components/blogUtils";
+import { fetchBlog } from "../../components/Forgin/components/blogUtils";
+import { useHistory, useParams, useLocation } from "react-router";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
+import { setPost } from "app/content/content";
 
 export interface SingleCommentFormProps {
   className?: string;
   commentId?: number;
-  onClickSubmit: (id?: number) => void;
-  onClickCancel: (id?: number) => void;
-  textareaRef?: React.MutableRefObject<null>;
+  onClickSubmit?: (id?: number) => void;
+  onClickCancel?: (id?: number) => void;
+  textareaRef?: any;
   defaultValue?: string;
   rows?: number;
 }
@@ -22,24 +28,55 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
   defaultValue = "",
   rows = 4,
 }) => {
+
+  const history = useHistory();
+  const location = useLocation();
+  const [comment, setComment] = useState("");
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuthState);
+  const url = auth.BASE_API_URL;
+
+  // @ts-ignore
+  const { slug } = useParams();
+  const id = parseInt(slug.split('/').pop());
+
+  const handleCommentSubmit = (e: any) => {
+    e.preventDefault();
+    if (!auth.token) {
+      history.push({
+        pathname: "/login",
+        state: { from: history.location.pathname } // Save the current path as the "from" state
+      });
+      return;
+    }
+    handleSubmitComment(comment, id, auth).then(() => {
+      setComment("");
+      fetchBlog(url, auth?.user?.user_id, id).then((data) => {
+        dispatch(setPost(data));
+      });
+    });
+  };
+
+
   return (
-    <form action="#" className={`nc-SingleCommentForm ${className}`}>
+    <form className={`nc-SingleCommentForm ${className}`}>
       <Textarea
         placeholder="Add to discussion"
+        value={comment}
         ref={textareaRef}
         required={true}
-        defaultValue={defaultValue}
         rows={rows}
+        onChange={(e) => { setComment(e.target.value); }}
       />
       <div className="mt-2 space-x-3">
-        <ButtonPrimary onClick={() => onClickSubmit(commentId)} type="submit">
+        <ButtonPrimary onClick={(e) => { handleCommentSubmit(e); }} type="submit">
           Submit
         </ButtonPrimary>
-        <ButtonSecondary type="button" onClick={() => onClickCancel(commentId)}>
+        <ButtonSecondary type="button" onClick={() => { }}>
           Cancel
         </ButtonSecondary>
       </div>
-    </form>
+    </form >
   );
 };
 

@@ -4,16 +4,20 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
 import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
-import Editor from "components/editor/editor";
+import Editorr from "components/editor/editor";
+import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from 'app/hooks';
-import { selectAuthState } from 'app/auth/auth';
+import { selectAuthState, setPending } from 'app/auth/auth';
 import { createBlog, fileValidation } from "../../components/Forgin/components/blogUtils";
 
 const DashboardSubmitPost = () => {
 
+  const history = useHistory();
+  const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
   const user = auth.user;
   const authToken = auth.token;
+  const pending = auth.pending;
   const url = auth.BASE_API_URL;
 
   const [message, setMessage] = useState("");
@@ -35,7 +39,7 @@ const DashboardSubmitPost = () => {
     });
   };
 
-  const handleDataFromEditor = (data: any) => {
+  const handleDataFromEditor = (data: any, g: any) => {
     setBlog((prev) => {
       return {
         ...prev,
@@ -46,8 +50,10 @@ const DashboardSubmitPost = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    dispatch(setPending(true));
     const res = await createBlog(url, blog, authToken);
-    console.log(res);
+    dispatch(setPending(false));
+    history.push(`/blog/${res.id}`);
   }
 
   const handleFile = (e: any) => {
@@ -137,10 +143,10 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label> Post Content</Label>
 
-          <Editor onData={handleDataFromEditor} />
+          <Editorr onData={handleDataFromEditor} />
         </label>
 
-        <ButtonPrimary className="md:col-span-2" type="submit">
+        <ButtonPrimary loading={pending} className="md:col-span-2" type="submit">
           Submit post
         </ButtonPrimary>
       </form>

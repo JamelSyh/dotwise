@@ -15,7 +15,7 @@ class BlogAdmin(admin.ModelAdmin):
 
 
 ADDITIONAL_USER_FIELDS = [
-    (None, {'fields': ['photo', 'bio']}),
+    (None, {'fields': ['photo', 'bio', 'role']}),
 ]
 
 
@@ -23,7 +23,7 @@ class ProfileAdmin(UserAdmin):
     add_form = ProfileCreationForm
     form = ProfileChangeForm
     model = Profile
-    list_display = ['username', 'email', 'photo', 'bio']
+    list_display = ['username', 'email', 'photo', 'bio', 'role']
     fieldsets = UserAdmin.fieldsets + tuple(ADDITIONAL_USER_FIELDS)
     add_fieldsets = UserAdmin.add_fieldsets + tuple(ADDITIONAL_USER_FIELDS)
 

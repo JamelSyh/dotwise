@@ -43,10 +43,11 @@ const PageHome: React.FC = () => {
   const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
   const MAGAZINE1_POSTS = content.posts;
   const MAGAZINE2_POSTS = content.posts;
+
   return (
     <div className="nc-PageHome relative">
       <Helmet>
-        <title>Home || Blog Magazine React Template</title>
+        <title>Home || Dotwise</title>
       </Helmet>
 
       {/* ======== ALL SECTIONS ======== */}
@@ -107,10 +108,10 @@ const PageHome: React.FC = () => {
           {/* <SectionAds /> */}
 
           {/* === SECTION 7 === */}
-          <SectionMagazine7
-            className="py-16 lg:py-28"
-            posts={DEMO_POSTS_GALLERY.filter((_, i) => i < 6)}
-          />
+          {/* <SectionMagazine7 */}
+          {/*   className="py-16 lg:py-28" */}
+          {/*   posts={DEMO_POSTS_GALLERY.filter((_, i) => i < 6)} */}
+          {/* /> */}
         </div>
 
         {/* === SECTION 11 === */}
@@ -143,25 +144,26 @@ const PageHome: React.FC = () => {
           {/*   /> */}
           {/* </div> */}
 
-          {/* === SECTION 5 === */}
-          <SectionGridAuthorBox
-            className="py-16 lg:py-28"
-            authors={profiles.filter((_, i) => i < 10)}
-          />
-
           {/* === SECTION 8 === */}
           <div className="relative py-16">
             <BackgroundSection />
             <SectionBecomeAnAuthor />
           </div>
 
-          {/* === SECTION 11 === */}
-          <SectionMagazine4
+          {/* === SECTION 5 === */}
+          <SectionGridAuthorBox
             className="py-16 lg:py-28"
-            heading="Life styles 🎨 "
-            posts={MAGAZINE2_POSTS}
-            tabs={MAGAZINE1_TABS}
+            authors={profiles.filter((_, i) => i < 10)}
           />
+
+
+          {/* === SECTION 11 === */}
+          {/* <SectionMagazine4 */}
+          {/*   className="py-16 lg:py-28" */}
+          {/*   heading="Life styles 🎨 " */}
+          {/*   posts={MAGAZINE2_POSTS} */}
+          {/*   tabs={MAGAZINE1_TABS} */}
+          {/* /> */}
 
           {/* === SECTION 12 === */}
           {/* <div className="relative py-16"> */}
@@ -179,7 +181,6 @@ const PageHome: React.FC = () => {
           {/* </div> */}
 
           {/* === SECTION 14 === */}
-          <SectionSubscribe2 className="pt-16 lg:pt-28" />
 
           {/* === SECTION 15 === */}
           {/* <SectionVideos className="py-16 lg:py-28" /> */}
@@ -191,7 +192,9 @@ const PageHome: React.FC = () => {
             widgetPosts={POSTS.filter((_, i) => i > 2 && i < 7)}
             categories={DEMO_CATEGORIES.filter((_, i) => i > 2 && i < 8)}
             tags={DEMO_CATEGORIES}
+            authors={profiles.filter((_, i) => i < 5)}
           />
+          <SectionSubscribe2 className="pt-16 lg:pt-28" />
         </div>
         {/* ======= END CONTAINER ============= */}
       </div>

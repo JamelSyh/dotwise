@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Garden",
+    "name": "Uncategorized",
     "href": "/archive/the-demo-archive-slug",
     "thumbnail": "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80",
     "count": 13,
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "name": "Jewelry",
+    "name": "Braille",
     "href": "/archive/the-demo-archive-slug",
     "thumbnail": "https://images.unsplash.com/photo-1485841890310-6a055c88698a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80",
     "count": 16,
@@ -151,7 +151,6 @@
     "count": 18,
     "color": "green"
   },
-
   {
     "id": 20,
     "name": "Graphic Design",

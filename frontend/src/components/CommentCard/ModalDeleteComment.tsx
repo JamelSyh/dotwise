@@ -3,6 +3,12 @@ import NcModal from "components/NcModal/NcModal";
 import { CommentType } from "./CommentCard";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
+import { deleteComment } from "../../components/Forgin/components/blogUtils";
+import { useParams } from "react-router";
+import { fetchBlog } from "../../components/Forgin/components/blogUtils";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
+import { setPost } from "app/content/content";
 
 export interface ModalDeleteCommentProps {
   commentId: CommentType["id"];
@@ -17,8 +23,26 @@ const ModalDeleteComment: FC<ModalDeleteCommentProps> = ({
 }) => {
   const textareaRef = useRef(null);
 
-  const handleClickSubmitForm = () => {
-    console.log({ commentId });
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuthState);
+  const url = auth.BASE_API_URL;
+
+  const { slug } = useParams();
+  const id = parseInt(slug.split('/').pop());
+
+  const handleDeleteComment = (e: any) => {
+    e.preventDefault();
+    deleteComment(commentId, auth).then(() => {
+      onCloseModalDeleteComment();
+      fetchBlog(url, auth?.user?.user_id, id).then((data) => {
+        dispatch(setPost(data));
+      });
+    });
+  };
+
+
+  const handleClickSubmitForm = (e: any) => {
+    handleDeleteComment(e);
   };
 
   useEffect(() => {

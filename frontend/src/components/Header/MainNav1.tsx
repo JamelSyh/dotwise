@@ -5,14 +5,30 @@ import SearchDropdown from "./SearchDropdown";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import MenuBar from "components/MenuBar/MenuBar";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
 
+  const history = useHistory();
 
+  const getButtonInfo = () => {
+    if (location.pathname == "/signup") {
+      return "Log In";
+    } else {
+      return "Sign Up";
+    }
+  }
+
+  const getButtonOnClick = () => {
+    if (location.pathname == "/signup") {
+      history.push("/login");
+    } else {
+      history.push("/signup");
+    }
+  }
 
   return (
     <div
@@ -29,14 +45,14 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
             <DarkModeContainer />
             <SearchDropdown />
             <div className="px-1" />
-            <ButtonPrimary >
-              {location.pathname == "/signup" ? <Link to="/login" >Log in</Link> : <Link to="/signup" >Sign up</Link>}
+            <ButtonPrimary onClick={getButtonOnClick}>
+              {getButtonInfo()}
             </ButtonPrimary>
           </div>
           <div className="flex items-center xl:hidden">
-            <ButtonPrimary >
-              {location.pathname == "/signup" ? <Link to="/login" >Log in</Link> : <Link to="/signup" >Sign up</Link>}
-            </ButtonPrimary>
+            <ButtonPrimary onClick={getButtonOnClick}>
+              {getButtonInfo()}
+            </ButtonPrimary >
             <div className="px-1" />
             <MenuBar />
           </div>

@@ -19,6 +19,7 @@ import { DEMO_CATEGORIES } from "data/taxonomies";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import NcImage from "components/NcImage/NcImage";
+import Badge from "components/Badge/Badge";
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectContentState } from "app/content/content";
@@ -39,6 +40,15 @@ const FILTERS = [
 const TABS = ["Articles", "Favorites", "Saved"];
 
 const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
+
+  const role: any = {
+    "U": { role: "User", color: "blue" },
+    "B": { role: "Blind User", color: "blue" },
+    "BA": { role: "Blind Assistant", color: "blue" },
+    "D": { role: "Developer", color: "orange" },
+    "A": { role: "Admin", color: "red" },
+  }
+
 
   const { slug } = useParams();
   const id = parseInt(slug.split('/').pop());
@@ -84,21 +94,24 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
           />
         </div>
         <div className="relative container -mt-20 lg:-mt-48">
-          <div className=" bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-16 rounded-[40px] shadow-2xl flex flex-col sm:flex-row sm:items-center">
+          <div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-16 rounded-[40px] shadow-2xl flex flex-col sm:flex-row sm:items-center">
             <Avatar
               containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
               imgUrl={author.avatar}
               sizeClass="w-20 h-20 text-xl lg:text-2xl lg:w-36 lg:h-36"
               radius="rounded-full"
             />
-            <div className="mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
-              <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
-                {author.displayName}
-              </h2>
-              <span className="block text-sm text-neutral-6000 dark:text-neutral-300 md:text-base">
-                {author.desc}
-              </span>
-              <SocialsList />
+            <div>
+              <Badge className="ml-5 mt-2" name={role[author.role].role} color={role[author.role].color} />
+              <div className="flex-col mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
+                <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
+                  {author.displayName}
+                </h2>
+                <span className="block text-sm text-neutral-6000 dark:text-neutral-300 md:text-base">
+                  {author.desc}
+                </span>
+                <SocialsList />
+              </div>
             </div>
           </div>
         </div>
@@ -156,7 +169,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           uniqueSliderClass="PageAuthor__slider"
-          authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+          authors={authors.filter((_, i) => i < 10)}
         />
 
         {/* SUBCRIBES */}

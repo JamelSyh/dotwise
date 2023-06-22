@@ -3,12 +3,14 @@ import Avatar from "components/Avatar/Avatar";
 import NcDropDown from "components/NcDropDown/NcDropDown";
 import CommentCardLikeReplyContainer from "containers/CommentCardLikeReplyContainer/CommentCardLikeReplyContainer";
 import { PostAuthorType } from "data/types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import twFocusClass from "utils/twFocusClass";
 import SingleCommentForm from "containers/PageSingle/SingleCommentForm";
 import ModalEditComment from "./ModalEditComment";
 import ModalDeleteComment from "./ModalDeleteComment";
 import ModalReportItem from "components/ModalReportItem/ModalReportItem";
+import { useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
 
 export interface CommentType {
   id: number;
@@ -34,12 +36,14 @@ const CommentCard: FC<CommentCardProps> = ({
   comment,
   size = "large",
 }) => {
+  const history = useHistory();
+  const auth = useAppSelector(selectAuthState);
   const { author, id, date, parentId, content } = comment;
   const actions = [
     { id: "edit", name: "Edit", icon: "las la-edit" },
     { id: "reply", name: "Reply", icon: "las la-reply" },
-    { id: "report", name: "Report abuse", icon: "las la-flag" },
     { id: "delete", name: "Delete", icon: "las la-trash-alt" },
+    { id: "report", name: "Report abuse", icon: "las la-flag" },
   ];
 
   const textareaRef = useRef(null);
@@ -68,6 +72,13 @@ const CommentCard: FC<CommentCardProps> = ({
   const closeModalDeleteComment = () => setIsDeleting(false);
 
   const hanldeClickDropDown = (item: typeof actions[number]) => {
+    if (!auth.token) {
+      history.push({
+        pathname: "/login",
+        state: { from: history.location.pathname } // Save the current path as the "from" state
+      });
+      return;
+    }
     if (item.id === "reply") {
       return openReplyForm();
     }
@@ -108,9 +119,8 @@ const CommentCard: FC<CommentCardProps> = ({
         <Avatar
           imgUrl={author.avatar}
           userName={author.displayName}
-          sizeClass={`h-6 w-6 text-base ${
-            size === "large" ? "sm:text-lg sm:h-8 sm:w-8" : ""
-          }`}
+          sizeClass={`h-6 w-6 text-base ${size === "large" ? "sm:text-lg sm:h-8 sm:w-8" : ""
+            }`}
           radius="rounded-full"
           containerClassName="mt-4"
         />

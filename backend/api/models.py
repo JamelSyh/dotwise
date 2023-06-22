@@ -1,12 +1,30 @@
 from django.db import models
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
+from django.utils.crypto import get_random_string
 
 
 class Profile(AbstractUser):
     photo = models.ImageField(
         upload_to='profile/', blank=True, null=True, default='profile/default.jpg')
     bio = models.TextField(blank=True, null=True)
+    api_key = models.CharField(
+        max_length=40, unique=True, blank=True, null=True)
+    ROLES = (
+        ('A', 'Admin'),
+        ('D', 'Developer'),
+        ('U', 'User'),
+        ('B', 'Blind User'),
+        ('BA', 'Blind Assistant'),
+    )
+    role = models.CharField(max_length=2, choices=ROLES, default='U')
+
+    def save(self, *args, **kwargs):
+        # Generate API key if it doesn't exist
+        if not self.api_key:
+            self.api_key = get_random_string(length=40)
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
@@ -54,7 +72,8 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='images/', blank=True, null=True, default='images/default_blog.png')
     category = models.CharField(
         max_length=100, default='uncategorized', choices=CHOICES)
     publish_status = models.BooleanField(default=True, choices=(
@@ -64,6 +83,7 @@ class Blog(models.Model):
     author_name = property(lambda self: self.author.username)
     author_photo = property(lambda self: self.author.photo.url)
     author_bio = property(lambda self: self.author.bio)
+    author_email = property(lambda self: self.author.email)
 
     class Meta:
         ordering = ['-created_at']

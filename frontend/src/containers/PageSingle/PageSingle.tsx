@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { PostDataType, TaxonomyType } from "data/types";
 import NcImage from "components/NcImage/NcImage";
 import { SINGLE } from "data/single";
@@ -11,7 +11,7 @@ import { changeCurrentPage } from "app/pages/pages";
 import SingleHeader from "./SingleHeader";
 import SingleRelatedPosts from "./SingleRelatedPosts";
 import { useParams } from 'react-router-dom';
-import { fetchBlog } from "../../components/Forgin/components/blogUtils";
+import { fetchBlog, fetchComments } from "../../components/Forgin/components/blogUtils";
 
 export interface PageSingleProps {
   className?: string;
@@ -29,6 +29,7 @@ const PageSingle: FC<PageSingleProps> = ({ className = "" }) => {
   const auth = useAppSelector(selectAuthState);
   const content = useAppSelector(selectContentState);
 
+
   const url = auth.BASE_API_URL;
   // @ts-ignore
   const { slug } = useParams();
@@ -39,14 +40,14 @@ const PageSingle: FC<PageSingleProps> = ({ className = "" }) => {
     fetchBlog(url, auth?.user?.user_id, id).then((data) => {
       dispatch(setPost(data));
       console.log(SINGLE, data);
-    })
+    });
     // UPDATE CURRENTPAGE DATA IN PAGE-REDUCERS
     dispatch(changeCurrentPage({ type: "/single/:slug", data: content.post }));
 
     return () => {
       dispatch(changeCurrentPage({ type: "/", data: {} }));
     };
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -64,7 +65,7 @@ const PageSingle: FC<PageSingleProps> = ({ className = "" }) => {
         {/* FEATURED IMAGE */}
         <NcImage
           containerClassName="container my-10 sm:my-12"
-          className="object-cover w-full h-full rounded-xl"
+          className="object-contain max-h-250 w-auto mx-auto my-auto"
           src={content.post.featuredImage}
         />
 

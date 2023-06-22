@@ -9,8 +9,77 @@ import { isEqual } from "lodash";
 // }
 
 const initialState = {
+  comments: [
+    {
+      id: 1,
+      author: {
+        id: 1,
+        firstName: 'admin',
+        lastName: '',
+        displayName: 'admin',
+        email: 'admin@dotwise.com',
+        gender: '',
+        avatar: 'profile/default.jpg',
+        count: 0,
+        href: '/author/1',
+        desc: '',
+        jobName: 'admin',
+        bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      },
+      date: 'May 20, 2021',
+      content: 'nice',
+      parentId: null,
+      like: {
+        count: 96,
+        isLiked: false
+      },
+      childrens: null
+    }
+  ]
+  ,
   posts: [],
-  myPosts: [],
+  myPosts: [
+    {
+      author: {
+        id: 1,
+        firstName: 'admin',
+        lastName: '',
+        displayName: 'admin',
+        email: 'admin@dotwise.com',
+        gender: '',
+        avatar: 'profile/default.jpg',
+        count: 0,
+        href: '/author/1',
+        desc: '',
+        jobName: 'admin',
+        bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      },
+      categories: [
+      ],
+      id: 1,
+      featuredImage: '',
+      title: '',
+      desc: '',
+      date: '',
+      href: '',
+      commentCount: 0,
+      viewdCount: 0,
+      readingTime: '',
+      bookmark: {
+        count: 0,
+        isBookmarked: false
+      },
+      like: {
+        count: 0,
+        isLiked: false
+      },
+      authorId: 0,
+      categoriesId: [],
+      postType: '',
+      tags: [
+      ],
+    }
+  ],
   post: {
     author: {
       id: 1,
@@ -69,7 +138,7 @@ const initialState = {
           bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
         },
         date: 'May 20, 2021',
-        content: 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.',
+        content: 'nice',
         parentId: null,
         like: {
           count: 96,
@@ -100,6 +169,11 @@ export const ContentSlice = createSlice({
         state.post = action.payload;
       }
     },
+    setComments: (state, action: PayloadAction<any>) => {
+      if (!isEqual(state.comments, action.payload)) {
+        state.comments = action.payload;
+      }
+    },
   },
 });
 
@@ -107,6 +181,7 @@ export const {
   setPosts,
   setMyPosts,
   setPost,
+  setComments,
 } = ContentSlice.actions;
 
 export const selectContentState = (state: RootState) =>

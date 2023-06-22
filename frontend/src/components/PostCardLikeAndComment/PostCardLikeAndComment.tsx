@@ -39,7 +39,10 @@ const PostCardLikeAndComment: FC<PostCardLikeAndCommentProps> = ({
         like={postData.like}
         onClickLike={() => {
           if (!auth.token) {
-            history.push("/login");
+            history.push({
+              pathname: "/login",
+              state: { from: history.location.pathname } // Save the current path as the "from" state
+            });
           }
           else if (postData.like.isLiked) {
             handleUnlike(url, postData.id, auth?.user?.user_id, auth?.token);

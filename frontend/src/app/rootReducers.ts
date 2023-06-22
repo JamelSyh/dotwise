@@ -9,6 +9,7 @@ import authReducer from "./auth/auth";
 import translatorReducer from "./translator/translator";
 import searchReducer from "./search/search";
 import contentReducer from "./content/content";
+import globalReducer from "./global/global";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -22,6 +23,7 @@ const rootReducers = {
   translator: translatorReducer,
   search: searchReducer,
   content: contentReducer,
+  global: globalReducer,
 };
 
 export default rootReducers;

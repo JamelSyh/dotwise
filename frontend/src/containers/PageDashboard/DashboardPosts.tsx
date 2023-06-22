@@ -3,7 +3,7 @@ import NcImage from "components/NcImage/NcImage";
 import Pagination from "components/Pagination/Pagination";
 import { getMyBlogs } from "../../components/Forgin/components/blogUtils";
 import { useAppSelector, useAppDispatch } from 'app/hooks';
-import { selectAuthState } from 'app/auth/auth';
+import { selectAuthState, setPending } from 'app/auth/auth';
 import { selectContentState, setMyPosts } from "app/content/content";
 import { deleteBlog } from "../../components/Forgin/components/blogUtils";
 
@@ -65,6 +65,7 @@ import { deleteBlog } from "../../components/Forgin/components/blogUtils";
 const DashboardPosts = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
+  const pending = auth.pending;
   const content = useAppSelector(selectContentState);
   const user = auth.user;
   const authToken = auth.token;
@@ -74,12 +75,11 @@ const DashboardPosts = () => {
   const setMyBlogs = async () => {
     const res = await getMyBlogs(url, authToken);
     dispatch(setMyPosts(res));
-    console.log(res);
   }
 
   useEffect(() => {
     setMyBlogs();
-  }, [content.posts])
+  }, [auth])
 
   return (
     <div className="flex flex-col space-y-8">
@@ -138,8 +138,10 @@ const DashboardPosts = () => {
                       {` | `}
                       <a
                         className="text-rose-600 hover:text-rose-900"
-                        onClick={() => {
-                          deleteBlog(url, item.id, authToken);
+                        onClick={async () => {
+                          dispatch(setPending(true));
+                          await deleteBlog(url, item.id, authToken);
+                          dispatch(setPending(false));
                         }}
                       >
                         Delete
