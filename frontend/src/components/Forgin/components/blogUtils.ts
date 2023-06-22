@@ -67,7 +67,7 @@ export const handleSubmitComment = async (content: any, blogId: any, auth: any) 
 
 
 export const fetchComments = async (url: any, blogId: any) => {
-  const response = await fetch(`${url}/api/blogs/${blogId}/comments`);
+  const response = await fetch(`${url}/api/blogs/${blogId}/comments/`);
   const data = await response.json();
   return data.map((comment: any, index: any) => ({
     id: comment.id,
