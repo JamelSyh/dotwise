@@ -50,6 +50,8 @@ const DashboardSubmitPost = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (blog.content != "")
+      return;
     dispatch(setPending(true));
     const res = await createBlog(url, blog, authToken);
     dispatch(setPending(false));
@@ -75,14 +77,14 @@ const DashboardSubmitPost = () => {
 
           <Input type="text" name="title" required className="mt-1" value={blog.title} onChange={handleChange} />
         </label>
-        <label className="block md:col-span-2">
-          <Label>Post Excerpt</Label>
+        {/* <label className="block md:col-span-2"> */}
+        {/*   <Label>Post Excerpt</Label> */}
 
-          <Textarea className="mt-1" rows={4} />
-          <p className="mt-1 text-sm text-neutral-500">
-            Brief description for your article. URLs are hyperlinked.
-          </p>
-        </label>
+        {/*   <Textarea className="mt-1" rows={4} /> */}
+        {/*   <p className="mt-1 text-sm text-neutral-500"> */}
+        {/*     Brief description for your article. URLs are hyperlinked. */}
+        {/*   </p> */}
+        {/* </label> */}
         <label className="block">
           <Label>Category</Label>
 
