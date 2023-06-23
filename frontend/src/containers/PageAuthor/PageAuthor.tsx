@@ -103,7 +103,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
               radius="rounded-full"
             />
             <div>
-              <Badge className="ml-5 mt-2" name={role[author.role].role} color={role[author.role].color} />
+              <Badge className="ml-5 mt-2" name={role[author?.role]?.role} color={role[author?.role]?.color} />
               <div className="flex-col mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
                 <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
                   {author.displayName}

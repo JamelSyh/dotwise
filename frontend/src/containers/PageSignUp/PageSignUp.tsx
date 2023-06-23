@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet";
 import { selectAuthState, setPending } from "app/auth/auth";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { signup } from "../../components/Forgin/components/blogUtils";
+import { Alert } from "components/Alert/Alert";
 
 export interface PageSignUpProps {
   className?: string;
@@ -102,6 +103,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         heading="Sign up"
       >
         <div className="max-w-md mx-auto space-y-6">
+          <Alert />
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a
