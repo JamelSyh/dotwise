@@ -4,9 +4,8 @@ import ContentLoader from 'react-content-loader'
 const ImageLoader = (props: any) => {
   return (
     <ContentLoader
+      className="w-full h-full"
       viewBox="0 0 500 500"
-      height={300}
-      width={600}
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
       {...props}
