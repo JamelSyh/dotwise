@@ -181,7 +181,7 @@ export const fetchAllProfiles = async (url: string) => {
     email: post.email,
     gender: "",
     avatar: `${imageUrl}${post.photo}`,
-    bgImage: `${imageUrl}${post.bg_image}` || profileBackgroundImages[post.id % profileBackgroundImages.length],
+    bgImage: post.bg_image ? `${imageUrl}${post.bg_image}` : profileBackgroundImages[post.id % profileBackgroundImages.length],
     count: post.blog_count,
     href: `/author/${post.id}`,
     desc: post.bio,
@@ -387,7 +387,7 @@ export const fetchAllBlogs = async (url: string, id: null) => {
       href: `/author/${post.author_id}`,
       desc: post.author_bio,
       jobName: "Author Job",
-      bgImage: `${imageUrl}${post.bg_image}` || profileBackgroundImages[post.id % profileBackgroundImages.length],
+      bgImage: post.bg_image ? `${imageUrl}${post.bg_image}` : profileBackgroundImages[post.id % profileBackgroundImages.length],
       role: data.author_role,
     },
     categories: [{
