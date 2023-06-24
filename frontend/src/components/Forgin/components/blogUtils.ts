@@ -157,7 +157,7 @@ export const fetchProfile = async (id: any, url: any) => {
     email: data.email,
     gender: "",
     avatar: `${imageUrl}${data.photo}`,
-    bgImage: profileBackgroundImages[data.id % profileBackgroundImages.length],
+    bgImage: data.bg_image || profileBackgroundImages[data.id % profileBackgroundImages.length],
     count: data.blog_count,
     href: `/author/${data.id}`,
     desc: data.bio,
@@ -181,7 +181,7 @@ export const fetchAllProfiles = async (url: string) => {
     email: post.email,
     gender: "",
     avatar: `${imageUrl}${post.photo}`,
-    bgImage: profileBackgroundImages[post.id % profileBackgroundImages.length],
+    bgImage: post.bg_image || profileBackgroundImages[post.id % profileBackgroundImages.length],
     count: post.blog_count,
     href: `/author/${post.id}`,
     desc: post.bio,
@@ -209,6 +209,9 @@ export const updateProfileInfo = async (url: any, user: any, token: any) => {
   }
   if (user.photo) {
     formData.append('photo', user.photo);
+  }
+  if (user.bgImage) {
+    formData.append('bg_image', user.bgImage);
   }
   if (user.role) {
     formData.append('role', user.role);
@@ -384,7 +387,7 @@ export const fetchAllBlogs = async (url: string, id: null) => {
       href: `/author/${post.author_id}`,
       desc: post.author_bio,
       jobName: "Author Job",
-      bgImage: profileBackgroundImages[post.author_id.id % profileBackgroundImages.length],
+      bgImage: post.bg_image || profileBackgroundImages[post.author_id.id % profileBackgroundImages.length],
       role: data.author_role,
     },
     categories: [{

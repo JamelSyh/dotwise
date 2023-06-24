@@ -13,6 +13,7 @@ import { selectAuthState, setPending } from 'app/auth/auth';
 const DashboardEditProfile = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageBg, setSelectedImageBg] = useState(null);
 
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const DashboardEditProfile = () => {
     username: "",
     password: "",
     bio: "",
+    bgImage: "",
     email: "",
     photo: "",
     role: "",
@@ -36,6 +38,7 @@ const DashboardEditProfile = () => {
 
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
+    console.log(profile);
     dispatch(setPending(true));
     const res = await updateProfileInfo(url, profile, authToken);
     dispatch(setPending(false));
@@ -46,12 +49,26 @@ const DashboardEditProfile = () => {
   const handleFileSelect = (event: any) => {
     const file = event.target.files[0];
     setProfile({ ...profile, photo: file })
+    console.log(event.target.name);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFileSelectBg = (event: any) => {
+    const file = event.target.files[0];
+    setSelectedImageBg(null);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImageBg(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setProfile({ ...profile, bgImage: file });
     }
   };
 
@@ -101,6 +118,48 @@ const DashboardEditProfile = () => {
               <p className="pl-1 mt-2">or drag and drop</p>
             </div>
             <p className="text-xs text-neutral-500 mt-2">PNG, JPG, GIF up to 2MB</p>
+          </div>
+        </div>
+
+        <div className="block md:col-span-2">
+          <Label>Background Image</Label>
+
+          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-700 border-dashed rounded-md">
+            <div className="space-y-1 text-center">
+              <svg
+                className="mx-auto h-12 w-12 text-neutral-400"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+              >
+                <path
+                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+              </svg>
+              <div className="flex flex-col sm:flex-row text-sm text-neutral-6000">
+                <label
+                  htmlFor="file-upload-bg"
+                  className="relative cursor-pointer rounded-md font-medium text-primary-6000 hover:text-primary-800 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+                >
+                  <span>Upload a Background Image</span>
+                  <input
+                    id="file-upload-bg"
+                    name="bgImage"
+                    type="file"
+                    className="sr-only"
+                    onChange={handleFileSelectBg}
+                  />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs text-neutral-500">
+                PNG, JPG, GIF up to 2MB
+              </p>
+            </div>
           </div>
         </div>
 
