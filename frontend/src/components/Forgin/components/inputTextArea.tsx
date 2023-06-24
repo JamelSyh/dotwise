@@ -133,10 +133,10 @@ function InputTextArea() {
 
   useEffect(() => {
     if (inLang.code === "1" || inLang.code === "2") {
-      setBraille(true);
+      dispatch(setBraille(true));
     }
     else {
-      setBraille(false);
+      dispatch(setBraille(false));
       dispatch(setBrailleBoard(false));
       inOpt.forEach((lang) => {
         if (lang === inLang)

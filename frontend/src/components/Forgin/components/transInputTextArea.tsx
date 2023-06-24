@@ -87,10 +87,10 @@ function TransInputTextArea() {
 
   useEffect(() => {
     if (inTrans[0].code === "1" || inTrans.code === "2") {
-      setBraille(true);
+      dispatch(setBraille(true));
     }
     else {
-      setBraille(false);
+      dispatch(setBraille(false));
       dispatch(setBrailleBoard(false));
       inTransOpt.forEach((lang: any) => {
         if (lang === inTrans[0])

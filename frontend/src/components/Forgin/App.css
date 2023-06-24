@@ -379,7 +379,7 @@ input:checked + .slider:before {
 /* ===================== keyboard ====================== */
 
 #kcontainer {
-  margin: auto;
+  margin: 0;
   width: 40%;
   height: 230px;
   border-radius: 5px;
