@@ -33,7 +33,7 @@ export default function AvatarDropdown() {
       email: "",
       gender: "",
       avatar: "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
-      bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      bgImage: "",
       count: 0,
       href: "/author/1",
       desc: "",

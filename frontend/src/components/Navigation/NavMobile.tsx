@@ -5,10 +5,12 @@ import { Disclosure } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import { NavItemType } from "./NavigationItem";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
-import { NAVIGATION_DEMO } from "data/navigation";
+import { NAVIGATION_DEMO, NAVIGATION_SHORT_DEMO } from "data/navigation";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import SocialsList from "components/SocialsList/SocialsList";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { useAppSelector } from "app/hooks";
+import { selectAuthState } from "app/auth/auth";
 
 export interface NavMobileProps {
   data?: NavItemType[];
@@ -149,6 +151,9 @@ const NavMobile: React.FC<NavMobileProps> = ({
     );
   };
 
+  const auth = useAppSelector(selectAuthState);
+  const navTabs = auth.user ? NAVIGATION_SHORT_DEMO : NAVIGATION_DEMO;
+
   return (
     <div className="overflow-y-auto w-full max-w-sm h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
       <div className="py-6 px-5">
@@ -171,11 +176,15 @@ const NavMobile: React.FC<NavMobileProps> = ({
         </span>
       </div>
       <ul className="flex flex-col py-6 px-2 space-y-1">
-        {data.map(_renderItem)}
+        {navTabs.map(_renderItem)}
       </ul>
       <div className="flex items-center justify-between py-6 px-5 space-x-4">
-        <a href="/#" target="_blank" rel="noopener noreferrer">
-          <ButtonPrimary>Get Template</ButtonPrimary>
+        <a href="" target="_blank" rel="noopener noreferrer">
+          {auth.user ?
+            <ButtonPrimary href="/dashboard/submit-post">Create</ButtonPrimary>
+            :
+            <ButtonPrimary href={"https://docs.dotwise.online"} targetBlank={true}>Docs</ButtonPrimary>
+          }
         </a>
       </div>
     </div>

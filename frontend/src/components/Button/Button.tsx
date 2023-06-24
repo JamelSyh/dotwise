@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { ButtonHTMLAttributes, FC } from "react";
 import { Link, LinkProps } from "react-router-dom";
 import { LocationStates } from "routers/types";
@@ -61,15 +62,27 @@ const Button: FC<ButtonProps> = ({
 
   if (!!href) {
     return (
-      <Link
-        to={href}
-        target={targetBlank ? "_blank" : undefined}
-        className={`${CLASSES} `}
-        onClick={onClick}
-        rel="noopener noreferrer"
-      >
-        {children || `This is Link`}
-      </Link>
+      <>
+        {targetBlank ?
+          <a
+            className={`${CLASSES} `}
+            href={href}
+            onClick={onClick}
+            rel="noopener noreferrer"
+          >
+            {children || `here`}
+          </a> :
+          <Link
+            to={href}
+            target={targetBlank ? "_blank" : undefined}
+            className={`${CLASSES} `}
+            onClick={onClick}
+            rel="noopener noreferrer"
+          >
+            {children || `This is Link`}
+          </Link>
+        }
+      </>
     );
   }
 

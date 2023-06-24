@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useEffect, useRef, useState } from "react";
 import SocialsShare from "components/SocialsShare/SocialsShare";
 import Avatar from "components/Avatar/Avatar";
@@ -8,6 +9,8 @@ import { PageItemType } from "app/pages/pages";
 import MainNav2Logged from "./MainNav2Logged";
 // import MainNav2 from "./MainNav2";
 import MainNav1 from "./MainNav1";
+import { useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
 
 export interface HeaderProps {
   // mainNavStyle?: "style1" | "style2" | "style2Logedin";
@@ -26,6 +29,9 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
   //
   const [isSingleHeaderShowing, setIsSingleHeaderShowing] = useState(false);
   const [isTop, setIsTop] = useState(true);
+
+  const content = useAppSelector(selectContentState);
+  const post = content.post;
 
   useEffect(() => {
     if (!mainMenuRef.current) {
@@ -107,7 +113,7 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
 
   const renderSingleHeader = () => {
     if (!isSingleHeaderShowing) return null;
-    const SINGLE = currentPage.data as SinglePageType;
+    const SINGLE = post;
     const { title, author, id, bookmark } = SINGLE;
     return (
       <div className="nc-SingleHeaderMenu dark relative py-4 bg-neutral-900 dark:bg-neutral-900">

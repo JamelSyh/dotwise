@@ -135,6 +135,12 @@ const dashboardChildMenus: NavItemType[] = [
 const otherPageChildMenus: NavItemType[] = [
   {
     id: ncNanoId(),
+    href: "https://docs.dotwise.online",
+    name: "docs",
+    targetBlank: true,
+  },
+  {
+    id: ncNanoId(),
     href: "/about",
     name: "About",
   },
@@ -381,7 +387,7 @@ const transcriptor_nav: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "/translator",
-    name: "translator",
+    name: "Translator",
   },
   {
     id: ncNanoId(),
@@ -392,6 +398,12 @@ const transcriptor_nav: NavItemType[] = [
 
 
 const info_nav: NavItemType[] = [
+  {
+    id: ncNanoId(),
+    href: "https://docs.dotwise.online",
+    name: "docs",
+    targetBlank: true,
+  },
   {
     id: ncNanoId(),
     href: "/search",
@@ -418,7 +430,7 @@ export const NAVIGATION_SHORT_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Transcriptor",
+    name: "Braille",
     type: "dropdown",
     children: transcriptor_nav,
   },
