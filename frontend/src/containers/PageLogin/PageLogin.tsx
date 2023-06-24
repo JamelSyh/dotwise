@@ -3,7 +3,7 @@ import LayoutPage from "components/LayoutPage/LayoutPage";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { selectAuthState, setUser, setToken, setErrMsg, setPending } from "app/auth/auth";
+import { selectAuthState, setUser, setToken, setProfile, setErrMsg, setPending } from "app/auth/auth";
 import { login } from "../../components/Forgin/components/blogUtils";
 import jwt_decode from "jwt-decode";
 
@@ -14,13 +14,11 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
+import { fetchProfile } from "../../components/Forgin/components/blogUtils";
 
 export interface PageLoginProps {
   className?: string;
 }
-
-
-
 
 
 const loginSocials = [
@@ -73,6 +71,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       dispatch(setUser(jwt_decode(data.access)));
       localStorage.setItem("authToken", JSON.stringify(data));
       localStorage.setItem("user", JSON.stringify(jwt_decode(data.access)));
+
       history.replace(from);
     } else {
       dispatch(setErrMsg(data.detail));

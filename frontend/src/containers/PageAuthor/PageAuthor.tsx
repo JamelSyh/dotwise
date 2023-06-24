@@ -25,6 +25,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectContentState } from "app/content/content";
 import { selectAuthState } from "app/auth/auth";
+import ContentLoader, { Facebook } from 'react-content-loader'
 
 export interface PageAuthorProps {
   className?: string;
@@ -55,6 +56,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
   const id = parseInt(slug.split('/').pop());
 
   const auth = useAppSelector(selectAuthState);
+  const pending = auth.pending;
   const content = useAppSelector(selectContentState);
   const authors = auth.profiles;
   const author = authors.find((profile: any) => profile?.id === id) ? authors.find((profile: any) => profile?.id === id) : {};
@@ -90,30 +92,34 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
         <div className="rounded-3xl md:rounded-[40px] relative aspect-w-16 aspect-h-12 sm:aspect-h-7 xl:sm:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-            className="object-cover w-full h-full"
+            src={author.bgImage}
+            className="object-top w-full h-full"
           />
         </div>
         <div className="relative container -mt-20 lg:-mt-48">
           <div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-16 rounded-[40px] shadow-2xl flex flex-col sm:flex-row sm:items-center">
-            <Avatar
-              containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
-              imgUrl={author.avatar}
-              sizeClass="w-20 h-20 text-xl lg:text-2xl lg:w-36 lg:h-36"
-              radius="rounded-full"
-            />
-            <div>
-              <Badge className="ml-5 mt-2" name={role[author?.role]?.role} color={role[author?.role]?.color} />
-              <div className="flex-col mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
-                <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
-                  {author.displayName}
-                </h2>
-                <span className="block text-sm text-neutral-6000 dark:text-neutral-300 md:text-base">
-                  {author.desc}
-                </span>
-                <SocialsList />
-              </div>
-            </div>
+            {pending ? <Facebook /> :
+              <>
+                <Avatar
+                  containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
+                  imgUrl={author.avatar}
+                  sizeClass="w-20 h-20 text-xl lg:text-2xl lg:w-36 lg:h-36"
+                  radius="rounded-full"
+                />
+                <div>
+                  <Badge className="ml-5 mt-2" name={role[author?.role]?.role} color={role[author?.role]?.color} />
+                  <div className="flex-col mt-5 sm:mt-0 sm:ml-8 space-y-4 max-w-lg">
+                    <h2 className="inline-block text-2xl sm:text-3xl md:text-4xl font-semibold">
+                      {author.displayName}
+                    </h2>
+                    <span className="block text-sm text-neutral-6000 dark:text-neutral-300 md:text-base">
+                      {author.desc}
+                    </span>
+                    <SocialsList />
+                  </div>
+                </div>
+              </>
+            }
           </div>
         </div>
       </div>

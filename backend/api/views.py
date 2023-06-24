@@ -8,6 +8,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+
 from django.http import HttpResponseBadRequest, FileResponse
 from django.core.files.base import ContentFile
 from django.core.exceptions import ObjectDoesNotExist
@@ -303,7 +305,7 @@ def registerUser(request):
     existing_user = Profile.objects.filter(
         Q(username=username) | Q(email=email)).first()
     if existing_user:
-        message = {'detail': 'User with this username or email already exists'}
+        message = {'message': 'User with this username or email already exists'}
         return Response(message, status=status.HTTP_409_CONFLICT)
 
     try:
@@ -316,17 +318,16 @@ def registerUser(request):
         )
 
         # Generate and assign API key
-        token, _ = Token.objects.get_or_create(user=user)
-        api_key = token.key
-        user.api_key = api_key
+        # token, _ = Token.objects.get_or_create(user=user)
+        # api_key = token.key
+        # user.api_key = api_key
         user.save()
-
         serializer = ProfileSerializer(user, many=False)
         return Response(serializer.data)
 
-    except:
-        message = {'detail': 'An error occurred during user registration'}
-        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception:
+        error_message = "An internal server error occurred. Please try again later."
+        return Response({"error": error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])

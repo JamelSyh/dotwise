@@ -1,4 +1,17 @@
 const imageUrl = "https://res.cloudinary.com/dz3frffba/";
+const profileBackgroundImages = [
+  "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  "https://images.pexels.com/photos/3030268/pexels-photo-3030268.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/302820/pexels-photo-302820.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/866398/pexels-photo-866398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/259526/pexels-photo-259526.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/235359/pexels-photo-235359.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/931881/pexels-photo-931881.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/355465/pexels-photo-355465.jpeg?auto=compress&cs=tinysrgb&w=1600",
+];
 
 export const login = async (url: any, username: any, password: any) => {
 
@@ -133,7 +146,7 @@ export const fileValidation = (files: any, setMessage: any, e: any) => {
   }
 };
 
-export const fetchProfile = async (id: any, url: string) => {
+export const fetchProfile = async (id: any, url: any) => {
   const response = await fetch(`${url}/api/user/${id}/`);
   const data = await response.json();
   const transformedPosts = {
@@ -144,7 +157,7 @@ export const fetchProfile = async (id: any, url: string) => {
     email: data.email,
     gender: "",
     avatar: `${imageUrl}${data.photo}`,
-    bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    bgImage: profileBackgroundImages[data.id % profileBackgroundImages.length],
     count: data.blog_count,
     href: `/author/${data.id}`,
     desc: data.bio,
@@ -168,7 +181,7 @@ export const fetchAllProfiles = async (url: string) => {
     email: post.email,
     gender: "",
     avatar: `${imageUrl}${post.photo}`,
-    bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    bgImage: profileBackgroundImages[post.id % profileBackgroundImages.length],
     count: post.blog_count,
     href: `/author/${post.id}`,
     desc: post.bio,
@@ -371,7 +384,7 @@ export const fetchAllBlogs = async (url: string, id: null) => {
       href: `/author/${post.author_id}`,
       desc: post.author_bio,
       jobName: "Author Job",
-      bgImage: "https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      bgImage: profileBackgroundImages[post.author_id.id % profileBackgroundImages.length],
       role: data.author_role,
     },
     categories: [{

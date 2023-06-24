@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setUser, setToken, setProfile, setErrMsg, setPending } from "app/auth/auth";
 import { selectContentState } from "app/content/content";
+import { fetchProfile } from "../../components/Forgin/components/blogUtils";
 
 export default function AvatarDropdown() {
 
@@ -24,10 +25,37 @@ export default function AvatarDropdown() {
     history.push("/");
     dispatch(setUser(null));
     dispatch(setToken(null));
-    dispatch(setProfile({}));
+    dispatch(setProfile({
+      id: 1,
+      firstName: "",
+      lastName: "",
+      displayName: "",
+      email: "",
+      gender: "",
+      avatar: "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
+      bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      count: 0,
+      href: "/author/1",
+      desc: "",
+      jobName: "",
+      api_key: null,
+      role: 'U',
+    }));
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
   };
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const url = auth.BASE_API_URL;
+      const userProfile = await fetchProfile(profile.id, url);
+      dispatch(setProfile(userProfile));
+    };
+
+    fetchUserProfile();
+  }, [profile]);
+
 
 
   return (

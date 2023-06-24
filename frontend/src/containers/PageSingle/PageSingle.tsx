@@ -6,7 +6,7 @@ import { SINGLE } from "data/single";
 import SingleContent from "./SingleContent";
 import { CommentType } from "components/CommentCard/CommentCard";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { selectAuthState } from "app/auth/auth";
+import { selectAuthState, setPending } from "app/auth/auth";
 import { selectContentState, setPost } from "app/content/content";
 import { changeCurrentPage } from "app/pages/pages";
 import SingleHeader from "./SingleHeader";
@@ -28,6 +28,7 @@ export interface SinglePageType extends PostDataType {
 const PageSingle: FC<PageSingleProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
+  const pending = auth.pending;
   const content = useAppSelector(selectContentState);
 
 
@@ -37,11 +38,12 @@ const PageSingle: FC<PageSingleProps> = ({ className = "" }) => {
   const id = parseInt(slug.split('/').pop());
 
   useEffect(() => {
-
+    dispatch(setPending(true));
     fetchBlog(url, auth?.user?.user_id, id).then((data) => {
       dispatch(setPost(data));
       console.log(SINGLE, data);
     });
+    dispatch(setPending(false));
     // UPDATE CURRENTPAGE DATA IN PAGE-REDUCERS
     dispatch(changeCurrentPage({ type: "/single/:slug", data: content.post }));
 

@@ -15,23 +15,23 @@ const initialState = {
       id: 1,
       author: {
         id: 1,
-        firstName: 'admin',
+        firstName: '',
         lastName: '',
-        displayName: 'admin',
-        email: 'admin@dotwise.com',
+        displayName: '',
+        email: '',
         gender: '',
         avatar: 'https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg',
         count: 0,
         href: '/author/1',
         desc: '',
-        jobName: 'admin',
+        jobName: '',
         bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
       },
-      date: 'May 20, 2021',
-      content: 'nice',
+      date: '',
+      content: '',
       parentId: null,
       like: {
-        count: 96,
+        count: 0,
         isLiked: false
       },
       childrens: null
@@ -43,16 +43,16 @@ const initialState = {
     {
       author: {
         id: 1,
-        firstName: 'admin',
+        firstName: '',
         lastName: '',
-        displayName: 'admin',
-        email: 'admin@dotwise.com',
+        displayName: '',
+        email: '',
         gender: '',
         avatar: 'https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg',
         count: 0,
         href: '/author/1',
         desc: '',
-        jobName: 'admin',
+        jobName: '',
         bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
       },
       categories: [
@@ -84,16 +84,16 @@ const initialState = {
   post: {
     author: {
       id: 1,
-      firstName: 'admin',
+      firstName: '',
       lastName: '',
-      displayName: 'admin',
-      email: 'admin@dotwise.com',
+      displayName: '',
+      email: '',
       gender: '',
       avatar: 'https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg',
       count: 0,
       href: '/author/1',
       desc: '',
-      jobName: 'admin',
+      jobName: '',
       bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
     },
     categories: [
@@ -126,23 +126,23 @@ const initialState = {
         id: 1,
         author: {
           id: 1,
-          firstName: 'admin',
+          firstName: '',
           lastName: '',
-          displayName: 'admin',
-          email: 'admin@dotwise.com',
+          displayName: '',
+          email: '',
           gender: '',
           avatar: 'https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg',
           count: 0,
           href: '/author/1',
           desc: '',
-          jobName: 'admin',
+          jobName: '',
           bgImage: 'https://images.pexels.com/photos/3651577/pexels-photo-3651577.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
         },
-        date: 'May 20, 2021',
-        content: 'nice',
+        date: '',
+        content: '',
         parentId: null,
         like: {
-          count: 96,
+          count: 0,
           isLiked: false
         },
         childrens: null

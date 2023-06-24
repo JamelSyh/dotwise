@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useEffect, useRef } from "react";
 import Tag from "components/Tag/Tag";
 import { SinglePageType } from "./PageSingle";
@@ -6,6 +7,10 @@ import SingleCommentForm from "./SingleCommentForm";
 import SingleCommentLists from "./SingleCommentLists";
 import SingleContentDemo from "./SingleContentDemo";
 import { useLocation } from "react-router";
+import { useAppSelector } from "app/hooks";
+import { selectAuthState, setPending } from "app/auth/auth";
+import Article from "../../components/Loaders/Article";
+
 
 export interface SingleContentProps {
   data: SinglePageType;
@@ -16,6 +21,8 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
   const commentRef = useRef<HTMLDivElement>(null);
   //
   const location = useLocation();
+  const auth = useAppSelector(selectAuthState);
+  const pending = auth.pending;
 
 
   useEffect(() => {
@@ -45,7 +52,9 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
         {/* <SingleContentDemo /> */}
         {/* {data.desc} */}
         {/* @ts-ignore */}
-        <div dangerouslySetInnerHTML={{ __html: data.content }} />
+        {pending ? <Article /> :
+          < div dangerouslySetInnerHTML={{ __html: data.content }} />
+        }
       </div>
 
       {/* TAGS */}

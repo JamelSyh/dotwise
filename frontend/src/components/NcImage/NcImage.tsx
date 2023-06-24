@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import checkInViewIntersectionObserver from "utils/isInViewPortIntersectionObserver";
 import PlaceIcon from "./PlaceIcon";
+import ContentLoader, { Facebook } from 'react-content-loader'
+import ImageLoader from "components/Loaders/ImageLoader";
 
 export interface NcImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   containerClassName?: string;
@@ -71,10 +73,10 @@ const NcImage: FC<NcImageProps> = ({
   const renderLoadingPlaceholder = () => {
     return (
       <div
-        className={`${className} flex items-center justify-center bg-neutral-200 dark:bg-neutral-6000 text-neutral-100 dark:text-neutral-500`}
+        className={`${className} flex items-center justify-center `}
       >
-        <div className="h-3/4 max-w-[50%]">
-          <PlaceIcon />
+        <div className="h-2/4 max-w-[50%]">
+          <ImageLoader />
         </div>
       </div>
     );

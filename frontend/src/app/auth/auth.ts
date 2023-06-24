@@ -22,8 +22,8 @@ const initialState = {
     bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     count: 0,
     href: "/author/1",
-    desc: "empty bio",
-    jobName: "Author Job",
+    desc: "",
+    jobName: "",
     api_key: null,
     role: 'U',
   },
@@ -40,8 +40,8 @@ const initialState = {
     bgImage: "https://images.pexels.com/photos/912410/pexels-photo-912410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     count: 0,
     href: "/author/1",
-    desc: "empty bio",
-    jobName: "Author Job"
+    desc: "",
+    jobName: ""
   },
   ],
   pending: false,
