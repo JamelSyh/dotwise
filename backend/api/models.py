@@ -16,6 +16,8 @@ class Profile(AbstractUser):
     )
     photo = CloudinaryField("image", blank=True,
                             null=True, default="image/upload/v1687451576/media/profile/default.jpg")
+    bg_image = CloudinaryField("image", blank=True,
+                               null=True)
     bio = models.TextField(blank=True, null=True)
     api_key = models.CharField(
         max_length=40, unique=True, blank=True, null=True)
@@ -28,6 +30,7 @@ class Profile(AbstractUser):
 
         super().save(*args, **kwargs)
         super().save(update_fields=['photo'])
+        super().save(update_fields=['bg_image'])
 
     def __str__(self):
         return self.username

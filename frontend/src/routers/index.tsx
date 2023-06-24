@@ -45,7 +45,7 @@ import PageTranscriptor from "containers/PageTranscriptor/PageTranscriptor";
 import PageTranslator from "containers/PageTranslator/PageTranslator";
 import PageLookup from "containers/PageLookup/PageLookup"
 import { selectAuthState } from "app/auth/auth";
-import GetContent from "../components/Forgin/components/getContent";
+import NotifPopup from "components/notifPopup/NotifPopup";
 
 
 export const privatePages: Page[] = [
@@ -145,6 +145,7 @@ const Routes = () => {
     >
       <ScrollToTop />
       <HeaderContainer />
+      <NotifPopup />
       <Switch>
         {publicPages.map(({ component, path, exact }) => {
           return (

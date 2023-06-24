@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from 'app/hooks';
 import { selectAuthState, setPending } from 'app/auth/auth';
 import { selectContentState, setMyPosts } from "app/content/content";
 import { deleteBlog } from "../../components/Forgin/components/blogUtils";
+import { setNotif } from "app/content/content";
 
 // const people = [
 //   {
@@ -77,6 +78,17 @@ const DashboardPosts = () => {
     dispatch(setMyPosts(res));
   }
 
+  const deletePost = async (item: any) => {
+    dispatch(setPending(true));
+    const res = await deleteBlog(url, item.id, authToken);
+    dispatch(setPending(false));
+    if (res.status == 204) {
+      dispatch(setNotif({ state: true, msg: "Post Deleted Successfully", type: "success" }));
+    } else {
+      dispatch(setNotif({ state: true, msg: "Post Delete Error", type: "error" }));
+    }
+  }
+
   useEffect(() => {
     setMyBlogs();
   }, [auth])
@@ -131,18 +143,14 @@ const DashboardPosts = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                       <a
                         href="/#"
-                        className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
+                        className="cursor-pointer text-primary-800 dark:text-primary-500 hover:text-primary-900"
                       >
                         Edit
                       </a>
                       {` | `}
                       <a
-                        className="text-rose-600 hover:text-rose-900"
-                        onClick={async () => {
-                          dispatch(setPending(true));
-                          await deleteBlog(url, item.id, authToken);
-                          dispatch(setPending(false));
-                        }}
+                        className=" cursor-pointer text-rose-600 hover:text-rose-900"
+                        onClick={() => { deletePost(item) }}
                       >
                         Delete
                       </a>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import LayoutPage from "components/LayoutPage/LayoutPage";
@@ -8,10 +9,10 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
-import { selectAuthState, setPending } from "app/auth/auth";
+import { selectAuthState, setPending, setErrMsg } from "app/auth/auth";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { signup } from "../../components/Forgin/components/blogUtils";
-import { Alert } from "components/Alert/Alert";
+import { setNotif } from "app/content/content";
 
 export interface PageSignUpProps {
   className?: string;
@@ -42,6 +43,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
   const auth = useAppSelector(selectAuthState);
 
+  const errMsg = auth.errMsg;
   const user = auth.user;
   const token = auth.token;
   const pending = auth.pending;
@@ -56,6 +58,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     bio: "",
     photo: "v1687457552/media/profile/default.jpg",
   });
+
+  useEffect(() => {
+    dispatch(setErrMsg(null));
+  }, [])
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -84,9 +90,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     const data = await response.json();
 
     if (response.status === 200) {
+      dispatch(setNotif({ state: true, msg: "Account Created Successfully", type: "success" }));
       history.push("/login");
     } else {
-      setMessage(data.detail);
+      dispatch(setErrMsg(data.message));
     }
     dispatch(setPending(false));
   };
@@ -95,7 +102,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageSignUp ${className}`} data-nc-id="PageSignUp">
       <Helmet>
-        <title>Sign up || Blog Magazine React Template</title>
+        <title>Sign up || Dotwise</title>
       </Helmet>
       <LayoutPage
         subHeading="Welcome to our blog magazine Community"
@@ -103,7 +110,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         heading="Sign up"
       >
         <div className="max-w-md mx-auto space-y-6">
-          <Alert />
+          {errMsg && <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span className="font-medium">{errMsg}</span> Change a few things up and try submitting again.
+          </div>}
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a

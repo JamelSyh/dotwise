@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 const Page404: React.FC = () => (
   <div className="nc-Page404">
     <Helmet>
-      <title>404 || Blog Magazine React Template</title>
+      <title>404 || Dotwise</title>
     </Helmet>
     <div className="container relative py-16 lg:py-20">
       {/* HEADER */}

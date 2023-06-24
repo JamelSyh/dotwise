@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setUser, setToken, setProfile, setErrMsg, setPending } from "app/auth/auth";
+import { selectContentState, setNotif } from "app/content/content";
 import { login } from "../../components/Forgin/components/blogUtils";
 import jwt_decode from "jwt-decode";
 
@@ -14,7 +15,7 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
-import { fetchProfile } from "../../components/Forgin/components/blogUtils";
+import NotifPopup from "components/notifPopup/NotifPopup";
 
 export interface PageLoginProps {
   className?: string;
@@ -49,11 +50,16 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuthState);
+  const content = useAppSelector(selectContentState);
+  const errMsg = auth.errMsg;
 
-  const user = auth.user;
   const token = auth.token;
   const pending = auth.pending;
   const url = auth.BASE_API_URL;
+
+  useEffect(() => {
+    dispatch(setErrMsg(null));
+  }, [])
 
 
   let userLogin = async (username: any, password: any) => {
@@ -71,7 +77,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       dispatch(setUser(jwt_decode(data.access)));
       localStorage.setItem("authToken", JSON.stringify(data));
       localStorage.setItem("user", JSON.stringify(jwt_decode(data.access)));
-
+      dispatch(setNotif({ state: true, msg: "Loggin Successfully", type: "success" }));
       history.replace(from);
     } else {
       dispatch(setErrMsg(data.detail));
@@ -133,7 +139,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
-        <title>Login || Blog Magazine React Template</title>
+        <title>Login || Dotwise</title>
       </Helmet>
       <LayoutPage
         subHeading="Welcome to our blog magazine Community"
@@ -141,6 +147,9 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         heading="Login"
       >
         <div className="max-w-md mx-auto space-y-6">
+          {errMsg && <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span className="font-medium">{errMsg}</span> Change a few things up and try submitting again.
+          </div>}
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a
@@ -170,7 +179,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6" action="#" method="post">
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Email address
+                Username
               </span>
               <Input
                 type="text"

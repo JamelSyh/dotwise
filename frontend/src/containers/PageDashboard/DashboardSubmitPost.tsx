@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
@@ -8,6 +9,7 @@ import Editorr from "components/editor/editor";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 import { selectAuthState, setPending } from 'app/auth/auth';
+import { setNotif } from "app/content/content";
 import { createBlog, fileValidation } from "../../components/Forgin/components/blogUtils";
 
 const DashboardSubmitPost = () => {
@@ -54,8 +56,14 @@ const DashboardSubmitPost = () => {
       return;
     dispatch(setPending(true));
     const res = await createBlog(url, blog, authToken);
-    dispatch(setPending(false));
-    history.push(`/blog/${res.id}`);
+    if (res.status == 201) {
+      const data = await res.json();
+      dispatch(setPending(false));
+      dispatch(setNotif({ state: true, msg: "Post Created Successfully", type: "success" }));
+      history.push(`/blog/${data.id}`);
+    } else {
+      dispatch(setNotif({ state: true, msg: "Post Creation Error", type: "error" }));
+    }
   }
 
   const handleFile = (e: any) => {
@@ -74,7 +82,6 @@ const DashboardSubmitPost = () => {
       <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
         <label className="block md:col-span-2">
           <Label>Post Title *</Label>
-
           <Input type="text" name="title" required className="mt-1" value={blog.title} onChange={handleChange} />
         </label>
         {/* <label className="block md:col-span-2"> */}

@@ -49,7 +49,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       data-nc-id="PageArchive"
     >
       <Helmet>
-        <title>Archive || Blog Magazine React Template</title>
+        <title>Archive || Dotwise</title>
       </Helmet>
 
       {/* HEADER */}

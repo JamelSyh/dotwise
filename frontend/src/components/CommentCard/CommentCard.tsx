@@ -41,8 +41,8 @@ const CommentCard: FC<CommentCardProps> = ({
   const { author, id, date, parentId, content } = comment;
   const actions = [
     { id: "edit", name: "Edit", icon: "las la-edit" },
-    { id: "reply", name: "Reply", icon: "las la-reply" },
     { id: "delete", name: "Delete", icon: "las la-trash-alt" },
+    { id: "reply", name: "Reply", icon: "las la-reply" },
     { id: "report", name: "Report abuse", icon: "las la-flag" },
   ];
 

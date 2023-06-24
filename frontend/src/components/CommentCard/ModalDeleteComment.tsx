@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 import { fetchBlog } from "../../components/Forgin/components/blogUtils";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState } from "app/auth/auth";
-import { setPost } from "app/content/content";
+import { setPost, setNotif } from "app/content/content";
 
 export interface ModalDeleteCommentProps {
   commentId: CommentType["id"];
@@ -31,14 +31,18 @@ const ModalDeleteComment: FC<ModalDeleteCommentProps> = ({
   const { slug } = useParams();
   const id = parseInt(slug.split('/').pop());
 
-  const handleDeleteComment = (e: any) => {
+  const handleDeleteComment = async (e: any) => {
     e.preventDefault();
-    deleteComment(commentId, auth).then(() => {
-      onCloseModalDeleteComment();
-      fetchBlog(url, auth?.user?.user_id, id).then((data) => {
-        dispatch(setPost(data));
-      });
-    });
+    const res = await deleteComment(commentId, auth)
+    console.log(res);
+    if (res.status == 204) {
+      dispatch(setNotif({ state: true, msg: "Comment Deleted Successfully", type: "success" }));
+    } else {
+      dispatch(setNotif({ state: true, msg: "Comment Delete Error", type: "error" }));
+    }
+    onCloseModalDeleteComment();
+    const data = await fetchBlog(url, auth?.user?.user_id, id)
+    dispatch(setPost(data));
   };
 
 

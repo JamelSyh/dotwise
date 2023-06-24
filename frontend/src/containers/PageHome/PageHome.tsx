@@ -33,6 +33,7 @@ import { useAppDispatch } from "app/hooks";
 import { selectContentState, setPosts } from "app/content/content";
 import { selectAuthState, setPending, setProfiles, setProfile } from "app/auth/auth";
 import { fetchAllBlogs, fetchAllProfiles, fetchProfile } from "components/Forgin/components/blogUtils";
+import NotifPopup from "components/notifPopup/NotifPopup";
 
 //
 //

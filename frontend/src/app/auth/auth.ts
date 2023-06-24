@@ -45,7 +45,7 @@ const initialState = {
   },
   ],
   pending: false,
-  errMsg: "",
+  errMsg: null,
 };
 
 export const AuthSlice = createSlice({

@@ -10,6 +10,7 @@ import { isEqual } from "lodash";
 // }
 
 const initialState = {
+  notif: { state: false, msg: null, type: null },
   currentPage: 1,
   comments: [
     {
@@ -181,6 +182,9 @@ export const ContentSlice = createSlice({
         state.currentPage = action.payload;
       }
     },
+    setNotif: (state, action: PayloadAction<any>) => {
+      state.notif = action.payload;
+    },
   },
 });
 
@@ -190,6 +194,7 @@ export const {
   setPost,
   setComments,
   setCurrentPage,
+  setNotif,
 } = ContentSlice.actions;
 
 export const selectContentState = (state: RootState) =>

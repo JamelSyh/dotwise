@@ -8,7 +8,7 @@ import { fetchBlog } from "../../components/Forgin/components/blogUtils";
 import { useHistory, useParams, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setPending } from "app/auth/auth";
-import { setPost } from "app/content/content";
+import { setPost, setNotif } from "app/content/content";
 
 export interface SingleCommentFormProps {
   className?: string;
@@ -42,7 +42,7 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
   const { slug } = useParams();
   const id = parseInt(slug.split('/').pop());
 
-  const handleCommentSubmit = (e: any) => {
+  const handleCommentSubmit = async (e: any) => {
     e.preventDefault();
     if (!auth.token) {
       history.push({
@@ -52,13 +52,15 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
       return;
     }
     dispatch(setPending(true));
-    handleSubmitComment(comment, id, auth).then(() => {
-      setComment("");
-      fetchBlog(url, auth?.user?.user_id, id).then((data) => {
-        dispatch(setPost(data));
-        dispatch(setPending(false));
-      });
-    });
+    const res = await handleSubmitComment(comment, id, auth);
+    setComment("");
+    if (res.status != 201) {
+      dispatch(setNotif({ state: true, msg: "Comment Creation Error", type: "error" }));
+    }
+
+    const blogRes = await fetchBlog(url, auth?.user?.user_id, id);
+    dispatch(setPost(blogRes));
+    dispatch(setPending(false));
   };
 
 

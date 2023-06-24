@@ -88,7 +88,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageAuthor  ${className}`} data-nc-id="PageAuthor">
       <Helmet>
-        <title>Author || Blog Magazine React Template</title>
+        <title>Author || Dotwise</title>
       </Helmet>
 
       {/* HEADER */}

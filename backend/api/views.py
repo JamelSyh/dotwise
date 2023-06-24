@@ -288,8 +288,13 @@ def createComment(request):
 @permission_classes([IsAuthenticated])
 def deleteComment(request, pk):
     comment = Comment.objects.get(pk=pk)
+
+    # Check if the comment belongs to the authenticated user
+    if comment.user != request.user:
+        return Response('You do not have permission to delete this comment', status=status.HTTP_403_FORBIDDEN)
+
     comment.delete()
-    return Response('Item successfully deleted!', status=status.HTTP_204_NO_CONTENT)
+    return Response('Comment successfully deleted!', status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])

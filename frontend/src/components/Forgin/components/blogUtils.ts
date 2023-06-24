@@ -61,7 +61,7 @@ export const handleLike = async (url: any, blogId: any, id: any, token: any) => 
 export const handleSubmitComment = async (content: any, blogId: any, auth: any) => {
   if (!auth.token) {
   } else {
-    const response = await fetch(`${auth.BASE_API_URL}/api/comments/create/`, {
+    return await fetch(`${auth.BASE_API_URL}/api/comments/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,8 +73,6 @@ export const handleSubmitComment = async (content: any, blogId: any, auth: any) 
         body: content,
       }),
     });
-    const data = await response.json();
-    console.log(data, "new comment");
   };
 }
 
@@ -217,23 +215,14 @@ export const updateProfileInfo = async (url: any, user: any, token: any) => {
     formData.append('role', user.role);
   }
 
-  try {
-    const response = await fetch(`${url}/api/profile/${user.id}/update/`, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'Bearer ' + String(token.access),
-      },
-      body: formData,
-    });
+  return await fetch(`${url}/api/profile/${user.id}/update/`, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + String(token.access),
+    },
+    body: formData,
+  });
 
-    if (response.ok) {
-      return await response.json();
-    } else {
-      console.error('Failed to update profile:', response.status);
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
 };
 
 export const getMyBlogs = async (url: any, token: any) => {
@@ -280,12 +269,11 @@ export const createBlog = async (url: any, blog: any, token: any) => {
     body: formData,
   };
   return await fetch(`${url}/api/blogs/create/`, requestOptions)
-    .then((response) => response.json());
 };
 
 
 export const deleteBlog = async (url: any, id: any, token: any) => {
-  await fetch(`${url}/api/blogs/${id}/delete/`, {
+  return await fetch(`${url}/api/blogs/${id}/delete/`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -295,7 +283,7 @@ export const deleteBlog = async (url: any, id: any, token: any) => {
 };
 
 export const deleteComment = async (commentId: any, auth: any) => {
-  await fetch(`${auth.BASE_API_URL}/api/comments/${commentId}/delete/`, {
+  return await fetch(`${auth.BASE_API_URL}/api/comments/${commentId}/delete/`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

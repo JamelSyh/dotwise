@@ -64,6 +64,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'photo',
+            'bg_image',
             'email',
             'password',
             'bio',

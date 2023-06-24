@@ -31,7 +31,7 @@ const SingleHeader: FC<SingleHeaderProps> = ({
   return (
     <>
       <Helmet>
-        <title>Single || Blog Magazine React Template</title>
+        <title>Single || Dotwise</title>
       </Helmet>
       {pending ? <Facebook /> :
         <div className={`nc-SingleHeader ${className}`}>

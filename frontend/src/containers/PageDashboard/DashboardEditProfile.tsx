@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { updateProfileInfo } from "../../components/Forgin/components/blogUtils";
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 import { selectAuthState, setPending } from 'app/auth/auth';
+import { setNotif } from "app/content/content";
 
 const DashboardEditProfile = () => {
 
@@ -41,8 +42,14 @@ const DashboardEditProfile = () => {
     console.log(profile);
     dispatch(setPending(true));
     const res = await updateProfileInfo(url, profile, authToken);
-    dispatch(setPending(false));
-    history.push(`/author/${res.id}`);
+    if (res.status == 200) {
+      const data = await res.json();
+      dispatch(setPending(false));
+      history.push(`/author/${data.id}`);
+      dispatch(setNotif({ state: true, msg: "Profile Updated Successfully", type: "success" }));
+    } else {
+      dispatch(setNotif({ state: true, msg: "Profile Update Error", type: "error" }));
+    }
   }
 
 
