@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import SectionSliderPosts from "./SectionSliderPosts";
@@ -41,8 +42,23 @@ const PageHome: React.FC = () => {
   const profiles = auth.profiles;
   const POSTS: PostDataType[] = content.posts;
   const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
-  const MAGAZINE1_POSTS = content.posts;
-  const MAGAZINE2_POSTS = content.posts;
+  // const MAGAZINE1_POSTS = content.posts;
+  // const MAGAZINE2_POSTS = content.posts;
+
+  const sortedPosts = [...POSTS];
+
+  sortedPosts.sort((a, b) => {
+    const likesA = a.like.count;
+    const likesB = b.like.count;
+
+    if (likesA < likesB) {
+      return 1;
+    } else if (likesA > likesB) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 
   return (
     <div className="nc-PageHome relative">
@@ -60,7 +76,7 @@ const PageHome: React.FC = () => {
           {/* === SECTION  === */}
           <SectionLargeSlider
             className="pt-10 pb-16 md:py-16 lg:pb-28 lg:pt-24 "
-            posts={POSTS.filter((_, i) => i < 3)}
+            posts={sortedPosts.filter((_, i) => i < 3)}
           />
 
           {/* === SECTION  === */}
@@ -100,7 +116,7 @@ const PageHome: React.FC = () => {
           {/* === SECTION 4 === */}
           <SectionMagazine1
             className="py-16 lg:py-28"
-            posts={MAGAZINE1_POSTS}
+            posts={POSTS}
             tabs={MAGAZINE1_TABS}
           />
 
