@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from "react";
+import React, { useEffect } from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import SectionSliderPosts from "./SectionSliderPosts";
 import SectionMagazine1 from "./SectionMagazine1";
@@ -29,16 +29,20 @@ import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useAppSelector } from "app/hooks";
-import { selectContentState } from "app/content/content";
-import { selectAuthState } from "app/auth/auth";
+import { useAppDispatch } from "app/hooks";
+import { selectContentState, setPosts } from "app/content/content";
+import { selectAuthState, setPending, setProfiles, setProfile } from "app/auth/auth";
+import { fetchAllBlogs, fetchAllProfiles, fetchProfile } from "components/Forgin/components/blogUtils";
 
 //
 //
 //
 
 const PageHome: React.FC = () => {
+  const dispatch = useAppDispatch();
   const content = useAppSelector(selectContentState);
   const auth = useAppSelector(selectAuthState);
+  const url = auth.BASE_API_URL;
   const profiles = auth.profiles;
   const POSTS: PostDataType[] = content.posts;
   const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
@@ -59,6 +63,26 @@ const PageHome: React.FC = () => {
       return 0;
     }
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(setPending(true));
+      const blogs = await fetchAllBlogs(url, auth?.user?.user_id);
+      dispatch(setPosts(blogs));
+      const profiles = await fetchAllProfiles(url);
+      dispatch(setProfiles(profiles));
+      dispatch(setPending(false));
+      if (auth.user?.user_id) {
+        dispatch(setPending(true));
+        const profileData = await fetchProfile(auth.user.user_id, url);
+        dispatch(setProfile(profileData));
+        dispatch(setPending(false));
+      }
+    };
+
+    fetchData();
+  }, [auth.user?.user_id]);
+
 
   return (
     <div className="nc-PageHome relative">

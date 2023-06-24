@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+// @ts-nocheck
+import React, { FC, useState } from "react";
 import Card3 from "components/Card3/Card3";
 import Heading from "components/Heading/Heading";
 import WidgetTags from "components/WidgetTags/WidgetTags";
@@ -17,6 +18,8 @@ import Card9 from "components/Card9/Card9";
 import Card10 from "components/Card10/Card10";
 import Card11 from "components/Card11/Card11";
 import Card14 from "components/Card14/Card14";
+import { useAppSelector } from "app/hooks";
+import { selectContentState } from "app/content/content";
 
 // THIS IS DEMO FOR MAIN DEMO
 // OTHER DEMO WILL PASS PROPS
@@ -61,6 +64,17 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
   gridClass = "",
   className = "",
 }) => {
+
+  const content = useAppSelector(selectContentState);
+  const currentPage = content.currentPage;
+
+  const [postsPerPage, setPostsPage] = useState(3);
+
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = posts.slice(firstPostIndex, lastPostIndex);
+
   const renderCard = (post: PostDataType) => {
     switch (postCardName) {
       case "card3":
@@ -96,10 +110,10 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
         <div className="w-full lg:w-3/5 xl:w-2/3 xl:pr-14">
           <Heading>{heading}</Heading>
           <div className={`grid gap-6 md:gap-8 ${gridClass}`}>
-            {posts.map((post) => renderCard(post))}
+            {currentPosts.map((post) => renderCard(post))}
           </div>
           <div className="flex flex-col mt-12 md:mt-20 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
+            <Pagination totalPosts={posts.length} postsPerPage={postsPerPage} />
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </div>

@@ -179,7 +179,7 @@ const Routes = () => {
 
       </Switch>
       <Footer />
-      <GetContent />
+      {/* <GetContent /> */}
       {/* MEDIA */}
 
       {/* //is Safari on an apple touch-screen device */}

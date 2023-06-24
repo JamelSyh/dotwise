@@ -1,7 +1,11 @@
+// @ts-nocheck
 import { CustomLink } from "data/types";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import twFocusClass from "utils/twFocusClass";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import { selectContentState, setCurrentPage } from "app/content/content";
+import { useParams } from "react-router-dom";
 
 const DEMO_PAGINATION: CustomLink[] = [
   {
@@ -26,28 +30,35 @@ export interface PaginationProps {
   className?: string;
 }
 
-const Pagination: FC<PaginationProps> = ({ className = "" }) => {
-  const renderItem = (pag: CustomLink, index: number) => {
-    if (index === 0) {
+const Pagination: FC<PaginationProps> = ({ className = "", totalPosts, postsPerPage = 10 }) => {
+
+
+  const dispatch = useAppDispatch();
+  const content = useAppSelector(selectContentState);
+  const currentPage = content.currentPage;
+
+  const renderItem = (pag: any) => {
+    if (pag === currentPage) {
       // RETURN ACTIVE PAGINATION
       return (
         <span
-          key={index}
-          className={`inline-flex w-11 h-11 items-center justify-center rounded-full bg-primary-6000 text-white ${twFocusClass()}`}
+          onClick={() => { dispatch(setCurrentPage(pag)); }}
+          key={pag}
+          className={`cursor-pointer inline-flex w-11 h-11 items-center justify-center rounded-full bg-primary-6000 text-white ${twFocusClass()}`}
         >
-          {pag.label}
+          {pag}
         </span>
       );
     }
     // RETURN UNACTIVE PAGINATION
     return (
-      <Link
-        key={index}
-        className={`inline-flex w-11 h-11 items-center justify-center rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-6000 dark:text-neutral-400 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-700 ${twFocusClass()}`}
-        to={pag.href}
+      <a
+        key={pag}
+        onClick={() => { dispatch(setCurrentPage(pag)); }}
+        className={`cursor-pointer inline-flex w-11 h-11 items-center justify-center rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-6000 dark:text-neutral-400 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-700 ${twFocusClass()}`}
       >
-        {pag.label}
-      </Link>
+        {pag}
+      </a>
     );
   };
 
@@ -55,7 +66,10 @@ const Pagination: FC<PaginationProps> = ({ className = "" }) => {
     <nav
       className={`nc-Pagination inline-flex space-x-1 text-base font-medium ${className}`}
     >
-      {DEMO_PAGINATION.map(renderItem)}
+      {/* {DEMO_PAGINATION.map(renderItem)} */}
+      {Array.from({ length: Math.ceil(totalPosts / postsPerPage) }).map((_, index) =>
+        renderItem(index + 1)
+      )}
     </nav>
   );
 };

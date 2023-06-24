@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectAuthState, setProfiles, setProfile, setPending } from "app/auth/auth";
 import { selectContentState, setPosts } from "app/content/content";
 import { fetchAllBlogs, fetchAllProfiles, fetchProfile } from "./blogUtils";
+import { profile } from "console";
 
 const GetContent = () => {
   const dispatch = useAppDispatch();
@@ -23,14 +24,14 @@ const GetContent = () => {
       dispatch(setPending(false));
       if (auth.user?.user_id) {
         dispatch(setPending(true));
-        const profile = await fetchProfile(auth.user.user_id, url);
-        dispatch(setProfile(profile));
+        const profileData = await fetchProfile(auth.user.user_id, url);
+        dispatch(setProfile(profileData));
         dispatch(setPending(false));
       }
     };
 
     fetchData();
-  }, [content]);
+  }, [auth.user_id]);
 
   return null;
 }

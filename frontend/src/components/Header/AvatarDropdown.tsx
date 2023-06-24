@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Popover, Transition } from "@headlessui/react";
 import Avatar from "components/Avatar/Avatar";
 import { avatarImgs } from "contains/fakeData";
@@ -49,7 +50,7 @@ export default function AvatarDropdown() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       const url = auth.BASE_API_URL;
-      const userProfile = await fetchProfile(profile.id, url);
+      const userProfile = await fetchProfile(auth.user.user_id, url);
       dispatch(setProfile(userProfile));
     };
 
@@ -87,6 +88,7 @@ export default function AvatarDropdown() {
                     <div className="flex items-center space-x-3">
                       <Avatar
                         imgUrl={profile.avatar}
+                        profile={profile}
                         sizeClass="w-12 h-12"
                         radius="rounded-full"
                       />

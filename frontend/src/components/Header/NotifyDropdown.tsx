@@ -3,18 +3,18 @@ import Avatar from "components/Avatar/Avatar";
 import { Fragment } from "react";
 
 const solutions = [
-  {
-    name: "Eden Tuan",
-    description: "Mentioned you in a comment",
-    time: "3 minutes ago",
-    href: "##",
-  },
-  {
-    name: "Leo Messi",
-    description: "Create your own targeted content",
-    time: "1 minute ago",
-    href: "##",
-  },
+  // {
+  //   name: "Eden Tuan",
+  //   description: "Mentioned you in a comment",
+  //   time: "3 minutes ago",
+  //   href: "##",
+  // },
+  // {
+  //   name: "Leo Messi",
+  //   description: "Create your own targeted content",
+  //   time: "1 minute ago",
+  //   href: "##",
+  // },
   {
     name: "Leo Kante",
     description: "Keep track of your growth",
@@ -81,6 +81,7 @@ export default function NotifyDropdown() {
                         <Avatar
                           sizeClass="w-8 h-8 sm:w-12 sm:h-12"
                           radius="rounded-full"
+                          imgUrl={"https://robohash.org/uttemporibusnisi.png?size=150x150&set=set1"}
                         />
                         <div className="ml-3 sm:ml-4 space-y-1">
                           <p className="text-sm font-medium text-gray-900 dark:text-gray-200">

@@ -21,6 +21,20 @@ const FOUNDER_DEMO: People[] = [
 const FOUNDER_PARTNER: People[] = [
   {
     id: "1",
+    name: `Dr. Et-tahir Zemouri`,
+    job: "Supervisor at CDTA",
+    avatar:
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
+  },
+  {
+    id: "4",
+    name: `Dr. Abdellah Rezoug`,
+    job: "Supervisor at UMBB",
+    avatar:
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687457552/media/profile/default.jpg",
+  },
+  {
+    id: "1",
     name: `Megateli Abdelaziz`,
     job: "colleague",
     avatar:

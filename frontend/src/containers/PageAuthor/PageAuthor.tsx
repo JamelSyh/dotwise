@@ -43,6 +43,8 @@ const TABS = ["Articles", "Favorites", "Saved"];
 
 const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
 
+
+
   const role: any = {
     "U": { role: "User", color: "blue" },
     "B": { role: "Blind User", color: "blue" },
@@ -58,21 +60,22 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
   const auth = useAppSelector(selectAuthState);
   const pending = auth.pending;
   const content = useAppSelector(selectContentState);
+  const currentPage = content.currentPage;
   const authors = auth.profiles;
   const author = authors.find((profile: any) => profile?.id === id) ? authors.find((profile: any) => profile?.id === id) : {};
 
-  // useEffect(() => {
-  //   console.log(author);
-  // }, [])
-
-
-  // const filteredP = content.posts.map((post: any) => {
-  //   console.log(post);
-  // });
 
   const filteredPosts = content.posts.filter((post: any) => post.author.id == id);
 
   const [tabActive, setTabActive] = useState<string>(TABS[0]);
+
+  const [postsPerPage, setPostsPage] = useState(4);
+
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = filteredPosts.slice(firstPostIndex, lastPostIndex);
+
 
   const handleClickTab = (item: string) => {
     if (item === tabActive) {
@@ -80,6 +83,7 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
     }
     setTabActive(item);
   };
+
 
   return (
     <div className={`nc-PageAuthor  ${className}`} data-nc-id="PageAuthor">
@@ -148,14 +152,14 @@ const PageAuthor: FC<PageAuthorProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {filteredPosts.map((post: any) => (
+            {currentPosts.map((post: any) => (
               <Card11 key={post.id} post={post} />
             ))}
           </div>
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
+            <Pagination totalPosts={filteredPosts.length} postsPerPage={postsPerPage} />
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </main>

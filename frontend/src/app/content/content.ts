@@ -10,6 +10,7 @@ import { isEqual } from "lodash";
 // }
 
 const initialState = {
+  currentPage: 1,
   comments: [
     {
       id: 1,
@@ -175,6 +176,11 @@ export const ContentSlice = createSlice({
         state.comments = action.payload;
       }
     },
+    setCurrentPage: (state, action: PayloadAction<any>) => {
+      if (!isEqual(state.currentPage, action.payload)) {
+        state.currentPage = action.payload;
+      }
+    },
   },
 });
 
@@ -183,6 +189,7 @@ export const {
   setMyPosts,
   setPost,
   setComments,
+  setCurrentPage,
 } = ContentSlice.actions;
 
 export const selectContentState = (state: RootState) =>
