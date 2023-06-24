@@ -52,7 +52,7 @@ body.dark {
 
 .input-container {
   position: relative;
-  padding: 0 20px;
+  padding: 0 !important;
   display: flex;
   margin: 10vh 0 5vh !important;
   gap: 10px;
@@ -497,7 +497,7 @@ input:checked + .slider:before {
 
 .lookup-container{
   position: relative;
-  padding: 0 50px;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   gap: 50px;
