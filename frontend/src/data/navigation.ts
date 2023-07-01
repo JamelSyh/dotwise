@@ -429,7 +429,7 @@ export const NAVIGATION_SHORT_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/transcriptor",
     name: "Braille",
     type: "dropdown",
     children: transcriptor_nav,

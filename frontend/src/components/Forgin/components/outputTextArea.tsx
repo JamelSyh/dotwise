@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { setInText, setOutText, setInOpt, selectTranscriptorState } from "app/transcriptor/transcriptor";
 import { selectAuthState } from "app/auth/auth";
 import Dropdown from './dropdown';
-import { DownloadOne, Copy } from "@icon-park/react";
+import { DownloadOne, Copy, Printer } from "@icon-park/react";
 import '../App.css';
 
 function OutputTextArea() {
@@ -41,6 +41,15 @@ function OutputTextArea() {
     window.URL.revokeObjectURL(tempUrl);
   };
 
+  const handlePrint = async () => {
+    const response = await fetch(`${url}/api/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
+    const text = await response.text();
+    const printWindow = window.open("", "_blank");
+    printWindow?.document.write(`<pre>${text}</pre>`);
+    printWindow?.document.close();
+    printWindow?.print();
+  };
+
 
   const placeholderHandler = () => {
     if (inLang.code === 'ar')
@@ -69,7 +78,14 @@ function OutputTextArea() {
       {outText &&
         <div className="card-bottom">
           {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >
-            <DownloadOne size="30" strokeWidth={3} />
+            <div className="icoon" onClick={handlePrint} >
+              <Printer size="25" strokeWidth={3} />
+            </div>
+          </div>}
+          {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >
+            <div className="icoon" onClick={copyToClipboard} >
+              <DownloadOne size="30" strokeWidth={3} />
+            </div>
           </div>}
           <div className="icoon" onClick={copyToClipboard} >
             <Copy theme="outline" size="25" strokeWidth={3} />
