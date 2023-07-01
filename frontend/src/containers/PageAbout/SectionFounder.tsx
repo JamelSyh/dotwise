@@ -14,7 +14,7 @@ const FOUNDER_DEMO: People[] = [
     name: `Jamal Sayah`,
     job: "Co-founder and Chief Executive",
     avatar:
-      "https://res.cloudinary.com/dz3frffba/image/upload/v1687463422/zkabikuepkdtj4e2ught.jpg",
+      "https://res.cloudinary.com/dz3frffba/image/upload/v1687632211/wmomnyhb5bzxaym0ncvf.jpg",
   },
 ];
 
