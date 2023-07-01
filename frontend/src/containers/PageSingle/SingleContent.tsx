@@ -86,6 +86,9 @@ const SingleContent: FC<SingleContentProps> = ({ data }) => {
       {/* COMMENTS LIST */}
       <div className="max-w-screen-md mx-auto">
         <SingleCommentLists comments={comments} />
+        {
+          console.log(comments, "lol")
+        }
       </div>
     </div>
   );

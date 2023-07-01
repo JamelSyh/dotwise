@@ -139,6 +139,7 @@ const CommentCard: FC<CommentCardProps> = ({
               to={author.href}
             >
               {author.displayName}
+              {console.log(author, "hi")}
             </Link>
             <span className="mx-2">·</span>
             <span className="text-neutral-500 dark:text-neutral-400 text-xs line-clamp-1 sm:text-sm">

@@ -86,7 +86,7 @@ export const fetchComments = async (url: any, blogId: any) => {
       id: comment.user,
       firstName: comment.username,
       lastName: "",
-      displayName: data.username,
+      displayName: comment.username,
       email: "",
       avatar: `${comment.photo}`,
       count: 0,
