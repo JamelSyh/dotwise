@@ -77,16 +77,15 @@ function OutputTextArea() {
       <textarea id="output-text" dir={inLang.code === 'ar' ? 'rtl' : ''} cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value))}></textarea>
       {outText &&
         <div className="card-bottom">
-          {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >
-            <div className="icoon" onClick={handlePrint} >
-              <Printer size="25" strokeWidth={3} />
-            </div>
-          </div>}
-          {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >
-            <div className="icoon" onClick={copyToClipboard} >
-              <DownloadOne size="30" strokeWidth={3} />
-            </div>
-          </div>}
+          {(inLang.code !== "1" && inLang.code !== "2") &&
+            <>
+              <div className="icoon" onClick={handlePrint} >
+                <Printer size="25" strokeWidth={3} />
+              </div>
+              <div className="icoon" onClick={handleDownload} >
+                <DownloadOne size="30" strokeWidth={3} />
+              </div>
+            </>}
           <div className="icoon" onClick={copyToClipboard} >
             <Copy theme="outline" size="25" strokeWidth={3} />
           </div>

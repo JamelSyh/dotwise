@@ -1,4 +1,3 @@
-import React from "react";
 import MyRouter from "routers/index";
 
 function App() {
