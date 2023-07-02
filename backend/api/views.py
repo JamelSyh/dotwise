@@ -107,10 +107,10 @@ def translate(request):
     return Response({'result': result})
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def download_file(request):
-    braille = request.query_params.get('braille')
-    key = request.query_params.get('key', '')
+    braille = request.data.get('braille')
+    key = request.data.get('key', '')
 
     try:
         validate_api_key(key)

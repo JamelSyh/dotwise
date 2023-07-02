@@ -36,16 +36,65 @@ function OutputTextArea() {
     link.href = tempUrl;
     link.download = "braille.brf";
     document.body.appendChild(link);
+
+    // Add line breaks to the text content before downloading
+    const textContent = outText.replace(/\n/g, '\r\n');
+    const textBlob = new Blob([textContent], { type: 'text/plain' });
+
+    link.href = URL.createObjectURL(textBlob);
+    link.download = "braille.txt";
     link.click();
+
     document.body.removeChild(link);
     window.URL.revokeObjectURL(tempUrl);
   };
 
   const handlePrint = async () => {
-    const response = await fetch(`${url}/api/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
+    const response = await fetch(`${url}/api/downloadfile/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        braille: outText,
+        key: dotwise_api_key,
+      }),
+    });
+
+    if (!response?.ok) {
+      // Handle error response
+      console.error('Error:', response.statusText);
+      return;
+    }
+
     const text = await response.text();
+
+    // Open a new window for printing
     const printWindow = window.open("", "_blank");
-    printWindow?.document.write(`<pre>${text}</pre>`);
+    const words = text.split(" ");
+    const wordsWithLineBreaks = [];
+
+    for (let i = 0; i < words.length; i++) {
+      wordsWithLineBreaks.push(words[i]);
+      if ((i + 1) % 25 === 0) {
+        // Add a line break after every 25 words
+        wordsWithLineBreaks.push("\n");
+      }
+    }
+
+    const fontSize = "30px"; // Adjust the desired font size here
+    const style = `
+    <style>
+      body {
+        font-size: ${fontSize};
+      }
+    </style>
+  `;
+
+    // Write the formatted text and the font size style to the print window
+    const formattedText = wordsWithLineBreaks.join(" ");
+    printWindow?.document.write(style);
+    printWindow?.document.write(`<pre>${formattedText}</pre>`);
     printWindow?.document.close();
     printWindow?.print();
   };
@@ -74,7 +123,7 @@ function OutputTextArea() {
         <span className="heading">To :</span>
         <Dropdown id="out" opt={outOpt} lang={outLang} />
       </ div>
-      <textarea id="output-text" dir={(inLang.code === 'ar') ? '' : 'rtl'} cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value))}></textarea>
+      <textarea id="output-text" dir={(outLang.code === 'ar' || (!outText && inLang.code === 'ar')) ? 'rtl' : ''} cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value.replace(/\n/g, '')))}></textarea>
       {outText &&
         <div className="card-bottom">
           {(inLang.code !== "1" && inLang.code !== "2") &&

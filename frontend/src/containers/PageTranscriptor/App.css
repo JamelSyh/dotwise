@@ -38,9 +38,9 @@ main {
   font-weight: 600;
 }
 
-body.dark {
-  --bg-color: #111116;
-  --light-bg-color: #1c1b20;
+:root.dark {
+  --bg-color: #0B0F19;
+  --light-bg-color: #0E131F;
   --text-color: #fff;
   --light-text-color: #58575c;
 }
@@ -431,10 +431,11 @@ input:checked + .slider:before {
   border: 1px solid var(--text-color);
   outline: none;
   cursor: pointer;
+  background-color: var(--background-color) !important;
 }
 
 .cell-dot:checked {
-  background-color: var(--text-color);
+  background-color: var(--text-color) !important;
 }
 
 .functions button {

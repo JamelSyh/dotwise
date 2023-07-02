@@ -38,9 +38,9 @@ main {
   /* font-weight: 600; */
 }
 
-body.dark {
+:root.dark {
   --bg-color: #111116;
-  --light-bg-color: #1c1b20;
+  --light-bg-color: #111827;
   --text-color: #fff;
   --light-text-color: #58575c;
 }

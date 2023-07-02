@@ -46,10 +46,51 @@ function TransOutputTextArea() {
   }
 
   const handlePrint = async () => {
-    const response = await fetch(`${url}/api/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
+    const response = await fetch(`${url}/api/downloadfile/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        braille: outText,
+        key: dotwise_api_key,
+      }),
+    });
+
+    if (!response?.ok) {
+      // Handle error response
+      console.error('Error:', response.statusText);
+      return;
+    }
+
     const text = await response.text();
+
+    // Open a new window for printing
     const printWindow = window.open("", "_blank");
-    printWindow?.document.write(`<pre>${text}</pre>`);
+    const words = text.split(" ");
+    const wordsWithLineBreaks = [];
+
+    for (let i = 0; i < words.length; i++) {
+      wordsWithLineBreaks.push(words[i]);
+      if ((i + 1) % 25 === 0) {
+        // Add a line break after every 25 words
+        wordsWithLineBreaks.push("\n");
+      }
+    }
+
+    const fontSize = "30px"; // Adjust the desired font size here
+    const style = `
+    <style>
+      body {
+        font-size: ${fontSize};
+      }
+    </style>
+  `;
+
+    // Write the formatted text and the font size style to the print window
+    const formattedText = wordsWithLineBreaks.join(" ");
+    printWindow?.document.write(style);
+    printWindow?.document.write(`<pre>${formattedText}</pre>`);
     printWindow?.document.close();
     printWindow?.print();
   };
