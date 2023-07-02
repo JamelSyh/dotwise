@@ -23,6 +23,10 @@ class Profile(AbstractUser):
         max_length=40, unique=True, blank=True, null=True)
     role = models.CharField(max_length=2, choices=ROLES, default='U')
 
+    @property
+    def blog_count(self):
+        return Blog.objects.filter(author=self).count()
+
     def save(self, *args, **kwargs):
         # Generate API key if it doesn't exist
         if not self.api_key:
@@ -40,6 +44,7 @@ class Blog(models.Model):
 
     CHOICES = (
         ('Uncategorized', 'Uncategorized'),
+        ('Braille', 'Braille'),
         ('Technology', 'Technology'),
         ('Programming', 'Programming'),
         ('Business', 'Business'),
@@ -124,15 +129,7 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         # Check if the image field has changed
-        if self.pk:
-            old_instance = Blog.objects.get(pk=self.pk)
-            if self.image != old_instance.image:
-                # Delete the old image from Cloudinary
-                uploader.destroy(old_instance.image.public_id)
-
-        # Save the blog instance
         super().save(*args, **kwargs)
-
         super().save(update_fields=['image'])
 
     def __str__(self):

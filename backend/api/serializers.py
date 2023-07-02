@@ -91,4 +91,4 @@ class ProfileSerializer(serializers.ModelSerializer):
         return instance
 
     def get_blog_count(self, obj):
-        return obj.blog_posts.count()
+        return obj.blog_count

@@ -110,7 +110,7 @@ const PageHome: React.FC = () => {
             <SectionSliderNewAuthors
               heading="Newest authors"
               subHeading="Say hello to future creator potentials"
-              authors={profiles.filter((_, i) => i < 10)}
+              authors={profiles}
               uniqueSliderClass="PageHome"
             />
           </div>

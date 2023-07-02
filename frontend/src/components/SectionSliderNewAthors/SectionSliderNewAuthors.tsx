@@ -68,6 +68,7 @@ const SectionSliderNewAuthors: FC<SectionSliderNewAuthorsProps> = ({
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
+            {console.log(authors, "auth")}
             {authors.map((item, index) => (
               <li key={index} className="glide__slide pb-12 md:pb-16">
                 <CardAuthorBox2 author={item} />
