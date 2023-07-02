@@ -17,7 +17,7 @@ const Logo: React.FC<LogoProps> = ({
 }) => {
   const history = useHistory();
   return (
-    <a onClick={() => { history.push("/"); }} className="ttnc-logo inline-block text-primary-6000">
+    <a onClick={() => { history.push("/"); }} className=" cursor-pointer ttnc-logo inline-block text-primary-6000">
       {/* THIS USE FOR MY MULTI DEMO */}
       {/* IF YOU ARE MY CLIENT. PLESE DELETE THIS CODE AND YOU YOUR IMAGE PNG BY BELLOW CODE */}
       <LogoSvg />

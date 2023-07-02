@@ -401,7 +401,7 @@ const info_nav: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "https://docs.dotwise.online",
-    name: "docs",
+    name: "Docs",
     targetBlank: true,
   },
   {
