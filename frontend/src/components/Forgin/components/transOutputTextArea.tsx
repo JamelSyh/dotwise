@@ -28,7 +28,22 @@ function TransOutputTextArea() {
   }
 
   const handleDownload = async () => {
-    const response = await fetch(`${url}/api/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
+    const response = await fetch(`${url}/api/downloadfile/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        braille: outText,
+        key: dotwise_api_key,
+      }),
+    });
+
+    if (!response?.ok) {
+      // Handle error response
+      console.error('Error:', response.statusText);
+      return;
+    }
     const blob = await response.blob();
     const tempUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -78,7 +93,7 @@ function TransOutputTextArea() {
       }
     }
 
-    const fontSize = "30px"; // Adjust the desired font size here
+    const fontSize = "25px"; // Adjust the desired font size here
     const style = `
     <style>
       body {
