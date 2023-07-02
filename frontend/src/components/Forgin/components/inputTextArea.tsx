@@ -199,6 +199,7 @@ function InputTextArea() {
         {inText !== "" && inLang.code !== "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>}
         <textarea className="custom-textarea" id="input-text" cols={30} rows={6} dir={inLang?.code === 'ar' ? 'rtl' : ''} value={inText} onChange={event => { dispatch(setInText(event.target.value)); }} onKeyDown={handleKeyPress}>
         </textarea>
+        {inText !== "" && inLang.code === "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>}
         <div className="chars"><span id="input-chars">{inText.length}</span> / 5000</div>
       </div>
       <div className="card-bottom">

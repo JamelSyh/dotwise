@@ -186,7 +186,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 name="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="example@example.com"
+                placeholder="username"
                 className="mt-1"
               />
             </label>

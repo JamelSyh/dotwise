@@ -74,7 +74,7 @@ function OutputTextArea() {
         <span className="heading">To :</span>
         <Dropdown id="out" opt={outOpt} lang={outLang} />
       </ div>
-      <textarea id="output-text" dir={inLang.code === 'ar' ? 'rtl' : ''} cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value))}></textarea>
+      <textarea id="output-text" dir={(inLang.code === 'ar') ? '' : 'rtl'} cols={30} rows={6} placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(setOutText(event.target.value))}></textarea>
       {outText &&
         <div className="card-bottom">
           {(inLang.code !== "1" && inLang.code !== "2") &&
